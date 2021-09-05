@@ -35,15 +35,21 @@ fun CurrenciesScreen(navController: NavController?) {
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold
         )
-        Text(
+        CenteredText(
             text = noCurrenciesWeirdSubtitle,
-            textAlign = TextAlign.Center
         )
-        Text(
+        CenteredText(
             text = niceDayMessage,
-            textAlign = TextAlign.Center
         )
     }
+}
+
+@Composable
+fun CenteredText(text:String){
+    Text(
+        text = text,
+        textAlign = TextAlign.Center
+    )
 }
 
 @Preview(showBackground = true)
