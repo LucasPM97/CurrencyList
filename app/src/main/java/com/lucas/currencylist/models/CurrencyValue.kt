@@ -9,6 +9,7 @@ data class CurrencyValue(
     val exchangeTo: CurrencyType
 ) {
     val exchangeTitle = "${exchangeFrom.getName()} / ${exchangeFrom.getName()}"
+    val exchangeTitle = "${exchangeFrom.getName()} / ${exchangeTo.getName()}"
 }
 
 enum class CurrencyType {
