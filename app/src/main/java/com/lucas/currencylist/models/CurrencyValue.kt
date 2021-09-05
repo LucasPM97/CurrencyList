@@ -8,8 +8,9 @@ data class CurrencyValue(
     val exchangeFrom: CurrencyType,
     val exchangeTo: CurrencyType
 ) {
-    val exchangeTitle = "${exchangeFrom.getName()} / ${exchangeFrom.getName()}"
     val exchangeTitle = "${exchangeFrom.getName()} / ${exchangeTo.getName()}"
+
+    val exchangeString = exchangeFrom.getPriceFormat(exchangeValue)
 }
 
 enum class CurrencyType {
@@ -36,6 +37,15 @@ fun CurrencyType.getName(): String = when (this) {
     CurrencyType.ETH -> "ETH"
     CurrencyType.ARS -> "ARS"
     CurrencyType.USD -> "U" + '$' + "D"
+    else -> ""
+}
+
+fun CurrencyType.getPriceFormat(value: Float): String = when (this) {
+    CurrencyType.DAI -> "$value ${this.getName()}"
+    CurrencyType.BTC -> "$value ${this.getName()}"
+    CurrencyType.ETH -> "$value ${this.getName()}"
+    CurrencyType.ARS -> "$ $value"
+    CurrencyType.USD -> "${this.getName()} $value"
     else -> ""
 }
 

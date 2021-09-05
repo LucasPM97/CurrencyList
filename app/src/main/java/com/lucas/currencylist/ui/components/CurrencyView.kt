@@ -5,6 +5,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.lucas.currencylist.models.CurrencyType
@@ -17,7 +18,7 @@ fun CurrencyView(
     modifier: Modifier = Modifier
 ) {
     Row(
-        modifier,
+        modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
@@ -29,9 +30,10 @@ fun CurrencyView(
             exchangeFrom = currencyValue.exchangeFrom,
             exchangeTo = currencyValue.exchangeTo
         )
-        Spacer(modifier = Modifier.fillMaxWidth())
         Text(
-            text= currencyValue.exchangeValue.toString()
+            text= currencyValue.exchangeString,
+            modifier = Modifier.fillMaxWidth(),
+            textAlign = TextAlign.End
         )
     }
 }
