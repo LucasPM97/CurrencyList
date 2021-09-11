@@ -12,23 +12,29 @@ interface ICurrencyRepository{
 
 class CurrencyRepository : ICurrencyRepository {
     override fun getCurrencyValues(): Flow<List<CurrencyValue>> = flow {
+
         while(true){
+            val daiRandomValue = (175..185).random()
+            val daiRandomDecimal = (1..9).random()
+            val btcRandomValue = (30000..60000).random()
+            val btcRandomDecimal = (1..9).random()
             emit(
                 listOf(
                     CurrencyValue(
-                        180.5f,
+                        daiRandomValue + 1f / daiRandomDecimal,
                         exchangeFrom = CurrencyType.ARS,
                         exchangeTo = CurrencyType.DAI,
                     ),
                     CurrencyValue(
-                        40000f,
+                        btcRandomValue  + 1f / btcRandomDecimal,
                         exchangeFrom = CurrencyType.USD,
                         exchangeTo = CurrencyType.BTC,
                     )
                 )
             )
             //Update currencies values each 5 minutes
-            delay(300000)
+//            delay(300000)
+            delay(3000)
         }
     }
 }
