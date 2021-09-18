@@ -1,7 +1,6 @@
 package com.lucas.currencylist.models
 
 import com.lucas.currencylist.models.utils.extensions.getName
-import com.lucas.currencylist.models.utils.extensions.getPriceFormat
 
 data class CurrencyValue(
     val exchangeValue: Float,
@@ -10,7 +9,7 @@ data class CurrencyValue(
 ) {
     val exchangeTitle = "${exchangeFrom.getName()} / ${exchangeTo.getName()}"
 
-    val exchangeString = exchangeFrom.getPriceFormat(exchangeValue)
+    val exchangeString = "$exchangeValue ${exchangeFrom.getName()}"
 }
 
 enum class CurrencyType {

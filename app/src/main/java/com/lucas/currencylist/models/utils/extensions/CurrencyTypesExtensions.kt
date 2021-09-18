@@ -20,16 +20,7 @@ fun CurrencyType.getName(): String = when (this) {
     CurrencyType.BTC -> "BTC"
     CurrencyType.ETH -> "ETH"
     CurrencyType.ARS -> "ARS"
-    CurrencyType.USD -> "U" + '$' + "D"
-    else -> ""
-}
-
-fun CurrencyType.getPriceFormat(value: Float): String = when (this) {
-    CurrencyType.DAI -> "$value ${this.getName()}"
-    CurrencyType.BTC -> "$value ${this.getName()}"
-    CurrencyType.ETH -> "$value ${this.getName()}"
-    CurrencyType.ARS -> "$ $value"
-    CurrencyType.USD -> "${this.getName()} $value"
+    CurrencyType.USD -> "USD"
     else -> ""
 }
 
