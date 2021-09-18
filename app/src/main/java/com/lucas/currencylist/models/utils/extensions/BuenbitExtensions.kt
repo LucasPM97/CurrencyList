@@ -9,7 +9,8 @@ fun BuenbitObject.toCurrencyList(): List<CurrencyValue> = listOf(
     daiars.toCurrencyValue(),
     daiusd.toCurrencyValue(),
     btcdai.toCurrencyValue(),
-    ethdai.toCurrencyValue()
+    ethdai.toCurrencyValue(),
+    bnbdai.toCurrencyValue()
 )
 
 fun BuenbitCurrency.toCurrencyValue(): CurrencyValue = CurrencyValue(

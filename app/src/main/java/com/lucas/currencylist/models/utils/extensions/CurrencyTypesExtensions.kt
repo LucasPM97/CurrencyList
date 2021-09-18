@@ -12,6 +12,7 @@ fun CurrencyType.getImage(): Int = when (this) {
     CurrencyType.ETH -> R.drawable.ic_ethereum
     CurrencyType.ARS -> R.drawable.ic_arspeso
     CurrencyType.USD -> R.drawable.ic_dollar
+    CurrencyType.BNB -> R.drawable.ic_bnbcoin
     else -> R.drawable.ic_baseline_block_24
 }
 
@@ -21,6 +22,7 @@ fun CurrencyType.getName(): String = when (this) {
     CurrencyType.ETH -> "ETH"
     CurrencyType.ARS -> "ARS"
     CurrencyType.USD -> "USD"
+    CurrencyType.BNB -> "BNB"
     else -> ""
 }
 
@@ -30,6 +32,7 @@ fun CurrencyType.getImageName(): String = when (this) {
     CurrencyType.ETH -> "Ethereum"
     CurrencyType.ARS -> "Argentina peso"
     CurrencyType.USD -> "Dollar"
+    CurrencyType.BNB -> "Binance Coin"
     else -> ""
 } + " icon"
 
@@ -39,5 +42,6 @@ fun String.toCurrencyType(): CurrencyType = when (this) {
     "dai" -> CurrencyType.DAI
     "btc" -> CurrencyType.BTC
     "eth" -> CurrencyType.ETH
+    "bnb" -> CurrencyType.BNB
     else -> CurrencyType.NONE
 }

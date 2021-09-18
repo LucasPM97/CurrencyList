@@ -18,5 +18,6 @@ enum class CurrencyType {
     USD,
     DAI,
     BTC,
-    ETH
+    ETH,
+    BNB
 }
