@@ -10,6 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.lucas.currencylist.R
@@ -45,7 +46,8 @@ fun TradingWebCard(
                 Text(
                     text = "powered by",
                     modifier = Modifier
-                        .padding(end = 10.dp)
+                        .padding(end = 10.dp),
+                    fontWeight = FontWeight.Bold
                 )
                 Image(
                     painter = painterResource(

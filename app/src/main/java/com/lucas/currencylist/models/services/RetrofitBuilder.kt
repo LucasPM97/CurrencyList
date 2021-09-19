@@ -7,21 +7,16 @@ object RetrofitBuilder {
 
     private const val BUENBIT_BASE_URL = "https://be.buenbit.com/api/"
     private const val BINANCE_BASE_URL = "https://binance.com/bapi/composite/v1/public/"
+    private const val RIPIO_BASE_URL = "https://api.exchange.ripio.com/api/v1/"
 
-    private fun getBuenbitRetrofit(): Retrofit {
+    private fun getRetrofit(baseUrl: String): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(BUENBIT_BASE_URL)
+            .baseUrl(baseUrl)
             .addConverterFactory(GsonConverterFactory.create())
             .build() //Doesn't require the adapter
     }
 
-    private fun getBinanceRetrofit(): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl(BINANCE_BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build() //Doesn't require the adapter
-    }
-
-    val buenbitService: BuenbitService = getBuenbitRetrofit().create(BuenbitService::class.java)
-    val binanceService: BinanceService = getBinanceRetrofit().create(BinanceService::class.java)
+    val buenbitService: BuenbitService = getRetrofit(BUENBIT_BASE_URL).create(BuenbitService::class.java)
+    val binanceService: BinanceService = getRetrofit(BINANCE_BASE_URL).create(BinanceService::class.java)
+    val ripioService: RipioService = getRetrofit(RIPIO_BASE_URL).create(RipioService::class.java)
 }

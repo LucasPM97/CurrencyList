@@ -1,7 +1,6 @@
 package com.lucas.currencylist.models.buenbit
 
 import com.google.gson.annotations.SerializedName
-import com.lucas.currencylist.models.buenbit.BuenbitCurrency
 
 data class BuenbitCurrencyModel(
     @SerializedName("object") val buenbitObject: BuenbitObject

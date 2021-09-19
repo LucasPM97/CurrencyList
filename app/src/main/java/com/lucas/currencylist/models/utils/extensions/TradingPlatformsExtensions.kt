@@ -9,6 +9,7 @@ import com.lucas.currencylist.models.TradingPlatformType
 fun TradingPlatformType.getImage(): Int = when (this) {
     TradingPlatformType.Buenbit -> R.drawable.buenbit
     TradingPlatformType.Binance -> R.drawable.binance
+    TradingPlatformType.Ripio -> R.drawable.ripio
     else -> R.drawable.ic_baseline_block_24
 }
 

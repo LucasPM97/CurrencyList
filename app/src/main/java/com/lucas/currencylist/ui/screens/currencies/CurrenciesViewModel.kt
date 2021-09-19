@@ -12,9 +12,11 @@ class CurrenciesViewModel : ViewModel() {
 
     private val repository: ICurrencyRepository = CurrencyRepository(
         RetrofitBuilder.buenbitService,
-        RetrofitBuilder.binanceService
+        RetrofitBuilder.binanceService,
+        RetrofitBuilder.ripioService
     )
 
     val buenbitTradingWeb: LiveData<TradingWeb> = repository.getBuenbitExchangeValues().asLiveData()
     val binanceTradingWeb: LiveData<TradingWeb> = repository.getBinanceExchangeValues().asLiveData()
+    val ripioTradingWeb: LiveData<TradingWeb> = repository.getRipioExchangeValues().asLiveData()
 }

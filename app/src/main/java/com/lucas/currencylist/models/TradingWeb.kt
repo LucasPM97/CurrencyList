@@ -7,5 +7,6 @@ data class TradingWeb(
 
 enum class TradingPlatformType{
     Buenbit,
-    Binance
+    Binance,
+    Ripio
 }

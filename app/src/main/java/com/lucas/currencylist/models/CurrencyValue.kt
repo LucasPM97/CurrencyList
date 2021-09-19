@@ -16,6 +16,7 @@ enum class CurrencyType {
     NONE,
     ARS,
     USD,
+    USDC,
     DAI,
     BTC,
     ETH,

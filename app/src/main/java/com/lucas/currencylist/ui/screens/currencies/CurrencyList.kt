@@ -1,8 +1,7 @@
 package com.lucas.currencylist.ui.screens.currencies
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -14,11 +13,10 @@ fun CurrencyList(
     currencies: List<CurrencyValue>,
     modifier: Modifier = Modifier
 ) {
-
-    LazyColumn(modifier = modifier) {
-        itemsIndexed(currencies) { _, currencyValue ->
+    Column(modifier) {
+        currencies.forEach {
             CurrencyView(
-                currencyValue,
+                it,
                 modifier = Modifier
                     .padding(bottom = 9.dp)
             )
