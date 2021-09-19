@@ -11,8 +11,10 @@ import com.lucas.currencylist.models.services.RetrofitBuilder
 class CurrenciesViewModel : ViewModel() {
 
     private val repository: ICurrencyRepository = CurrencyRepository(
-        RetrofitBuilder.buenbitService
+        RetrofitBuilder.buenbitService,
+        RetrofitBuilder.binanceService
     )
 
     val buenbitTradingWeb: LiveData<TradingWeb> = repository.getBuenbitExchangeValues().asLiveData()
+    val binanceTradingWeb: LiveData<TradingWeb> = repository.getBinanceExchangeValues().asLiveData()
 }

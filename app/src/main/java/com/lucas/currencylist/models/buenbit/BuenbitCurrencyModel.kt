@@ -1,4 +1,4 @@
-package com.lucas.currencylist.models
+package com.lucas.currencylist.models.buenbit
 
 import com.google.gson.annotations.SerializedName
 import com.lucas.currencylist.models.buenbit.BuenbitCurrency

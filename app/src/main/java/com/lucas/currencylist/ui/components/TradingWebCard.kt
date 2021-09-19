@@ -1,11 +1,14 @@
 package com.lucas.currencylist.ui.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -14,6 +17,8 @@ import com.lucas.currencylist.models.CurrencyType
 import com.lucas.currencylist.models.CurrencyValue
 import com.lucas.currencylist.models.TradingPlatformType
 import com.lucas.currencylist.models.TradingWeb
+import com.lucas.currencylist.models.utils.extensions.getImage
+import com.lucas.currencylist.models.utils.extensions.getImageName
 import com.lucas.currencylist.ui.screens.currencies.CurrencyList
 
 @Composable
@@ -21,9 +26,9 @@ fun TradingWebCard(
     tradingWeb: TradingWeb,
     modifier: Modifier = Modifier
 ) {
-    Card {
+    Card(modifier) {
         Column(
-            modifier
+            Modifier
                 .padding(all = 20.dp)
         ) {
             CurrencyList(
@@ -34,7 +39,8 @@ fun TradingWebCard(
                 Modifier
                     .fillMaxWidth()
                     .height(20.dp),
-                horizontalArrangement = Arrangement.End
+                horizontalArrangement = Arrangement.End,
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
                     text = "powered by",
@@ -42,8 +48,10 @@ fun TradingWebCard(
                         .padding(end = 10.dp)
                 )
                 Image(
-                    painter = painterResource(id = R.drawable.buenbit),
-                    contentDescription = "Buenbit image"
+                    painter = painterResource(
+                        id = tradingWeb.platformType.getImage()
+                    ),
+                    contentDescription = "${tradingWeb.platformType.getImageName()} image"
                 )
             }
         }
@@ -67,7 +75,7 @@ fun PreviewTradingWebCard() {
                     exchangeTo = CurrencyType.BTC
                 )
             ),
-            platformType = TradingPlatformType.Buenbit
+            platformType = TradingPlatformType.Binance
         )
     )
 }

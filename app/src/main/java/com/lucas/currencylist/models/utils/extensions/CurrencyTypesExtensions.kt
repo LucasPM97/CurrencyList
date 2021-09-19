@@ -35,13 +35,3 @@ fun CurrencyType.getImageName(): String = when (this) {
     CurrencyType.BNB -> "Binance Coin"
     else -> ""
 } + " icon"
-
-fun String.toCurrencyType(): CurrencyType = when (this) {
-    "ars" -> CurrencyType.ARS
-    "usd" -> CurrencyType.USD
-    "dai" -> CurrencyType.DAI
-    "btc" -> CurrencyType.BTC
-    "eth" -> CurrencyType.ETH
-    "bnb" -> CurrencyType.BNB
-    else -> CurrencyType.NONE
-}

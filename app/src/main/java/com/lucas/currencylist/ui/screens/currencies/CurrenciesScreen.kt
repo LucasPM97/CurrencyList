@@ -19,6 +19,7 @@ fun CurrenciesScreen(
     viewModel: CurrenciesViewModel = viewModel()
 ) {
     val buenbitWeb by viewModel.buenbitTradingWeb.observeAsState(null)
+    val binanceWeb by viewModel.binanceTradingWeb.observeAsState(null)
 
     Column(
         Modifier
@@ -29,6 +30,12 @@ fun CurrenciesScreen(
             )
     ) {
         buenbitWeb?.let {
+            TradingWebCard(
+                tradingWeb = it,
+                Modifier.padding(bottom = 20.dp)
+            )
+        }
+        binanceWeb?.let {
             TradingWebCard(
                 tradingWeb = it
             )
