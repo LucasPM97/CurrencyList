@@ -1,7 +1,9 @@
 package com.lucas.currencylist.models.ripio
 
+import com.google.gson.annotations.SerializedName
+
 data class RipioCurrency(
     val base: String,
     val quote: String,
-    val bid: Float
+    @SerializedName("last_price") val price: Double
 )

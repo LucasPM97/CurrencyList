@@ -25,7 +25,7 @@ fun List<RipioCurrency>.toCurrencyList() = map {
 fun RipioCurrency.toCurrencyValue(): CurrencyValue = CurrencyValue(
     exchangeFrom = this.getCurrencyType(quote),
     exchangeTo = this.getCurrencyType(base),
-    exchangeValue = bid
+    exchangeValue = price
 )
 
 fun RipioCurrency.getCurrencyType(currencyName: String): CurrencyType =

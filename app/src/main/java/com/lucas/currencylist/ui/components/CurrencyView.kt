@@ -65,7 +65,7 @@ private fun CurrencyStack(
 fun PreviewCurrency() {
     CurrencyView(
         currencyValue = CurrencyValue(
-            180.5f,
+            180.5,
             exchangeFrom = CurrencyType.ARS,
             exchangeTo = CurrencyType.DAI,
         ),

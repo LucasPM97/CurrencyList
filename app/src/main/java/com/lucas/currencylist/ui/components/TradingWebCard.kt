@@ -67,12 +67,12 @@ fun PreviewTradingWebCard() {
         tradingWeb = TradingWeb(
             currecies = listOf(
                 CurrencyValue(
-                    exchangeValue = 180.5f,
+                    exchangeValue = 180.5,
                     exchangeFrom = CurrencyType.ARS,
                     exchangeTo = CurrencyType.DAI
                 ),
                 CurrencyValue(
-                    exchangeValue = 40000f,
+                    exchangeValue = 40000.0,
                     exchangeFrom = CurrencyType.DAI,
                     exchangeTo = CurrencyType.BTC
                 )
