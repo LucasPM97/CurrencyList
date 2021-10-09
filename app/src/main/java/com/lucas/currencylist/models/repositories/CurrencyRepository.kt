@@ -2,6 +2,7 @@ package com.lucas.currencylist.models.repositories
 
 import com.lucas.currencylist.models.TradingPlatformType
 import com.lucas.currencylist.models.TradingWeb
+import com.lucas.currencylist.models.TradingWebProvider
 import com.lucas.currencylist.models.services.BinanceService
 import com.lucas.currencylist.models.services.BuenbitService
 import com.lucas.currencylist.models.services.RipioService
@@ -12,9 +13,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 interface ICurrencyRepository {
-    fun getBuenbitExchangeValues(): Flow<TradingWeb>
-    fun getBinanceExchangeValues(): Flow<TradingWeb>
-    fun getRipioExchangeValues(): Flow<TradingWeb>
+    fun getTradingWebProviders(): List<TradingWebProvider>
 }
 
 class CurrencyRepository(
@@ -22,7 +21,22 @@ class CurrencyRepository(
     private val binanceService: BinanceService,
     private val ripioService: RipioService
 ) : ICurrencyRepository {
-    override fun getBuenbitExchangeValues(): Flow<TradingWeb> = flow {
+
+    override fun getTradingWebProviders(): List<TradingWebProvider> {
+        return listOf(
+            TradingWebProvider(
+                state = getBuenbitExchangeValues()
+            ),
+            TradingWebProvider(
+                state = getBinanceExchangeValues()
+            ),
+            TradingWebProvider(
+                state = getRipioExchangeValues()
+            )
+        )
+    }
+
+    fun getBuenbitExchangeValues(): Flow<TradingWeb> = flow {
 
         while (true) {
             try {
@@ -48,7 +62,7 @@ class CurrencyRepository(
         }
     }
 
-    override fun getBinanceExchangeValues(): Flow<TradingWeb> = flow {
+    fun getBinanceExchangeValues(): Flow<TradingWeb> = flow {
 
         while (true) {
             try {
@@ -76,7 +90,7 @@ class CurrencyRepository(
         }
     }
 
-    override fun getRipioExchangeValues(): Flow<TradingWeb> = flow {
+    fun getRipioExchangeValues(): Flow<TradingWeb> = flow {
 
         while (true) {
             try {
