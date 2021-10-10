@@ -11,10 +11,8 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.lucas.currencylist.models.TradingWeb
 import com.lucas.currencylist.models.TradingWebProvider
 import com.lucas.currencylist.ui.components.TradingWebCard
 
@@ -47,13 +45,12 @@ fun RenderTradingWeb(
     tradingWebProvider: TradingWebProvider,
     modifier: Modifier = Modifier
 ) {
-    val tradingWeb by tradingWebProvider.state
-        .asLiveData()
-        .observeAsState(initial = null)
+    val tradingWebState by tradingWebProvider.state.observeAsState()
 
-    tradingWeb?.let {
+    tradingWebState?.let{
         TradingWebCard(
-            tradingWeb = it,
+            tradingWebProvider.platformType,
+            tradingWebState = it,
             modifier.padding(bottom = bottomSpace)
         )
     }
