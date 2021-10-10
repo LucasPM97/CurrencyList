@@ -1,7 +1,13 @@
 package com.lucas.currencylist.models
 
-import kotlinx.coroutines.flow.Flow
+import androidx.lifecycle.LiveData
 
-data class TradingWebProvider (
-    val state : Flow<TradingWeb>
+data class TradingWebProvider(
+    val state: LiveData<TradingWebProviderState>,
+    val platformType: TradingPlatformType
 )
+
+sealed class TradingWebProviderState() {
+    data class Completed(val tradingWeb: TradingWeb) : TradingWebProviderState()
+    class IsLoading() : TradingWebProviderState()
+}
