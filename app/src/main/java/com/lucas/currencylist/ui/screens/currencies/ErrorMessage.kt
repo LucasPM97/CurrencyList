@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.sp
 
 const val noCurrenciesWeirdSubtitle =
     "It would be better if you go and watch some videos and learn how to create your own currency app..."
-const val noCurrenciesWeirdTitle = "Mmmmm... no currencies? That's weird..."
+const val noCurrenciesWeirdTitle = "Mmmmm... no currencies?\nMmmmm...That's weird..."
 const val niceDayMessage = "And... I don't know.. have a nice day"
 
 @Composable
