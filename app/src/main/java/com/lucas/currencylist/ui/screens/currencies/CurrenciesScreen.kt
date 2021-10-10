@@ -16,7 +16,7 @@ import androidx.navigation.NavController
 import com.lucas.currencylist.models.TradingWebProvider
 import com.lucas.currencylist.ui.components.TradingWebCard
 
-val bottomSpace = 20.dp
+val itemsSpace = 20.dp
 
 @Composable
 fun CurrenciesScreen(
@@ -31,6 +31,7 @@ fun CurrenciesScreen(
             .padding(
                 horizontal = 20.dp,
             )
+            .padding(bottom = 20.dp)
             .verticalScroll(rememberScrollState())
 
     ) {
@@ -51,7 +52,7 @@ fun RenderTradingWeb(
         TradingWebCard(
             tradingWebProvider.platformType,
             tradingWebState = it,
-            modifier.padding(bottom = bottomSpace)
+            modifier.padding(top = itemsSpace)
         )
     }
 }

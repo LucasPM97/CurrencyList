@@ -30,15 +30,7 @@ fun TradingWebCard(
                 .padding(all = 20.dp)
         ) {
 
-            if (tradingWebState is TradingWebProviderState.Completed) {
-                if (tradingWebState.tradingWeb.currecies.isEmpty()) {
-                    RenderErrorMessage()
-                } else {
-                    RenderList(currencies = tradingWebState.tradingWeb.currecies)
-                }
-            } else if (tradingWebState is TradingWebProviderState.IsLoading) {
-                RenderLoading()
-            }
+            RenderBody(tradingWebState)
 
             Row(
                 Modifier
@@ -61,6 +53,19 @@ fun TradingWebCard(
                 )
             }
         }
+    }
+}
+
+@Composable
+private fun RenderBody(tradingWebState: TradingWebProviderState) {
+    if (tradingWebState is TradingWebProviderState.Completed) {
+        if (tradingWebState.tradingWeb.currecies.isEmpty()) {
+            RenderErrorMessage()
+        } else {
+            RenderList(currencies = tradingWebState.tradingWeb.currecies)
+        }
+    } else if (tradingWebState is TradingWebProviderState.IsLoading) {
+        RenderLoading()
     }
 }
 
