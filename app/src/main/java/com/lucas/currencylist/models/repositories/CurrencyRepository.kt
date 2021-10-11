@@ -1,7 +1,10 @@
 package com.lucas.currencylist.models.repositories
 
+import androidx.lifecycle.asLiveData
 import com.lucas.currencylist.models.TradingPlatformType
 import com.lucas.currencylist.models.TradingWeb
+import com.lucas.currencylist.models.TradingWebProvider
+import com.lucas.currencylist.models.TradingWebProviderState
 import com.lucas.currencylist.models.services.BinanceService
 import com.lucas.currencylist.models.services.BuenbitService
 import com.lucas.currencylist.models.services.RipioService
@@ -12,9 +15,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 interface ICurrencyRepository {
-    fun getBuenbitExchangeValues(): Flow<TradingWeb>
-    fun getBinanceExchangeValues(): Flow<TradingWeb>
-    fun getRipioExchangeValues(): Flow<TradingWeb>
+    fun getTradingWebProviders(): List<TradingWebProvider>
 }
 
 class CurrencyRepository(
@@ -22,85 +23,95 @@ class CurrencyRepository(
     private val binanceService: BinanceService,
     private val ripioService: RipioService
 ) : ICurrencyRepository {
-    override fun getBuenbitExchangeValues(): Flow<TradingWeb> = flow {
 
-        while (true) {
-            try {
-                val response = buenbitService.getCurrencyExchangeValues()
-
-                if (response.isSuccessful) {
-                    response.body()?.let {
-                        emit(
-                            TradingWeb(
-                                platformType = TradingPlatformType.Buenbit,
-                                currecies = it.buenbitObject.toCurrencyList()
-                            )
-                        )
-                    }
-                }
-
-            } catch (ex: Exception) {
-                println(ex)
-            }
-
-            //Update currencies values each 5 minutes
-            delay(300000)
-        }
+    override fun getTradingWebProviders(): List<TradingWebProvider> {
+        return listOf(
+            TradingWebProvider(
+                state = getTradingViewExchangeValues(TradingPlatformType.Buenbit).asLiveData(),
+                platformType = TradingPlatformType.Buenbit
+            ),
+            TradingWebProvider(
+                state = getTradingViewExchangeValues(TradingPlatformType.Binance).asLiveData(),
+                platformType = TradingPlatformType.Binance
+            ),
+            TradingWebProvider(
+                state = getTradingViewExchangeValues(TradingPlatformType.Ripio).asLiveData(),
+                platformType = TradingPlatformType.Ripio
+            )
+        )
     }
 
-    override fun getBinanceExchangeValues(): Flow<TradingWeb> = flow {
+    private suspend fun getBuenbitExchangeValues(): TradingWeb {
 
-        while (true) {
-            try {
-                val response = binanceService.getCurrencyExchangeValues()
+        val response = buenbitService.getCurrencyExchangeValues()
 
-                if (response.isSuccessful) {
-                    response.body()?.let {
-                        emit(
-                            TradingWeb(
-                                platformType = TradingPlatformType.Binance,
-                                currecies = it.data
-                                    .filterNoUsedCurrencies()
-                                    .toCurrencyList()
-                            )
-                        )
-                    }
-                }
-
-            } catch (ex: Exception) {
-                println(ex)
-            }
-
-            //Update currencies values each 5 minutes
-            delay(300000)
-        }
+        return if (response.isSuccessful) {
+            return TradingWeb(
+                platformType = TradingPlatformType.Buenbit,
+                currecies = response.body()?.buenbitObject?.toCurrencyList()
+                    ?: emptyList()
+            )
+        } else TradingWeb(
+            platformType = TradingPlatformType.Buenbit,
+            currecies = emptyList()
+        )
     }
 
-    override fun getRipioExchangeValues(): Flow<TradingWeb> = flow {
+    private suspend fun getBinanceExchangeValues(): TradingWeb {
 
-        while (true) {
-            try {
-                val response = ripioService.getCurrencyExchangeValues()
+        val response = binanceService.getCurrencyExchangeValues()
 
-                if (response.isSuccessful) {
-                    response.body()?.let {
-                        emit(
-                            TradingWeb(
-                                platformType = TradingPlatformType.Ripio,
-                                currecies = it
-                                    .filterNoUsedCurrencies()
-                                    .toCurrencyList()
-                            )
-                        )
+        return if (response.isSuccessful) {
+            return TradingWeb(
+                platformType = TradingPlatformType.Binance,
+                currecies = response.body()?.data?.filterNoUsedCurrencies()?.toCurrencyList()
+                    ?: emptyList()
+            )
+        } else TradingWeb(
+            platformType = TradingPlatformType.Binance,
+            currecies = emptyList()
+        )
+    }
+
+    private suspend fun getRipioExchangeValues(): TradingWeb {
+        val response = ripioService.getCurrencyExchangeValues()
+
+        return if (response.isSuccessful) {
+            return TradingWeb(
+                platformType = TradingPlatformType.Ripio,
+                currecies = response.body()?.filterNoUsedCurrencies()?.toCurrencyList()
+                    ?: emptyList()
+            )
+        } else TradingWeb(
+            platformType = TradingPlatformType.Ripio,
+            currecies = emptyList()
+        )
+    }
+
+    private fun getTradingViewExchangeValues(platformType: TradingPlatformType): Flow<TradingWebProviderState> =
+        flow {
+            while (true) {
+                try {
+                    emit(TradingWebProviderState.IsLoading())
+
+                    val tradingWeb1 = when (platformType) {
+                        TradingPlatformType.Buenbit -> getBuenbitExchangeValues()
+                        TradingPlatformType.Binance -> getBinanceExchangeValues()
+                        TradingPlatformType.Ripio -> getRipioExchangeValues()
                     }
+
+                    emit(
+                        TradingWebProviderState.Completed(
+                            tradingWeb = tradingWeb1
+                        )
+                    )
+
+                } catch (ex: Exception) {
+                    println(ex)
                 }
 
-            } catch (ex: Exception) {
-                println(ex)
+                //Update currencies values each 5 minutes
+                delay(300000)
             }
-
-            //Update currencies values each 5 minutes
-            delay(300000)
         }
-    }
 }

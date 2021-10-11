@@ -13,19 +13,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.lucas.currencylist.models.TradingWeb
+import com.lucas.currencylist.models.TradingWebProvider
 import com.lucas.currencylist.ui.components.TradingWebCard
 
-val bottomSpace = 20.dp
+val itemsSpace = 20.dp
 
 @Composable
 fun CurrenciesScreen(
     navController: NavController?,
     viewModel: CurrenciesViewModel = viewModel()
 ) {
-    val buenbitWeb by viewModel.buenbitTradingWeb.observeAsState(null)
-    val binanceWeb by viewModel.binanceTradingWeb.observeAsState(null)
-    val ripioWeb by viewModel.ripioTradingWeb.observeAsState(null)
+    val providers = viewModel.tradingWebProviders
 
     Column(
         Modifier
@@ -33,19 +31,11 @@ fun CurrenciesScreen(
             .padding(
                 horizontal = 20.dp,
             )
+            .padding(bottom = 20.dp)
             .verticalScroll(rememberScrollState())
 
     ) {
-        buenbitWeb?.let {
-            RenderTradingWeb(
-                it,
-                Modifier.padding(top = 20.dp)
-            )
-        }
-        binanceWeb?.let {
-            RenderTradingWeb(it)
-        }
-        ripioWeb?.let {
+        providers.forEach {
             RenderTradingWeb(it)
         }
     }
@@ -53,13 +43,18 @@ fun CurrenciesScreen(
 
 @Composable
 fun RenderTradingWeb(
-    tradingWeb: TradingWeb,
+    tradingWebProvider: TradingWebProvider,
     modifier: Modifier = Modifier
 ) {
-    TradingWebCard(
-        tradingWeb = tradingWeb,
-        modifier.padding(bottom = bottomSpace)
-    )
+    val tradingWebState by tradingWebProvider.state.observeAsState()
+
+    tradingWebState?.let{
+        TradingWebCard(
+            tradingWebProvider.platformType,
+            tradingWebState = it,
+            modifier.padding(top = itemsSpace)
+        )
+    }
 }
 
 @Preview(showBackground = true)
