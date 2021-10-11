@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/CurrencyList.iml" filepath="$PROJECT_DIR$/.idea/modules/CurrencyList.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/CurrencyList.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/CurrencyList.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/core/CurrencyList.core.iml" filepath="$PROJECT_DIR$/.idea/modules/core/CurrencyList.core.iml" />
     </modules>
   </component>
 </project>

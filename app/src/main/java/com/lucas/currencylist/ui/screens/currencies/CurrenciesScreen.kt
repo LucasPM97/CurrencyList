@@ -13,7 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.lucas.currencylist.models.TradingWebProvider
+import com.lucas.core.models.TradingWebProvider
 import com.lucas.currencylist.ui.components.TradingWebCard
 
 val itemsSpace = 20.dp

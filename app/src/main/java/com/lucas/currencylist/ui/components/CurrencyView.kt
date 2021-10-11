@@ -8,8 +8,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.lucas.currencylist.models.CurrencyType
-import com.lucas.currencylist.models.CurrencyValue
+import com.lucas.core.models.CurrencyType
+import com.lucas.core.models.CurrencyValue
 
 @Composable
 fun CurrencyView(
