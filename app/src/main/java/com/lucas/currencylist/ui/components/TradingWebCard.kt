@@ -1,5 +1,6 @@
 package com.lucas.currencylist.ui.components
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
@@ -28,6 +29,7 @@ fun TradingWebCard(
         Column(
             Modifier
                 .padding(all = 20.dp)
+                .animateContentSize()
         ) {
 
             RenderBody(tradingWebState)
