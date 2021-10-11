@@ -1,9 +1,9 @@
 package com.lucas.currencylist.ui.screens.currencies
 
 import androidx.lifecycle.ViewModel
-import com.lucas.currencylist.models.repositories.CurrencyRepository
-import com.lucas.currencylist.models.repositories.ICurrencyRepository
-import com.lucas.currencylist.models.services.RetrofitBuilder
+import com.lucas.core.models.repositories.CurrencyRepository
+import com.lucas.core.models.repositories.ICurrencyRepository
+import com.lucas.core.models.services.RetrofitBuilder
 
 class CurrenciesViewModel : ViewModel() {
 
