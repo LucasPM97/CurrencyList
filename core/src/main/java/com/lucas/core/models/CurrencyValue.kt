@@ -1,7 +1,9 @@
 package com.lucas.core.models
 
-import com.lucas.core.models.utils.extensions.getName
-import com.lucas.core.models.utils.extensions.roundString
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import com.lucas.core.utils.extensions.getName
+import com.lucas.core.utils.extensions.roundString
 
 data class CurrencyValue(
     val exchangeValue: Double,

@@ -1,4 +1,4 @@
-package com.lucas.core.models.utils.extensions
+package com.lucas.core.utils.extensions
 
 import java.text.DecimalFormat
 

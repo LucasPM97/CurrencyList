@@ -1,4 +1,4 @@
-package com.lucas.core.models.utils.extensions
+package com.lucas.core.utils.extensions
 
 import androidx.annotation.DrawableRes
 import com.lucas.core.R
