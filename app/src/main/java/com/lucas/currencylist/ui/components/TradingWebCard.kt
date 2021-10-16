@@ -14,8 +14,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.lucas.core.models.*
-import com.lucas.core.models.utils.extensions.getImage
-import com.lucas.core.models.utils.extensions.getImageName
+import com.lucas.core.utils.extensions.getImage
+import com.lucas.core.utils.extensions.getImageName
 import com.lucas.currencylist.ui.screens.currencies.CurrencyList
 import com.lucas.currencylist.ui.screens.currencies.ErrorMessage
 

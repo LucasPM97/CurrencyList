@@ -1,15 +1,15 @@
-package com.lucas.core.models.repositories
+package com.lucas.core.repositories
 
 import androidx.lifecycle.asLiveData
 import com.lucas.core.models.TradingPlatformType
 import com.lucas.core.models.TradingWeb
 import com.lucas.core.models.TradingWebProvider
 import com.lucas.core.models.TradingWebProviderState
-import com.lucas.core.models.services.BinanceService
-import com.lucas.core.models.services.BuenbitService
-import com.lucas.core.models.services.RipioService
-import com.lucas.core.models.utils.extensions.filterNoUsedCurrencies
-import com.lucas.core.models.utils.extensions.toCurrencyList
+import com.lucas.core.services.BinanceService
+import com.lucas.core.services.BuenbitService
+import com.lucas.core.services.RipioService
+import com.lucas.core.utils.extensions.filterNoUsedCurrencies
+import com.lucas.core.utils.extensions.toCurrencyList
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

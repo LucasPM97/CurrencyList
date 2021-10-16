@@ -1,4 +1,4 @@
-package com.lucas.core.models.services
+package com.lucas.core.services
 
 import com.lucas.core.models.ripio.RipioCurrency
 import retrofit2.Response

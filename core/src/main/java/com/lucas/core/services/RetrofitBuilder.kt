@@ -1,4 +1,4 @@
-package com.lucas.core.models.services
+package com.lucas.core.services
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
