@@ -1,4 +1,4 @@
-package com.lucas.core.models.utils.extensions
+package com.lucas.core.utils.extensions
 
 import com.lucas.core.models.CurrencyType
 import com.lucas.core.models.CurrencyValue
