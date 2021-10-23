@@ -13,8 +13,9 @@ fun TradingPlatformType.getImage(): Int = when (this) {
     else -> R.drawable.ic_baseline_block_24
 }
 
-fun TradingPlatformType.getImageName(): String = when (this) {
+fun TradingPlatformType.getName(): String = when (this) {
     TradingPlatformType.Buenbit -> "Buenbit"
     TradingPlatformType.Binance -> "Binance"
+    TradingPlatformType.Ripio -> "Ripio"
     else -> ""
-} + " icon"
+}

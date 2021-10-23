@@ -8,6 +8,13 @@ data class TradingWebProvider(
 )
 
 sealed class TradingWebProviderState() {
-    data class Completed(val tradingWeb: TradingWeb) : TradingWebProviderState()
-    class IsLoading() : TradingWebProviderState()
+    data class Completed(val currencies: List<CurrencyValue>) : TradingWebProviderState()
+    data class IsLoading(val currencies: List<CurrencyValue>) : TradingWebProviderState()
+}
+
+enum class TradingPlatformType{
+    None,
+    Buenbit,
+    Binance,
+    Ripio
 }
