@@ -2,6 +2,7 @@ package com.lucas.core.utils.extensions
 
 import com.lucas.core.models.CurrencyType
 import com.lucas.core.models.CurrencyValue
+import com.lucas.core.models.TradingPlatformType
 import com.lucas.core.models.ripio.RipioCurrency
 
 val usedCurrencies = listOf(
@@ -25,7 +26,8 @@ fun List<RipioCurrency>.toCurrencyList() = map {
 fun RipioCurrency.toCurrencyValue(): CurrencyValue = CurrencyValue(
     exchangeFrom = this.getCurrencyType(quote),
     exchangeTo = this.getCurrencyType(base),
-    exchangeValue = price
+    exchangeValue = price,
+    platform = TradingPlatformType.Ripio
 )
 
 fun RipioCurrency.getCurrencyType(currencyName: String): CurrencyType =

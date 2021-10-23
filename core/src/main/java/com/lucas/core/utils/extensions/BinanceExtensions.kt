@@ -2,6 +2,7 @@ package com.lucas.core.utils.extensions
 
 import com.lucas.core.models.CurrencyType
 import com.lucas.core.models.CurrencyValue
+import com.lucas.core.models.TradingPlatformType
 import com.lucas.core.models.binance.BinanceCurrency
 
 
@@ -16,7 +17,8 @@ fun List<BinanceCurrency>.toCurrencyList() = map {
 fun BinanceCurrency.toCurrencyValue(): CurrencyValue = CurrencyValue(
     exchangeFrom = CurrencyType.USD,
     exchangeTo = this.getCurrencyType(),
-    exchangeValue = price
+    exchangeValue = price,
+    platform = TradingPlatformType.Binance
 )
 
 fun BinanceCurrency.getCurrencyType(): CurrencyType =

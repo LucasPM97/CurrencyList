@@ -15,7 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.lucas.core.models.*
 import com.lucas.core.utils.extensions.getImage
-import com.lucas.core.utils.extensions.getImageName
+import com.lucas.core.utils.extensions.getName
 import com.lucas.currencylist.ui.screens.currencies.CurrencyList
 import com.lucas.currencylist.ui.screens.currencies.ErrorMessage
 
@@ -51,7 +51,7 @@ fun TradingWebCard(
                     painter = painterResource(
                         id = tradingPlatformType.getImage()
                     ),
-                    contentDescription = "${tradingPlatformType.getImageName()} image"
+                    contentDescription = "${tradingPlatformType.getName()} image"
                 )
             }
         }
@@ -61,13 +61,17 @@ fun TradingWebCard(
 @Composable
 private fun RenderBody(tradingWebState: TradingWebProviderState) {
     if (tradingWebState is TradingWebProviderState.Completed) {
-        if (tradingWebState.tradingWeb.currecies.isEmpty()) {
+        if (tradingWebState.currencies.isEmpty()) {
             RenderErrorMessage()
         } else {
-            RenderList(currencies = tradingWebState.tradingWeb.currecies)
+            RenderList(currencies = tradingWebState.currencies)
         }
     } else if (tradingWebState is TradingWebProviderState.IsLoading) {
-        RenderLoading()
+        if (tradingWebState.currencies.isEmpty()) {
+            RenderLoading()
+        } else {
+            RenderList(currencies = tradingWebState.currencies)
+        }
     }
 }
 
@@ -115,20 +119,19 @@ fun PreviewTradingWebCard_CompletedState() {
     TradingWebCard(
         tradingPlatformType = TradingPlatformType.Binance,
         tradingWebState = TradingWebProviderState.Completed(
-            TradingWeb(
-                currecies = listOf(
-                    CurrencyValue(
-                        exchangeValue = 180.5,
-                        exchangeFrom = CurrencyType.ARS,
-                        exchangeTo = CurrencyType.DAI
-                    ),
-                    CurrencyValue(
-                        exchangeValue = 40000.0,
-                        exchangeFrom = CurrencyType.DAI,
-                        exchangeTo = CurrencyType.BTC
-                    )
+            currencies = listOf(
+                CurrencyValue(
+                    platform = TradingPlatformType.None,
+                    exchangeValue = 180.5,
+                    exchangeFrom = CurrencyType.ARS,
+                    exchangeTo = CurrencyType.DAI
                 ),
-                platformType = TradingPlatformType.Binance
+                CurrencyValue(
+                    platform = TradingPlatformType.None,
+                    exchangeValue = 40000.0,
+                    exchangeFrom = CurrencyType.DAI,
+                    exchangeTo = CurrencyType.BTC
+                )
             )
         )
     )
@@ -140,10 +143,7 @@ fun PreviewTradingWebCard_Error() {
     TradingWebCard(
         tradingPlatformType = TradingPlatformType.Binance,
         tradingWebState = TradingWebProviderState.Completed(
-            TradingWeb(
-                currecies = emptyList(),
-                platformType = TradingPlatformType.Binance
-            )
+            currencies = emptyList()
         )
     )
 }
@@ -153,6 +153,32 @@ fun PreviewTradingWebCard_Error() {
 fun PreviewTradingWebCard_Loading() {
     TradingWebCard(
         tradingPlatformType = TradingPlatformType.Binance,
-        tradingWebState = TradingWebProviderState.IsLoading()
+        tradingWebState = TradingWebProviderState.IsLoading(
+            currencies = emptyList()
+        )
+    )
+}
+
+@Composable
+@Preview
+fun PreviewTradingWebCard_Loading_WithItems() {
+    TradingWebCard(
+        tradingPlatformType = TradingPlatformType.Binance,
+        tradingWebState = TradingWebProviderState.IsLoading(
+            currencies = listOf(
+                CurrencyValue(
+                    platform = TradingPlatformType.None,
+                    exchangeValue = 180.5,
+                    exchangeFrom = CurrencyType.ARS,
+                    exchangeTo = CurrencyType.DAI
+                ),
+                CurrencyValue(
+                    platform = TradingPlatformType.None,
+                    exchangeValue = 40000.0,
+                    exchangeFrom = CurrencyType.DAI,
+                    exchangeTo = CurrencyType.BTC
+                )
+            )
+        )
     )
 }
