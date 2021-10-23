@@ -1,8 +1,9 @@
 package com.lucas.core.repositories
 
 import androidx.lifecycle.asLiveData
+import com.lucas.core.database.CurrenciesDatabaseDAO
+import com.lucas.core.models.CurrencyValue
 import com.lucas.core.models.TradingPlatformType
-import com.lucas.core.models.TradingWeb
 import com.lucas.core.models.TradingWebProvider
 import com.lucas.core.models.TradingWebProviderState
 import com.lucas.core.services.BinanceService
@@ -19,6 +20,7 @@ interface ICurrencyRepository {
 }
 
 class CurrencyRepository(
+    private val currenciesDAO: CurrenciesDatabaseDAO,
     private val buenbitService: BuenbitService,
     private val binanceService: BinanceService,
     private val ripioService: RipioService
@@ -41,73 +43,65 @@ class CurrencyRepository(
         )
     }
 
-    private suspend fun getBuenbitExchangeValues(): TradingWeb {
+    private suspend fun getBuenbitExchangeValues(): List<CurrencyValue> {
 
         val response = buenbitService.getCurrencyExchangeValues()
 
         return if (response.isSuccessful) {
-            return TradingWeb(
-                platformType = TradingPlatformType.Buenbit,
-                currecies = response.body()?.buenbitObject?.toCurrencyList()
-                    ?: emptyList()
-            )
-        } else TradingWeb(
-            platformType = TradingPlatformType.Buenbit,
-            currecies = emptyList()
-        )
+            return response.body()?.buenbitObject?.toCurrencyList()
+                ?: emptyList()
+        } else emptyList()
     }
 
-    private suspend fun getBinanceExchangeValues(): TradingWeb {
+    private suspend fun getBinanceExchangeValues(): List<CurrencyValue> {
 
         val response = binanceService.getCurrencyExchangeValues()
 
         return if (response.isSuccessful) {
-            return TradingWeb(
-                platformType = TradingPlatformType.Binance,
-                currecies = response.body()?.data?.filterNoUsedCurrencies()?.toCurrencyList()
-                    ?: emptyList()
-            )
-        } else TradingWeb(
-            platformType = TradingPlatformType.Binance,
-            currecies = emptyList()
-        )
+            return response.body()?.data?.filterNoUsedCurrencies()?.toCurrencyList()
+                ?: emptyList()
+        } else emptyList()
     }
 
-    private suspend fun getRipioExchangeValues(): TradingWeb {
+    private suspend fun getRipioExchangeValues(): List<CurrencyValue> {
         val response = ripioService.getCurrencyExchangeValues()
 
         return if (response.isSuccessful) {
-            return TradingWeb(
-                platformType = TradingPlatformType.Ripio,
-                currecies = response.body()?.filterNoUsedCurrencies()?.toCurrencyList()
-                    ?: emptyList()
-            )
-        } else TradingWeb(
-            platformType = TradingPlatformType.Ripio,
-            currecies = emptyList()
-        )
+            return response.body()?.filterNoUsedCurrencies()?.toCurrencyList()
+                ?: emptyList()
+        } else emptyList()
     }
 
     private fun getTradingViewExchangeValues(platformType: TradingPlatformType): Flow<TradingWebProviderState> =
         flow {
             while (true) {
                 try {
-                    emit(TradingWebProviderState.IsLoading())
+                    emit(TradingWebProviderState.IsLoading(
+                        currenciesDAO.getAllCurrenciesFromPlatform(platformType)
+                    ))
 
-                    val tradingWeb1 = when (platformType) {
+                    val currencies = when (platformType) {
                         TradingPlatformType.Buenbit -> getBuenbitExchangeValues()
                         TradingPlatformType.Binance -> getBinanceExchangeValues()
                         TradingPlatformType.Ripio -> getRipioExchangeValues()
+                        else -> throw Exception("No valid platform")
                     }
+
+                    currenciesDAO.insertOrUpdateList(currencies)
 
                     emit(
                         TradingWebProviderState.Completed(
-                            tradingWeb = tradingWeb1
+                            currenciesDAO.getAllCurrenciesFromPlatform(platformType)
                         )
                     )
 
                 } catch (ex: Exception) {
                     println(ex)
+                    emit(
+                        TradingWebProviderState.Completed(
+                            currenciesDAO.getAllCurrenciesFromPlatform(platformType)
+                        )
+                    )
                 }
 
                 //Update currencies values each 5 minutes

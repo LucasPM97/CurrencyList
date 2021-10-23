@@ -3,6 +3,7 @@ package com.lucas.core.utils.extensions
 import com.lucas.core.models.buenbit.BuenbitObject
 import com.lucas.core.models.CurrencyType
 import com.lucas.core.models.CurrencyValue
+import com.lucas.core.models.TradingPlatformType
 import com.lucas.core.models.buenbit.BuenbitCurrency
 
 
@@ -17,7 +18,8 @@ fun BuenbitObject.toCurrencyList(): List<CurrencyValue> = listOf(
 fun BuenbitCurrency.toCurrencyValue(): CurrencyValue = CurrencyValue(
     exchangeFrom = this.getCurrencyType(currency),
     exchangeTo = this.getCurrencyType(bidCurrency),
-    exchangeValue = sellingPrice
+    exchangeValue = sellingPrice,
+    platform = TradingPlatformType.Buenbit
 )
 
 fun BuenbitCurrency.getCurrencyType(currencyName: String): CurrencyType = when (currencyName) {
