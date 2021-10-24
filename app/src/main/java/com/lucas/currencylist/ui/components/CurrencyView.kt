@@ -1,7 +1,7 @@
 package com.lucas.currencylist.ui.components
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -15,7 +15,7 @@ import com.lucas.core.models.TradingPlatformType
 @Composable
 fun CurrencyView(
     currencyValue: CurrencyValue,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Row(
         modifier.fillMaxWidth(),
@@ -30,11 +30,21 @@ fun CurrencyView(
             exchangeFrom = currencyValue.exchangeFrom,
             exchangeTo = currencyValue.exchangeTo
         )
-        Text(
-            text= currencyValue.exchangeString,
+        Row(
             modifier = Modifier.fillMaxWidth(),
-            textAlign = TextAlign.End
-        )
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.End
+        ) {
+            Text(
+                text = currencyValue.exchangeString,
+                textAlign = TextAlign.End
+            )
+            FavButton(
+                currencyValue.fav,
+                onClick = {/* TODO */ }
+            )
+        }
+
     }
 }
 
