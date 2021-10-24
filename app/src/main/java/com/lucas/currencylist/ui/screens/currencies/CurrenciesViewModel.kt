@@ -18,4 +18,7 @@ class CurrenciesViewModel(application: Application) : AndroidViewModel(applicati
     )
 
     val tradingWebProviders = repository.getTradingWebProviders()
+
+    val currencies = repository.getCurrencies()
+
 }

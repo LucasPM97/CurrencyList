@@ -8,8 +8,8 @@ data class TradingWebProvider(
 )
 
 sealed class TradingWebProviderState() {
-    data class Completed(val currencies: List<CurrencyValue>) : TradingWebProviderState()
-    data class IsLoading(val currencies: List<CurrencyValue>) : TradingWebProviderState()
+    class Completed() : TradingWebProviderState()
+    class IsLoading() : TradingWebProviderState()
 }
 
 enum class TradingPlatformType{

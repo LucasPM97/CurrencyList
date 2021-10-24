@@ -13,6 +13,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.lucas.core.models.CurrencyValue
+import com.lucas.core.models.TradingPlatformType
 import com.lucas.core.models.TradingWebProvider
 import com.lucas.currencylist.ui.components.TradingWebCard
 
@@ -23,8 +25,6 @@ fun CurrenciesScreen(
     navController: NavController?,
     viewModel: CurrenciesViewModel = viewModel()
 ) {
-    val providers = viewModel.tradingWebProviders
-
     Column(
         Modifier
             .fillMaxSize()
@@ -35,8 +35,18 @@ fun CurrenciesScreen(
             .verticalScroll(rememberScrollState())
 
     ) {
-        providers.forEach {
-            RenderTradingWeb(it)
+        viewModel.currencies.forEach { (platform, currenciesState) ->
+            val currencies by currenciesState.observeAsState(initial = emptyList())
+
+            val providerState = viewModel.tradingWebProviders.first {
+                it.platformType == platform
+            }
+
+            RenderTradingWeb(
+                tradingWebProvider = providerState,
+                platformType = platform,
+                currencies = currencies
+            )
         }
     }
 }
@@ -44,14 +54,17 @@ fun CurrenciesScreen(
 @Composable
 fun RenderTradingWeb(
     tradingWebProvider: TradingWebProvider,
+    platformType: TradingPlatformType,
+    currencies: List<CurrencyValue>,
     modifier: Modifier = Modifier
 ) {
     val tradingWebState by tradingWebProvider.state.observeAsState()
 
-    tradingWebState?.let{
+    tradingWebState?.let {
         TradingWebCard(
-            tradingWebProvider.platformType,
+            platformType,
             tradingWebState = it,
+            currencyList = currencies,
             modifier.padding(top = itemsSpace)
         )
     }
