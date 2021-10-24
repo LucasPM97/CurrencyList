@@ -12,6 +12,7 @@ data class CurrencyValue(
     var exchangeValue: Double,
     var exchangeFrom: CurrencyType = CurrencyType.NONE,
     var exchangeTo: CurrencyType = CurrencyType.NONE,
+    var fav: Boolean = false,
     @PrimaryKey
     val currencyId: String = "${platform.getName()}_${exchangeFrom.getName()}_${exchangeTo.getName()}",
 ) {
