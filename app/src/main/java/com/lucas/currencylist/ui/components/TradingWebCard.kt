@@ -23,7 +23,8 @@ import com.lucas.currencylist.ui.screens.currencies.ErrorMessage
 fun TradingWebCard(
     tradingPlatformType: TradingPlatformType,
     tradingWebState: TradingWebProviderState,
-    modifier: Modifier = Modifier,
+    currencyList: List<CurrencyValue>,
+    modifier: Modifier = Modifier
 ) {
     Card(modifier) {
         Column(
@@ -32,7 +33,10 @@ fun TradingWebCard(
                 .animateContentSize()
         ) {
 
-            RenderBody(tradingWebState)
+            RenderBody(
+                tradingWebState,
+                currencyList
+            )
 
             Row(
                 Modifier
@@ -59,18 +63,21 @@ fun TradingWebCard(
 }
 
 @Composable
-private fun RenderBody(tradingWebState: TradingWebProviderState) {
+private fun RenderBody(
+    tradingWebState: TradingWebProviderState,
+    currencyList: List<CurrencyValue>
+) {
     if (tradingWebState is TradingWebProviderState.Completed) {
-        if (tradingWebState.currencies.isEmpty()) {
+        if (currencyList.isEmpty()) {
             RenderErrorMessage()
         } else {
-            RenderList(currencies = tradingWebState.currencies)
+            RenderList(currencies = currencyList)
         }
     } else if (tradingWebState is TradingWebProviderState.IsLoading) {
-        if (tradingWebState.currencies.isEmpty()) {
+        if (currencyList.isEmpty()) {
             RenderLoading()
         } else {
-            RenderList(currencies = tradingWebState.currencies)
+            RenderList(currencies = currencyList)
         }
     }
 }
@@ -118,20 +125,19 @@ private fun RenderList(currencies: List<CurrencyValue>) {
 fun PreviewTradingWebCard_CompletedState() {
     TradingWebCard(
         tradingPlatformType = TradingPlatformType.Binance,
-        tradingWebState = TradingWebProviderState.Completed(
-            currencies = listOf(
-                CurrencyValue(
-                    platform = TradingPlatformType.None,
-                    exchangeValue = 180.5,
-                    exchangeFrom = CurrencyType.ARS,
-                    exchangeTo = CurrencyType.DAI
-                ),
-                CurrencyValue(
-                    platform = TradingPlatformType.None,
-                    exchangeValue = 40000.0,
-                    exchangeFrom = CurrencyType.DAI,
-                    exchangeTo = CurrencyType.BTC
-                )
+        tradingWebState = TradingWebProviderState.Completed(),
+        currencyList = listOf(
+            CurrencyValue(
+                platform = TradingPlatformType.None,
+                exchangeValue = 180.5,
+                exchangeFrom = CurrencyType.ARS,
+                exchangeTo = CurrencyType.DAI
+            ),
+            CurrencyValue(
+                platform = TradingPlatformType.None,
+                exchangeValue = 40000.0,
+                exchangeFrom = CurrencyType.DAI,
+                exchangeTo = CurrencyType.BTC
             )
         )
     )
@@ -142,9 +148,8 @@ fun PreviewTradingWebCard_CompletedState() {
 fun PreviewTradingWebCard_Error() {
     TradingWebCard(
         tradingPlatformType = TradingPlatformType.Binance,
-        tradingWebState = TradingWebProviderState.Completed(
-            currencies = emptyList()
-        )
+        tradingWebState = TradingWebProviderState.Completed(),
+        currencyList = emptyList()
     )
 }
 
@@ -153,9 +158,8 @@ fun PreviewTradingWebCard_Error() {
 fun PreviewTradingWebCard_Loading() {
     TradingWebCard(
         tradingPlatformType = TradingPlatformType.Binance,
-        tradingWebState = TradingWebProviderState.IsLoading(
-            currencies = emptyList()
-        )
+        tradingWebState = TradingWebProviderState.IsLoading(),
+        currencyList = emptyList()
     )
 }
 
@@ -164,20 +168,19 @@ fun PreviewTradingWebCard_Loading() {
 fun PreviewTradingWebCard_Loading_WithItems() {
     TradingWebCard(
         tradingPlatformType = TradingPlatformType.Binance,
-        tradingWebState = TradingWebProviderState.IsLoading(
-            currencies = listOf(
-                CurrencyValue(
-                    platform = TradingPlatformType.None,
-                    exchangeValue = 180.5,
-                    exchangeFrom = CurrencyType.ARS,
-                    exchangeTo = CurrencyType.DAI
-                ),
-                CurrencyValue(
-                    platform = TradingPlatformType.None,
-                    exchangeValue = 40000.0,
-                    exchangeFrom = CurrencyType.DAI,
-                    exchangeTo = CurrencyType.BTC
-                )
+        tradingWebState = TradingWebProviderState.IsLoading(),
+        currencyList = listOf(
+            CurrencyValue(
+                platform = TradingPlatformType.None,
+                exchangeValue = 180.5,
+                exchangeFrom = CurrencyType.ARS,
+                exchangeTo = CurrencyType.DAI
+            ),
+            CurrencyValue(
+                platform = TradingPlatformType.None,
+                exchangeValue = 40000.0,
+                exchangeFrom = CurrencyType.DAI,
+                exchangeTo = CurrencyType.BTC
             )
         )
     )

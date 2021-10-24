@@ -1,5 +1,6 @@
 package com.lucas.core.repositories
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import com.lucas.core.database.CurrenciesDatabaseDAO
 import com.lucas.core.models.CurrencyValue
@@ -16,7 +17,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 interface ICurrencyRepository {
+    fun getCurrencies(): Map<TradingPlatformType, LiveData<List<CurrencyValue>>>
     fun getTradingWebProviders(): List<TradingWebProvider>
+    suspend fun updateCurrencyFav(currencyId: String, fav: Boolean)
 }
 
 class CurrencyRepository(
@@ -25,6 +28,20 @@ class CurrencyRepository(
     private val binanceService: BinanceService,
     private val ripioService: RipioService
 ) : ICurrencyRepository {
+
+    override fun getCurrencies(): Map<TradingPlatformType, LiveData<List<CurrencyValue>>> {
+        return mapOf(
+            createPlatformCurrencyPair(TradingPlatformType.Buenbit),
+            createPlatformCurrencyPair(TradingPlatformType.Binance),
+            createPlatformCurrencyPair(TradingPlatformType.Ripio)
+        )
+    }
+
+    private fun createPlatformCurrencyPair(platformType: TradingPlatformType) =
+        platformType to
+                currenciesDAO.getCurrenciesFlowFromPlatform(platformType)
+                    .asLiveData()
+
 
     override fun getTradingWebProviders(): List<TradingWebProvider> {
         return listOf(
@@ -41,6 +58,10 @@ class CurrencyRepository(
                 platformType = TradingPlatformType.Ripio
             )
         )
+    }
+
+    override suspend fun updateCurrencyFav(currencyId: String, fav: Boolean) {
+        currenciesDAO.updateFav(currencyId, fav)
     }
 
     private suspend fun getBuenbitExchangeValues(): List<CurrencyValue> {
@@ -76,9 +97,9 @@ class CurrencyRepository(
         flow {
             while (true) {
                 try {
-                    emit(TradingWebProviderState.IsLoading(
-                        currenciesDAO.getAllCurrenciesFromPlatform(platformType)
-                    ))
+                    emit(
+                        TradingWebProviderState.IsLoading()
+                    )
 
                     val currencies = when (platformType) {
                         TradingPlatformType.Buenbit -> getBuenbitExchangeValues()
@@ -90,17 +111,13 @@ class CurrencyRepository(
                     currenciesDAO.insertOrUpdateList(currencies)
 
                     emit(
-                        TradingWebProviderState.Completed(
-                            currenciesDAO.getAllCurrenciesFromPlatform(platformType)
-                        )
+                        TradingWebProviderState.Completed()
                     )
 
                 } catch (ex: Exception) {
                     println(ex)
                     emit(
-                        TradingWebProviderState.Completed(
-                            currenciesDAO.getAllCurrenciesFromPlatform(platformType)
-                        )
+                        TradingWebProviderState.Completed()
                     )
                 }
 
