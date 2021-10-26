@@ -8,6 +8,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -17,6 +18,7 @@ import com.lucas.core.models.CurrencyValue
 import com.lucas.core.models.TradingPlatformType
 import com.lucas.core.models.TradingWebProvider
 import com.lucas.currencylist.ui.components.TradingWebCard
+import kotlinx.coroutines.launch
 
 val itemsSpace = 20.dp
 
@@ -25,6 +27,9 @@ fun CurrenciesScreen(
     navController: NavController?,
     viewModel: CurrenciesViewModel = viewModel()
 ) {
+
+    val coroutineScope = rememberCoroutineScope()
+
     Column(
         Modifier
             .fillMaxSize()
@@ -45,7 +50,15 @@ fun CurrenciesScreen(
             RenderTradingWeb(
                 tradingWebProvider = providerState,
                 platformType = platform,
-                currencies = currencies
+                currencies = currencies,
+                itemFavOnClick = { currencyId ->
+                    coroutineScope.launch {
+                        val currency = currencies.first {
+                            it.currencyId == currencyId
+                        }
+                        viewModel.updateFav(currencyId, !currency.fav)
+                    }
+                }
             )
         }
     }
@@ -56,7 +69,8 @@ fun RenderTradingWeb(
     tradingWebProvider: TradingWebProvider,
     platformType: TradingPlatformType,
     currencies: List<CurrencyValue>,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    itemFavOnClick: (currencyId: String) -> Unit
 ) {
     val tradingWebState by tradingWebProvider.state.observeAsState()
 
@@ -65,6 +79,7 @@ fun RenderTradingWeb(
             platformType,
             tradingWebState = it,
             currencyList = currencies,
+            itemFavOnClick = itemFavOnClick,
             modifier.padding(top = itemsSpace)
         )
     }

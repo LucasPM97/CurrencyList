@@ -21,4 +21,8 @@ class CurrenciesViewModel(application: Application) : AndroidViewModel(applicati
 
     val currencies = repository.getCurrencies()
 
+    suspend fun updateFav(currencyId: String, fav: Boolean) {
+        repository.updateCurrencyFav(currencyId, fav)
+    }
+
 }

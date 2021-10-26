@@ -10,15 +10,18 @@ import com.lucas.currencylist.ui.components.CurrencyView
 
 @Composable
 fun CurrencyList(
+    modifier: Modifier = Modifier,
     currencies: List<CurrencyValue>,
-    modifier: Modifier = Modifier
+    itemFavOnClick: (currencyId: String) -> Unit = {}
+
 ) {
     Column(modifier) {
         currencies.forEach {
             CurrencyView(
                 it,
                 modifier = Modifier
-                    .padding(bottom = 9.dp)
+                    .padding(bottom = 9.dp),
+                favOnClick = itemFavOnClick
             )
         }
     }
