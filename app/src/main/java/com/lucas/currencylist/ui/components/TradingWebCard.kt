@@ -24,6 +24,7 @@ fun TradingWebCard(
     tradingPlatformType: TradingPlatformType,
     tradingWebState: TradingWebProviderState,
     currencyList: List<CurrencyValue>,
+    itemFavOnClick: (currencyId: String) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     Card(modifier) {
@@ -35,7 +36,8 @@ fun TradingWebCard(
 
             RenderBody(
                 tradingWebState,
-                currencyList
+                currencyList,
+                itemFavOnClick
             )
 
             Row(
@@ -65,19 +67,26 @@ fun TradingWebCard(
 @Composable
 private fun RenderBody(
     tradingWebState: TradingWebProviderState,
-    currencyList: List<CurrencyValue>
+    currencyList: List<CurrencyValue>,
+    itemFavOnClick: (currencyId: String) -> Unit = {}
 ) {
     if (tradingWebState is TradingWebProviderState.Completed) {
         if (currencyList.isEmpty()) {
             RenderErrorMessage()
         } else {
-            RenderList(currencies = currencyList)
+            RenderList(
+                currencies = currencyList,
+                itemFavOnClick
+            )
         }
     } else if (tradingWebState is TradingWebProviderState.IsLoading) {
         if (currencyList.isEmpty()) {
             RenderLoading()
         } else {
-            RenderList(currencies = currencyList)
+            RenderList(
+                currencies = currencyList,
+                itemFavOnClick
+            )
         }
     }
 }
@@ -113,10 +122,14 @@ fun RenderLoading() {
 }
 
 @Composable
-private fun RenderList(currencies: List<CurrencyValue>) {
+private fun RenderList(
+    currencies: List<CurrencyValue>,
+    itemFavOnClick: (currencyId: String) -> Unit = {}
+) {
     CurrencyList(
-        currencies = currencies,
-        modifier = Modifier.padding(bottom = 20.dp)
+        modifier = Modifier.padding(bottom = 20.dp),
+        currencies,
+        itemFavOnClick
     )
 }
 
