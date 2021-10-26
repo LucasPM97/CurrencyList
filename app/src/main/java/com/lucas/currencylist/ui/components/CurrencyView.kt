@@ -16,6 +16,7 @@ import com.lucas.core.models.TradingPlatformType
 fun CurrencyView(
     currencyValue: CurrencyValue,
     modifier: Modifier = Modifier,
+    favOnClick: (currencyId: String) -> Unit = {}
 ) {
     Row(
         modifier.fillMaxWidth(),
@@ -41,7 +42,9 @@ fun CurrencyView(
             )
             FavButton(
                 currencyValue.fav,
-                onClick = {/* TODO */ }
+                onClick = {
+                    favOnClick(currencyValue.currencyId)
+                }
             )
         }
 
