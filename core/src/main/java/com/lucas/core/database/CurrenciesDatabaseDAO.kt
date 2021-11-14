@@ -4,6 +4,7 @@ import androidx.room.*
 import com.lucas.core.models.CurrencyValue
 import com.lucas.core.models.TradingPlatformType
 import kotlinx.coroutines.flow.Flow
+import java.util.*
 
 @Dao
 interface CurrenciesDatabaseDAO {
@@ -20,8 +21,8 @@ interface CurrenciesDatabaseDAO {
     @Insert
     suspend fun insertCurrency(currency: CurrencyValue)
 
-    @Query("UPDATE currencies_table SET exchangeValue=:exchangeValue WHERE currencyId = :currencyId")
-    suspend fun updateExchangeValues(currencyId: String, exchangeValue: Double)
+    @Query("UPDATE currencies_table SET exchangeValue=:exchangeValue, lastUpdate=:lastUpdate  WHERE currencyId = :currencyId")
+    suspend fun updateExchangeValues(currencyId: String, exchangeValue: Double, lastUpdate: Date)
 
     @Query("UPDATE currencies_table SET fav=:fav WHERE currencyId = :currencyId")
     suspend fun updateFav(currencyId: String, fav: Boolean)

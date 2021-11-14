@@ -6,10 +6,11 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.lucas.core.models.CurrencyValue
-import com.lucas.core.utils.converters.TradingPlatformConverter
+import com.lucas.core.utils.converters.DateTimeConverter
 
 
-@Database(entities = [CurrencyValue::class], version = 2, exportSchema = false)
+@Database(entities = [CurrencyValue::class], version = 3, exportSchema = false)
+@TypeConverters(DateTimeConverter::class)
 abstract class CurrenciesDatabase : RoomDatabase() {
 
     abstract val dao: CurrenciesDatabaseDAO

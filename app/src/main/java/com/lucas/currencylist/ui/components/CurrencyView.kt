@@ -5,12 +5,15 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.lucas.core.models.CurrencyType
 import com.lucas.core.models.CurrencyValue
 import com.lucas.core.models.TradingPlatformType
+import com.lucas.core.utils.extensions.lastUpdateText
 
 @Composable
 fun CurrencyView(
@@ -18,37 +21,46 @@ fun CurrencyView(
     modifier: Modifier = Modifier,
     favOnClick: (currencyId: String) -> Unit = {}
 ) {
-    Row(
-        modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically,
+    Column(
+        modifier.fillMaxWidth()
     ) {
-        Text(
-            text = currencyValue.exchangeTitle,
-            modifier = Modifier
-                .padding(end = 20.dp),
-        )
-        CurrencyStack(
-            exchangeFrom = currencyValue.exchangeFrom,
-            exchangeTo = currencyValue.exchangeTo
-        )
         Row(
-            modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.End
         ) {
             Text(
-                text = currencyValue.exchangeString,
-                textAlign = TextAlign.End
+                text = currencyValue.exchangeTitle,
+                modifier = Modifier
+                    .padding(end = 20.dp),
             )
-            FavButton(
-                currencyValue.fav,
-                onClick = {
-                    favOnClick(currencyValue.currencyId)
-                }
+            CurrencyStack(
+                exchangeFrom = currencyValue.exchangeFrom,
+                exchangeTo = currencyValue.exchangeTo
             )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.End
+            ) {
+                Text(
+                    text = currencyValue.exchangeString,
+                    textAlign = TextAlign.End
+                )
+                FavButton(
+                    currencyValue.fav,
+                    onClick = {
+                        favOnClick(currencyValue.currencyId)
+                    }
+                )
+            }
         }
-
+//        Spacer(modifier = Modifier.height(5.dp))
+        Text(
+            text = currencyValue.lastUpdateText(),
+            fontSize = 12.sp,
+            color = Color.Gray
+        )
     }
+
 }
 
 @Composable

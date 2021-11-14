@@ -5,6 +5,9 @@ import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.lucas.core.utils.extensions.getName
 import com.lucas.core.utils.extensions.roundString
+import com.lucas.core.utils.helpers.DateHelper
+import java.time.LocalDateTime
+import java.util.*
 
 @Entity(tableName = "currencies_table")
 data class CurrencyValue(
@@ -13,6 +16,7 @@ data class CurrencyValue(
     var exchangeFrom: CurrencyType = CurrencyType.NONE,
     var exchangeTo: CurrencyType = CurrencyType.NONE,
     var fav: Boolean = false,
+    var lastUpdate: Date = DateHelper.currentDate(),
     @PrimaryKey
     val currencyId: String = "${platform.getName()}_${exchangeFrom.getName()}_${exchangeTo.getName()}",
 ) {
