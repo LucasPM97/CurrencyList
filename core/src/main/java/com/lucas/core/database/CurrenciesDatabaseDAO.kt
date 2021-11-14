@@ -11,6 +11,9 @@ interface CurrenciesDatabaseDAO {
     @Query("Select * FROM currencies_table WHERE platform == :platformType")
     fun getCurrenciesFlowFromPlatform(platformType: TradingPlatformType): Flow<List<CurrencyValue>>
 
+    @Query("Select * FROM currencies_table WHERE platform == :platformType AND fav == 1")
+    fun getFavCurrenciesFlowFromPlatform(platformType: TradingPlatformType): Flow<List<CurrencyValue>>
+
     @Query("Select * FROM currencies_table WHERE platform == :platformType")
     suspend fun getAllCurrenciesFromPlatform(platformType: TradingPlatformType): List<CurrencyValue>
 
