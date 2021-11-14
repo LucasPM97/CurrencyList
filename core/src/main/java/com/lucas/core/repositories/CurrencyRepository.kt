@@ -52,7 +52,7 @@ class CurrencyRepository(
 
     private fun createPlatformFavCurrencyPair(platformType: TradingPlatformType) =
         platformType to
-                currenciesDAO.getCurrenciesFlowFromPlatform(platformType)
+                currenciesDAO.getFavCurrenciesFlowFromPlatform(platformType)
 
     override fun getTradingWebProviders(): List<TradingWebProvider> {
         return listOf(

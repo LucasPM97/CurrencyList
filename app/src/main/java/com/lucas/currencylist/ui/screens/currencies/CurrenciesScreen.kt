@@ -22,7 +22,6 @@ fun CurrenciesScreen(
     navController: NavController?,
     viewModel: CurrenciesViewModel = viewModel()
 ) {
-
     val coroutineScope = rememberCoroutineScope()
 
     fun favCurrency(currency: CurrencyValue) {
