@@ -15,7 +15,7 @@ interface CurrenciesDatabaseDAO {
     fun getFavCurrenciesFlowFromPlatform(platformType: TradingPlatformType): Flow<List<CurrencyValue>>
 
     @Query("Select * FROM currencies_table WHERE currencyId == :currencyId")
-    fun getCurrencyById(currencyId: String): CurrencyValue?
+    suspend fun getCurrencyById(currencyId: String): CurrencyValue?
 
     @Insert
     suspend fun insertCurrency(currency: CurrencyValue)
