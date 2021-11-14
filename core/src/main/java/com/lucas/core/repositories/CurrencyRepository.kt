@@ -137,15 +137,19 @@ class CurrencyRepository(
         }
 
     private suspend fun updateCurrencyValuesIfAlreadyExists(currencies: List<CurrencyValue>) {
+        try {
+            currencies.forEach { currency ->
+                val storedCurrency = currenciesDAO.getCurrencyById(currency.currencyId)
 
-        currencies.forEach { currency ->
-            val storedCurrency = currenciesDAO.getCurrencyById(currency.currencyId)
-
-            if (storedCurrency == null) {
-                currenciesDAO.insertCurrency(currency)
-            } else {
-                currenciesDAO.updateExchangeValues(currency.currencyId, currency.exchangeValue)
+                if (storedCurrency == null) {
+                    currenciesDAO.insertCurrency(currency)
+                } else {
+                    currenciesDAO.updateExchangeValues(currency.currencyId, currency.exchangeValue)
+                }
             }
+        } catch (ex: Exception) {
+
         }
+
     }
 }

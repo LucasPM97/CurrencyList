@@ -26,12 +26,6 @@ fun FavCurrenciesScreen(
 ) {
     val coroutineScope = rememberCoroutineScope()
 
-    fun favCurrency(currency: CurrencyValue) {
-        coroutineScope.launch {
-            viewModel.updateFav(currency.currencyId, !currency.fav)
-        }
-    }
-
     val platformState = viewModel.currencies.map { (platform, currenciesFlow) ->
         val currencies by currenciesFlow.collectAsState(initial = emptyList())
 
@@ -44,28 +38,9 @@ fun FavCurrenciesScreen(
         currencies.isNotEmpty()
     }
 
-    if (platformState.isEmpty()) {
-        EmptyFavList(navController)
-    } else {
-        TradingWebList(
-            platformState,
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = 20.dp)
-                .padding(bottom = 20.dp),
-            itemFavOnClick = {
-                favCurrency(it)
-            }
-        )
-    }
-}
-
-@Composable
-private fun EmptyFavList(navController: NavController?) {
-
-    fun goToCurrencyList() {
-        navController?.let {
-            it.navigate("currencies")
+    fun favCurrency(currency: CurrencyValue) {
+        coroutineScope.launch {
+            viewModel.updateFav(currency.currencyId, !currency.fav)
         }
     }
 
@@ -74,16 +49,54 @@ private fun EmptyFavList(navController: NavController?) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = "Here will be listed your selected currencies")
-        Button(
-            modifier = Modifier
-                .padding(top = 20.dp),
-            onClick = {
-                goToCurrencyList()
-            }
-        ) {
-            Text("All currencies")
+        if (platformState.isEmpty()) {
+            EmptyFavListMessage()
         }
+        GoToCurrencyListButton(
+            navController,
+            modifier = Modifier
+                .padding(
+                    top = 20.dp,
+                    bottom = 20.dp
+                )
+        )
+        if (platformState.isNotEmpty()) {
+            TradingWebList(
+                platformState,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 20.dp)
+                    .padding(bottom = 20.dp),
+                itemFavOnClick = {
+                    favCurrency(it)
+                }
+            )
+        }
+    }
+}
+
+@Composable
+private fun EmptyFavListMessage() {
+    Text(text = "Here will be listed your selected currencies")
+}
+
+@Composable
+fun GoToCurrencyListButton(
+    navController: NavController?,
+    modifier: Modifier = Modifier
+) {
+    fun goToCurrencyList() {
+        navController?.let {
+            it.navigate("currencies")
+        }
+    }
+    Button(
+        modifier = modifier,
+        onClick = {
+            goToCurrencyList()
+        }
+    ) {
+        Text("All currencies")
     }
 }
 
