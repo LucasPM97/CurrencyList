@@ -9,8 +9,7 @@ import com.lucas.core.models.CurrencyValue
 import com.lucas.core.utils.converters.TradingPlatformConverter
 
 
-@Database(entities = [CurrencyValue::class], version = 1, exportSchema = false)
-//@TypeConverters(TradingPlatformConverter::class)
+@Database(entities = [CurrencyValue::class], version = 2, exportSchema = false)
 abstract class CurrenciesDatabase : RoomDatabase() {
 
     abstract val dao: CurrenciesDatabaseDAO
