@@ -32,23 +32,19 @@ fun FavCurrenciesScreen(
         }
     }
 
-    var anyCurrencyFaved = false
-
     val platformState = viewModel.currencies.map { (platform, currenciesFlow) ->
         val currencies by currenciesFlow.collectAsState(initial = emptyList())
-
-        if (currencies.isNotEmpty()) {
-            anyCurrencyFaved = true
-        }
 
         val providerState = viewModel.tradingWebProviders.first {
             it.platformType == platform
         }
 
         providerState to currencies
+    }.filter { (_, currencies) ->
+        currencies.isNotEmpty()
     }
 
-    if (!anyCurrencyFaved) {
+    if (platformState.isEmpty()) {
         EmptyFavList(navController)
     } else {
         TradingWebList(
