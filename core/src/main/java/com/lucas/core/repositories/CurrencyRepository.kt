@@ -1,6 +1,5 @@
 package com.lucas.core.repositories
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import com.lucas.core.database.CurrenciesDatabaseDAO
 import com.lucas.core.models.CurrencyValue
@@ -119,7 +118,7 @@ class CurrencyRepository(
                         else -> throw Exception("No valid platform")
                     }
 
-                    currenciesDAO.insertOrUpdateList(currencies)
+                    updateCurrencyValuesIfAlreadyExists(currencies)
 
                     emit(
                         TradingWebProviderState.Completed()
@@ -136,4 +135,17 @@ class CurrencyRepository(
                 delay(300000)
             }
         }
+
+    private suspend fun updateCurrencyValuesIfAlreadyExists(currencies: List<CurrencyValue>) {
+
+        currencies.forEach { currency ->
+            val storedCurrency = currenciesDAO.getCurrencyById(currency.currencyId)
+
+            if (storedCurrency == null) {
+                currenciesDAO.insertCurrency(currency)
+            } else {
+                currenciesDAO.updateExchangeValues(currency.currencyId, currency.exchangeValue)
+            }
+        }
+    }
 }
