@@ -17,7 +17,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 interface ICurrencyRepository {
-    fun getCurrencies(): Map<TradingPlatformType, LiveData<List<CurrencyValue>>>
+    fun getCurrencies(): Map<TradingPlatformType, Flow<List<CurrencyValue>>>
+    fun getFavCurrencies(): Map<TradingPlatformType, Flow<List<CurrencyValue>>>
     fun getTradingWebProviders(): List<TradingWebProvider>
     suspend fun updateCurrencyFav(currencyId: String, fav: Boolean)
 }
@@ -29,7 +30,7 @@ class CurrencyRepository(
     private val ripioService: RipioService
 ) : ICurrencyRepository {
 
-    override fun getCurrencies(): Map<TradingPlatformType, LiveData<List<CurrencyValue>>> {
+    override fun getCurrencies(): Map<TradingPlatformType, Flow<List<CurrencyValue>>> {
         return mapOf(
             createPlatformCurrencyPair(TradingPlatformType.Buenbit),
             createPlatformCurrencyPair(TradingPlatformType.Binance),
@@ -40,8 +41,18 @@ class CurrencyRepository(
     private fun createPlatformCurrencyPair(platformType: TradingPlatformType) =
         platformType to
                 currenciesDAO.getCurrenciesFlowFromPlatform(platformType)
-                    .asLiveData()
 
+    override fun getFavCurrencies(): Map<TradingPlatformType, Flow<List<CurrencyValue>>> {
+        return mapOf(
+            createPlatformFavCurrencyPair(TradingPlatformType.Buenbit),
+            createPlatformFavCurrencyPair(TradingPlatformType.Binance),
+            createPlatformFavCurrencyPair(TradingPlatformType.Ripio)
+        )
+    }
+
+    private fun createPlatformFavCurrencyPair(platformType: TradingPlatformType) =
+        platformType to
+                currenciesDAO.getCurrenciesFlowFromPlatform(platformType)
 
     override fun getTradingWebProviders(): List<TradingWebProvider> {
         return listOf(
