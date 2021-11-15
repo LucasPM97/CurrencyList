@@ -16,7 +16,6 @@ data class CurrencyValue(
     var exchangeFrom: CurrencyType = CurrencyType.NONE,
     var exchangeTo: CurrencyType = CurrencyType.NONE,
     var fav: Boolean = false,
-    var lastUpdate: Date = DateHelper.currentDate(),
     @PrimaryKey
     val currencyId: String = "${platform.getName()}_${exchangeFrom.getName()}_${exchangeTo.getName()}",
 ) {
