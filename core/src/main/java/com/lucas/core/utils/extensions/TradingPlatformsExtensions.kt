@@ -2,8 +2,26 @@ package com.lucas.core.utils.extensions
 
 import androidx.annotation.DrawableRes
 import com.lucas.core.R
+import com.lucas.core.models.CurrencyValue
 import com.lucas.core.models.TradingPlatformType
+import com.lucas.core.models.TradingWebProvider
+import com.lucas.core.utils.helpers.DateHelper
+import java.util.*
 
+fun Date.lastUpdateText(): String {
+    val currentDate = DateHelper.currentDate()
+    val currentDetailedDate = currentDate.toDetailedDate()
+    val lastUpdateDetailedDate = this.toDetailedDate()
+
+    if (lastUpdateDetailedDate.day == currentDetailedDate.day) {
+        return this.toString("HH:mm")
+    } else
+        if (currentDetailedDate.day == (lastUpdateDetailedDate.day - 1)) {
+            return "Yesterday ${this.toString("HH:mm")}"
+        }
+
+    return this.toString("MMM dd")
+}
 
 @DrawableRes
 fun TradingPlatformType.getImage(): Int = when (this) {

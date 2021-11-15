@@ -5,8 +5,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import com.lucas.core.models.CurrencyValue
 import com.lucas.core.models.TradingPlatformType
@@ -48,15 +48,17 @@ private fun RenderTradingWeb(
     modifier: Modifier = Modifier,
     itemFavOnClick: (currencyId: String) -> Unit
 ) {
-    val tradingWebState by tradingWebProvider.state.observeAsState()
+    val tradingWebState by tradingWebProvider.state.collectAsState(null)
+    val lastUpdate by tradingWebProvider.lastUpdate.collectAsState(null)
 
     tradingWebState?.let {
         TradingWebCard(
             platformType,
             tradingWebState = it,
+            lastUpdate = lastUpdate,
             currencyList = currencies,
             itemFavOnClick = itemFavOnClick,
-            modifier.padding(top = itemsSpace)
+            modifier = modifier.padding(top = itemsSpace)
         )
     }
 }

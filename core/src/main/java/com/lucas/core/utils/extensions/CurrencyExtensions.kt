@@ -8,21 +8,6 @@ import com.lucas.core.utils.helpers.DateHelper
 import java.text.SimpleDateFormat
 import java.util.concurrent.TimeUnit
 
-fun CurrencyValue.lastUpdateText(): String {
-    val currentDate = DateHelper.currentDate()
-    val currentDetailedDate = currentDate.toDetailedDate()
-    val lastUpdateDetailedDate = lastUpdate.toDetailedDate()
-
-    if (lastUpdateDetailedDate.day == currentDetailedDate.day) {
-        return lastUpdate.toString("HH:mm")
-    } else
-    if (currentDetailedDate.day == (lastUpdateDetailedDate.day - 1)) {
-        return "Yesterday ${lastUpdate.toString("HH:mm")}"
-    }
-
-    return lastUpdate.toString("MMM dd")
-}
-
 @DrawableRes
 fun CurrencyType.getImage(): Int = when (this) {
     CurrencyType.DAI -> R.drawable.ic_dai

@@ -9,33 +9,40 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.lucas.core.models.*
 import com.lucas.core.utils.extensions.getImage
 import com.lucas.core.utils.extensions.getName
+import com.lucas.core.utils.extensions.lastUpdateText
+import com.lucas.core.utils.helpers.DateHelper
 import com.lucas.currencylist.ui.screens.currencies.CurrencyList
 import com.lucas.currencylist.ui.screens.currencies.ErrorMessage
+import java.util.*
 
 @Composable
 fun TradingWebCard(
     tradingPlatformType: TradingPlatformType,
     tradingWebState: TradingWebProviderState,
+    lastUpdate: Date?,
     currencyList: List<CurrencyValue>,
     itemFavOnClick: (currencyId: String) -> Unit = {},
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Card(modifier) {
         Column(
             Modifier
-                .padding(all = 20.dp)
+                .padding(all = 10.dp)
                 .animateContentSize()
         ) {
 
             RenderBody(
                 tradingWebState,
+                lastUpdate,
                 currencyList,
                 itemFavOnClick
             )
@@ -67,6 +74,7 @@ fun TradingWebCard(
 @Composable
 private fun RenderBody(
     tradingWebState: TradingWebProviderState,
+    lastUpdate: Date?,
     currencyList: List<CurrencyValue>,
     itemFavOnClick: (currencyId: String) -> Unit = {}
 ) {
@@ -76,6 +84,7 @@ private fun RenderBody(
         } else {
             RenderList(
                 currencies = currencyList,
+                lastUpdate,
                 itemFavOnClick
             )
         }
@@ -85,6 +94,7 @@ private fun RenderBody(
         } else {
             RenderList(
                 currencies = currencyList,
+                lastUpdate,
                 itemFavOnClick
             )
         }
@@ -124,8 +134,21 @@ fun RenderLoading() {
 @Composable
 private fun RenderList(
     currencies: List<CurrencyValue>,
+    lastUpdate: Date?,
     itemFavOnClick: (currencyId: String) -> Unit = {}
 ) {
+    lastUpdate?.let {
+        Row(
+            modifier= Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.End
+        ){
+            Text(
+                text = lastUpdate.lastUpdateText(),
+                fontSize = 12.sp,
+                color = Color.Gray,
+            )
+        }
+    }
     CurrencyList(
         modifier = Modifier.padding(bottom = 20.dp),
         currencies,
@@ -152,7 +175,8 @@ fun PreviewTradingWebCard_CompletedState() {
                 exchangeFrom = CurrencyType.DAI,
                 exchangeTo = CurrencyType.BTC
             )
-        )
+        ),
+        lastUpdate = DateHelper.currentDate()
     )
 }
 
@@ -162,7 +186,8 @@ fun PreviewTradingWebCard_Error() {
     TradingWebCard(
         tradingPlatformType = TradingPlatformType.Binance,
         tradingWebState = TradingWebProviderState.Completed(),
-        currencyList = emptyList()
+        currencyList = emptyList(),
+        lastUpdate = DateHelper.currentDate()
     )
 }
 
@@ -172,7 +197,8 @@ fun PreviewTradingWebCard_Loading() {
     TradingWebCard(
         tradingPlatformType = TradingPlatformType.Binance,
         tradingWebState = TradingWebProviderState.IsLoading(),
-        currencyList = emptyList()
+        currencyList = emptyList(),
+        lastUpdate = DateHelper.currentDate()
     )
 }
 
@@ -195,6 +221,7 @@ fun PreviewTradingWebCard_Loading_WithItems() {
                 exchangeFrom = CurrencyType.DAI,
                 exchangeTo = CurrencyType.BTC
             )
-        )
+        ),
+        lastUpdate = DateHelper.currentDate()
     )
 }
