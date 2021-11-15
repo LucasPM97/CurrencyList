@@ -53,12 +53,6 @@ fun CurrencyView(
                 )
             }
         }
-//        Spacer(modifier = Modifier.height(5.dp))
-        Text(
-            text = currencyValue.lastUpdateText(),
-            fontSize = 12.sp,
-            color = Color.Gray
-        )
     }
 
 }

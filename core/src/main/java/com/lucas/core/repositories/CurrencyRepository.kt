@@ -1,16 +1,15 @@
 package com.lucas.core.repositories
 
-import androidx.lifecycle.asLiveData
 import com.lucas.core.database.CurrenciesDatabaseDAO
-import com.lucas.core.models.CurrencyValue
-import com.lucas.core.models.TradingPlatformType
-import com.lucas.core.models.TradingWebProvider
-import com.lucas.core.models.TradingWebProviderState
+import com.lucas.core.database.PlatformUpdatesDatabaseDAO
+import com.lucas.core.models.*
 import com.lucas.core.services.BinanceService
 import com.lucas.core.services.BuenbitService
 import com.lucas.core.services.RipioService
 import com.lucas.core.utils.extensions.filterNoUsedCurrencies
+import com.lucas.core.utils.extensions.getName
 import com.lucas.core.utils.extensions.toCurrencyList
+import com.lucas.core.utils.helpers.DateHelper
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -23,6 +22,7 @@ interface ICurrencyRepository {
 }
 
 class CurrencyRepository(
+    private val platformUpdatesDAO: PlatformUpdatesDatabaseDAO,
     private val currenciesDAO: CurrenciesDatabaseDAO,
     private val buenbitService: BuenbitService,
     private val binanceService: BinanceService,
@@ -56,16 +56,25 @@ class CurrencyRepository(
     override fun getTradingWebProviders(): List<TradingWebProvider> {
         return listOf(
             TradingWebProvider(
-                state = getTradingViewExchangeValues(TradingPlatformType.Buenbit).asLiveData(),
-                platformType = TradingPlatformType.Buenbit
+                state = getTradingViewExchangeValues(TradingPlatformType.Buenbit),
+                platformType = TradingPlatformType.Buenbit,
+                lastUpdate = platformUpdatesDAO.getFlowPlatformLastUpdate(
+                    TradingPlatformType.Buenbit.getName()
+                )
             ),
             TradingWebProvider(
-                state = getTradingViewExchangeValues(TradingPlatformType.Binance).asLiveData(),
-                platformType = TradingPlatformType.Binance
+                state = getTradingViewExchangeValues(TradingPlatformType.Binance),
+                platformType = TradingPlatformType.Binance,
+                lastUpdate = platformUpdatesDAO.getFlowPlatformLastUpdate(
+                    TradingPlatformType.Binance.getName()
+                )
             ),
             TradingWebProvider(
-                state = getTradingViewExchangeValues(TradingPlatformType.Ripio).asLiveData(),
-                platformType = TradingPlatformType.Ripio
+                state = getTradingViewExchangeValues(TradingPlatformType.Ripio),
+                platformType = TradingPlatformType.Ripio,
+                lastUpdate = platformUpdatesDAO.getFlowPlatformLastUpdate(
+                    TradingPlatformType.Ripio.getName()
+                )
             )
         )
     }
@@ -118,6 +127,11 @@ class CurrencyRepository(
                         else -> throw Exception("No valid platform")
                     }
 
+                    platformUpdatesDAO.insertPlatformUpdates(
+                        TradingPlatformUpdates(
+                            platformName = platformType.getName()
+                        )
+                    )
                     updateCurrencyValuesIfAlreadyExists(currencies)
 
                     emit(
@@ -143,7 +157,7 @@ class CurrencyRepository(
             if (storedCurrency == null) {
                 currenciesDAO.insertCurrency(currency)
             } else {
-                currenciesDAO.updateExchangeValues(currency.currencyId, currency.exchangeValue, currency.lastUpdate)
+                currenciesDAO.updateExchangeValues(currency.currencyId, currency.exchangeValue)
             }
         }
     }
