@@ -12,7 +12,10 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.lucas.core.models.CurrencyValue
+import com.lucas.core.models.TradingPlatformType
 import com.lucas.currencylist.ui.components.TradingWebList
+import com.lucas.currencylist.ui.components.utils.mapToState
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 val itemsSpace = 20.dp
@@ -30,15 +33,11 @@ fun CurrenciesScreen(
         }
     }
 
-    val platformState = viewModel.currencies.map { (platform, currenciesFlow) ->
-        val currencies by currenciesFlow.collectAsState(initial = emptyList())
 
-        val providerState = viewModel.tradingWebProviders.first {
-            it.platformType == platform
-        }
-
-        providerState to currencies
-    }
+    val platformState = mapToState(
+        currenciesMap = viewModel.currencies,
+        tradingWebProviders = viewModel.tradingWebProviders
+    )
 
     TradingWebList(
         platformState,
@@ -51,6 +50,7 @@ fun CurrenciesScreen(
         }
     )
 }
+
 
 @Preview(showBackground = true)
 @Composable
