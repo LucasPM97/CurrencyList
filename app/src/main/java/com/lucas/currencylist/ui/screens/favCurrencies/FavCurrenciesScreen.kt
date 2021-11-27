@@ -4,11 +4,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Button
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,24 +15,38 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.lucas.core.models.CurrencyValue
 import com.lucas.currencylist.ui.components.TradingWebList
+import com.lucas.currencylist.ui.components.utils.mapToState
 import kotlinx.coroutines.launch
 
 @Composable
 fun FavCurrenciesScreen(
-    navController: NavController?,
+    navController: NavController? = null,
     viewModel: FavCurrenciesViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
+) {
+
+    Scaffold(
+        floatingActionButton = {
+            NavigateToCurrencyListButton(
+                navController = navController
+            )
+        },
+        content = {
+            Screen(viewModel, navController)
+        }
+    )
+}
+
+@Composable
+private fun Screen(
+    viewModel: FavCurrenciesViewModel,
+    navController: NavController?
 ) {
     val coroutineScope = rememberCoroutineScope()
 
-    val platformState = viewModel.currencies.map { (platform, currenciesFlow) ->
-        val currencies by currenciesFlow.collectAsState(initial = emptyList())
-
-        val providerState = viewModel.tradingWebProviders.first {
-            it.platformType == platform
-        }
-
-        providerState to currencies
-    }.filter { (_, currencies) ->
+    val platformState = mapToState(
+        currenciesMap = viewModel.currencies,
+        tradingWebProviders = viewModel.tradingWebProviders
+    ).filter { (_, currencies) ->
         currencies.isNotEmpty()
     }
 
@@ -50,17 +62,8 @@ fun FavCurrenciesScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         if (platformState.isEmpty()) {
-            EmptyFavListMessage()
-        }
-        GoToCurrencyListButton(
-            navController,
-            modifier = Modifier
-                .padding(
-                    top = 20.dp,
-                    bottom = 20.dp
-                )
-        )
-        if (platformState.isNotEmpty()) {
+            EmptyFavListScreen(navController)
+        } else {
             TradingWebList(
                 platformState,
                 modifier = Modifier
@@ -76,32 +79,12 @@ fun FavCurrenciesScreen(
 }
 
 @Composable
-private fun EmptyFavListMessage() {
+private fun EmptyFavListScreen(navController: NavController?) {
     Text(text = "Here will be listed your selected currencies")
-}
-
-@Composable
-fun GoToCurrencyListButton(
-    navController: NavController?,
-    modifier: Modifier = Modifier
-) {
-    fun goToCurrencyList() {
-        navController?.let {
-            it.navigate("currencies")
-        }
-    }
-    Button(
-        modifier = modifier,
-        onClick = {
-            goToCurrencyList()
-        }
-    ) {
-        Text("All currencies")
-    }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun PreviewScreen() {
-    FavCurrenciesScreen(navController = null)
+    FavCurrenciesScreen()
 }
