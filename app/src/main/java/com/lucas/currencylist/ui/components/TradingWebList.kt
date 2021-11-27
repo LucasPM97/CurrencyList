@@ -8,10 +8,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.lucas.core.models.CurrencyValue
 import com.lucas.core.models.TradingPlatformType
 import com.lucas.core.models.TradingWebProvider
-import com.lucas.currencylist.ui.screens.currencies.itemsSpace
+
+val itemsSpace = 10.dp
 
 @Composable
 fun TradingWebList(
@@ -58,7 +60,10 @@ private fun RenderTradingWeb(
             lastUpdate = lastUpdate,
             currencyList = currencies,
             itemFavOnClick = itemFavOnClick,
-            modifier = modifier.padding(top = itemsSpace)
+            modifier = modifier.padding(
+                top = itemsSpace,
+                bottom = itemsSpace
+            )
         )
     }
 }
