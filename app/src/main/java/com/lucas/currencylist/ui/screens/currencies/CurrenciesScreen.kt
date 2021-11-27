@@ -18,8 +18,6 @@ import com.lucas.currencylist.ui.components.utils.mapToState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
-val itemsSpace = 20.dp
-
 @Composable
 fun CurrenciesScreen(
     navController: NavController?,
