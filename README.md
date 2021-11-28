@@ -13,4 +13,5 @@ Implemented features:
 Next steps:
 - WorkManager (to update the database even when the app is closed)
 - Performance metrics
+- Handle text size when the exchange value is too long
 - A better theme xD
