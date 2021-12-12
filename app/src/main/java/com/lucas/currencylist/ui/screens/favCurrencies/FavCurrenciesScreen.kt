@@ -3,7 +3,6 @@ package com.lucas.currencylist.ui.screens.favCurrencies
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -11,10 +10,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.lucas.core.models.CurrencyValue
-import com.lucas.currencylist.ui.components.TradingWebList
 import com.lucas.currencylist.ui.components.utils.mapToState
 import kotlinx.coroutines.launch
 
@@ -25,21 +22,23 @@ fun FavCurrenciesScreen(
 ) {
 
     Scaffold(
+        topBar = {
+            TopBar()
+        },
         floatingActionButton = {
             NavigateToCurrencyListButton(
                 navController = navController
             )
         },
         content = {
-            Screen(viewModel, navController)
+            Screen(viewModel)
         }
     )
 }
 
 @Composable
 private fun Screen(
-    viewModel: FavCurrenciesViewModel,
-    navController: NavController?
+    viewModel: FavCurrenciesViewModel
 ) {
     val coroutineScope = rememberCoroutineScope()
 
@@ -62,14 +61,10 @@ private fun Screen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         if (platformState.isEmpty()) {
-            EmptyFavListScreen(navController)
+            EmptyFavListMessage()
         } else {
-            TradingWebList(
+            FavoriteList(
                 platformState,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 20.dp)
-                    .padding(bottom = 20.dp),
                 itemFavOnClick = {
                     favCurrency(it)
                 }
@@ -79,7 +74,7 @@ private fun Screen(
 }
 
 @Composable
-private fun EmptyFavListScreen(navController: NavController?) {
+private fun EmptyFavListMessage() {
     Text(text = "Here will be listed your selected currencies")
 }
 
