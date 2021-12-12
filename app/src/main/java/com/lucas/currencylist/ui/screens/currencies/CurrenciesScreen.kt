@@ -44,7 +44,6 @@ private fun Screen(viewModel: CurrenciesViewModel) {
         }
     }
 
-
     val platformState = mapToState(
         currenciesMap = viewModel.currencies,
         tradingWebProviders = viewModel.tradingWebProviders
