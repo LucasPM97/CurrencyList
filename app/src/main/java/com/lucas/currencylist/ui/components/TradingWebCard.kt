@@ -10,7 +10,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -21,8 +23,9 @@ import com.lucas.core.utils.extensions.getName
 import com.lucas.core.utils.extensions.lastUpdateText
 import com.lucas.core.utils.helpers.DateHelper
 import com.lucas.currencylist.ui.screens.currencies.CurrencyList
-import com.lucas.currencylist.ui.screens.currencies.ErrorMessage
+import com.lucas.currencylist.ui.screens.currencies.components.ErrorMessage
 import java.util.*
+import com.lucas.currencylist.R
 
 @Composable
 fun TradingWebCard(
@@ -55,16 +58,20 @@ fun TradingWebCard(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "powered by",
+                    text = stringResource(id = R.string.webcard_poweredBy),
                     modifier = Modifier
                         .padding(end = 10.dp),
                     fontWeight = FontWeight.Bold
                 )
+
+                val webImageDescription = stringResource(id = R.string.webcard_image_description)
+                    .replace("{0}",tradingPlatformType.getName())
+
                 Image(
                     painter = painterResource(
                         id = tradingPlatformType.getImage()
                     ),
-                    contentDescription = "${tradingPlatformType.getName()} image"
+                    contentDescription = webImageDescription
                 )
             }
         }
@@ -137,13 +144,16 @@ private fun RenderList(
     lastUpdate: Date?,
     itemFavOnClick: (currencyId: String) -> Unit = {}
 ) {
+
+    val context = LocalContext.current
+
     lastUpdate?.let {
         Row(
             modifier= Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.End
         ){
             Text(
-                text = lastUpdate.lastUpdateText(),
+                text = lastUpdate.lastUpdateText(context),
                 fontSize = 12.sp,
                 color = Color.Gray,
             )

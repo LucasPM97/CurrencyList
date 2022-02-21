@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">CurrencyList</string>
+    <string name="favorites_tabBarTitle">Your list</string>
+    <string name="favorites_addCurrenciesButton_description">Add currencies</string>
+    <string name="currencies_backButton_description">Back</string>
+    <string name="currencies_emptyTitle">Mmmmm… no currencies?\nMmmmm…That\'s weird…</string>
+    <string name="currencies_emptySubtitle">It would be better if you go and watch some videos and learn how to create your own currency app…</string>
+    <string name="currencies_emptyNiceDay">And… I don\'t know.. have a nice day</string>
+    <string name="webcard_poweredBy">powered by</string>
+    <string name="webcard_image_description">{0} image</string>
+    <string name="favButton_description">Add to favorites</string>
 </resources>

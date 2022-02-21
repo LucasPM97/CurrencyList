@@ -1,4 +1,4 @@
-package com.lucas.currencylist.ui.screens.favCurrencies
+package com.lucas.currencylist.ui.screens.favCurrencies.components
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding

@@ -1,6 +1,7 @@
 package com.lucas.core.utils.extensions
 
 import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import com.lucas.core.R
 import com.lucas.core.models.CurrencyType
 import com.lucas.core.models.CurrencyValue
@@ -31,13 +32,14 @@ fun CurrencyType.getName(): String = when (this) {
     else -> ""
 }
 
-fun CurrencyType.getImageName(): String = when (this) {
-    CurrencyType.DAI -> "DAI"
-    CurrencyType.BTC -> "Bitcoin"
-    CurrencyType.ETH -> "Ethereum"
-    CurrencyType.ARS -> "Argentina peso"
-    CurrencyType.USD -> "Dollar"
-    CurrencyType.USDC -> "USD Coin"
-    CurrencyType.BNB -> "Binance Coin"
-    else -> ""
-} + " icon"
+@StringRes
+fun CurrencyType.getImageName(): Int = when (this) {
+    CurrencyType.DAI -> R.string.dai_icon_description
+    CurrencyType.BTC -> R.string.btc_icon_description
+    CurrencyType.ETH -> R.string.eth_icon_description
+    CurrencyType.ARS -> R.string.ars_icon_description
+    CurrencyType.USD -> R.string.usd_icon_description
+    CurrencyType.USDC -> R.string.usdc_icon_description
+    CurrencyType.BNB -> R.string.bnb_icon_description
+    else -> 0
+}

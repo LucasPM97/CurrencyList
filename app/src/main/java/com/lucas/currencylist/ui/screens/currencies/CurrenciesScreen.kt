@@ -13,6 +13,7 @@ import androidx.navigation.NavController
 import com.lucas.core.models.CurrencyValue
 import com.lucas.currencylist.ui.components.TradingWebList
 import com.lucas.currencylist.ui.components.utils.mapToState
+import com.lucas.currencylist.ui.screens.currencies.components.TopBar
 import kotlinx.coroutines.launch
 
 @Composable

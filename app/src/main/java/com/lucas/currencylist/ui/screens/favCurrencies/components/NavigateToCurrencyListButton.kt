@@ -1,4 +1,4 @@
-package com.lucas.currencylist.ui.screens.favCurrencies
+package com.lucas.currencylist.ui.screens.favCurrencies.components
 
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
@@ -6,8 +6,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
+import com.lucas.currencylist.R
 
 @Composable
 fun NavigateToCurrencyListButton(
@@ -28,7 +30,7 @@ fun NavigateToCurrencyListButton(
     ) {
         Icon(
             imageVector = Icons.Filled.Add,
-            contentDescription = "Add currencies"
+            contentDescription = stringResource(id = R.string.favorites_addCurrenciesButton_description)
         )
     }
 }
