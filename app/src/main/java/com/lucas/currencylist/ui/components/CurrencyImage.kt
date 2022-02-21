@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import com.lucas.core.models.CurrencyType
 import com.lucas.core.utils.extensions.getImage
 import com.lucas.core.utils.extensions.getImageName
@@ -17,7 +18,7 @@ fun CurrencyImage(
         painter = painterResource(
             currencyType.getImage()
         ),
-        contentDescription = currencyType.getImageName(),
+        contentDescription = stringResource(id =  currencyType.getImageName()),
         modifier = modifier
     )
 }

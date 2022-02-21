@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">CurrencyList</string>
+    <string name="dai_icon_description">DAI icon</string>
+    <string name="btc_icon_description">Bitcoin icon</string>
+    <string name="eth_icon_description">Ethereum icon</string>
+    <string name="ars_icon_description">Argentina peso icon</string>
+    <string name="usd_icon_description">Dollar icon</string>
+    <string name="usdc_icon_description">USD Coin icon</string>
+    <string name="bnb_icon_description">Binance Coin icon</string>
+    <string name="yesterday">Yesterday</string>
 </resources>
