@@ -11,7 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
-import com.lucas.core.models.CurrencyValue
+import com.lucas.core.data.models.CurrencyValue
 import com.lucas.currencylist.ui.components.utils.mapToState
 import com.lucas.currencylist.ui.screens.favCurrencies.components.FavoriteList
 import com.lucas.currencylist.ui.screens.favCurrencies.components.NavigateToCurrencyListButton

@@ -1,4 +1,4 @@
-package com.lucas.core.models
+package com.lucas.core.data.models
 
 import kotlinx.coroutines.flow.Flow
 import java.util.*
