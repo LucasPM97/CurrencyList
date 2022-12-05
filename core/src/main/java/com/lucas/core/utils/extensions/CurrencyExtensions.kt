@@ -3,8 +3,8 @@ package com.lucas.core.utils.extensions
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.lucas.core.R
-import com.lucas.core.models.CurrencyType
-import com.lucas.core.models.CurrencyValue
+import com.lucas.core.data.models.CurrencyType
+import com.lucas.core.data.models.CurrencyValue
 import com.lucas.core.utils.helpers.DateHelper
 import java.text.SimpleDateFormat
 import java.util.concurrent.TimeUnit

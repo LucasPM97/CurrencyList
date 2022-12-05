@@ -1,10 +1,10 @@
-package com.lucas.core.services
+package com.lucas.core.data.remote.apis
 
-import com.lucas.core.models.binance.BinanceCurrencyModel
+import com.lucas.core.data.models.binance.BinanceCurrencyModel
 import retrofit2.Response
 import retrofit2.http.GET
 
-interface BinanceService {
+interface BinanceApi {
     @GET("marketing/symbol/list")
     suspend fun getCurrencyExchangeValues(): Response<BinanceCurrencyModel>
 }
