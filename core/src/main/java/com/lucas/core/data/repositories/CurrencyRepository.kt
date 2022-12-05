@@ -1,15 +1,12 @@
-package com.lucas.core.repositories
+package com.lucas.core.data.repositories
 
-import com.lucas.core.database.CurrenciesDatabaseDAO
-import com.lucas.core.database.PlatformUpdatesDatabaseDAO
-import com.lucas.core.models.*
-import com.lucas.core.services.BinanceService
-import com.lucas.core.services.BuenbitService
-import com.lucas.core.services.RipioService
+import com.lucas.core.data.local.database.CurrenciesDatabaseDAO
+import com.lucas.core.data.local.database.IExchangeRemoteDataSource
+import com.lucas.core.data.local.database.PlatformUpdatesDatabaseDAO
+import com.lucas.core.data.models.*
 import com.lucas.core.utils.extensions.filterNoUsedCurrencies
 import com.lucas.core.utils.extensions.getName
 import com.lucas.core.utils.extensions.toCurrencyList
-import com.lucas.core.utils.helpers.DateHelper
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -24,9 +21,7 @@ interface ICurrencyRepository {
 class CurrencyRepository(
     private val platformUpdatesDAO: PlatformUpdatesDatabaseDAO,
     private val currenciesDAO: CurrenciesDatabaseDAO,
-    private val buenbitService: BuenbitService,
-    private val binanceService: BinanceService,
-    private val ripioService: RipioService
+    private val remoteDataSource: IExchangeRemoteDataSource
 ) : ICurrencyRepository {
 
     override fun getCurrencies(): Map<TradingPlatformType, Flow<List<CurrencyValue>>> {
@@ -59,21 +54,21 @@ class CurrencyRepository(
                 state = getTradingViewExchangeValues(TradingPlatformType.Buenbit),
                 platformType = TradingPlatformType.Buenbit,
                 lastUpdate = platformUpdatesDAO.getFlowPlatformLastUpdate(
-                    TradingPlatformType.Buenbit.getName()
+                    com.lucas.core.data.models.TradingPlatformType.Buenbit.getName()
                 )
             ),
             TradingWebProvider(
                 state = getTradingViewExchangeValues(TradingPlatformType.Binance),
                 platformType = TradingPlatformType.Binance,
                 lastUpdate = platformUpdatesDAO.getFlowPlatformLastUpdate(
-                    TradingPlatformType.Binance.getName()
+                    com.lucas.core.data.models.TradingPlatformType.Binance.getName()
                 )
             ),
             TradingWebProvider(
                 state = getTradingViewExchangeValues(TradingPlatformType.Ripio),
                 platformType = TradingPlatformType.Ripio,
                 lastUpdate = platformUpdatesDAO.getFlowPlatformLastUpdate(
-                    TradingPlatformType.Ripio.getName()
+                    com.lucas.core.data.models.TradingPlatformType.Ripio.getName()
                 )
             )
         )
@@ -81,35 +76,6 @@ class CurrencyRepository(
 
     override suspend fun updateCurrencyFav(currencyId: String, fav: Boolean) {
         currenciesDAO.updateFav(currencyId, fav)
-    }
-
-    private suspend fun getBuenbitExchangeValues(): List<CurrencyValue> {
-
-        val response = buenbitService.getCurrencyExchangeValues()
-
-        return if (response.isSuccessful) {
-            return response.body()?.buenbitObject?.toCurrencyList()
-                ?: emptyList()
-        } else emptyList()
-    }
-
-    private suspend fun getBinanceExchangeValues(): List<CurrencyValue> {
-
-        val response = binanceService.getCurrencyExchangeValues()
-
-        return if (response.isSuccessful) {
-            return response.body()?.data?.filterNoUsedCurrencies()?.toCurrencyList()
-                ?: emptyList()
-        } else emptyList()
-    }
-
-    private suspend fun getRipioExchangeValues(): List<CurrencyValue> {
-        val response = ripioService.getCurrencyExchangeValues()
-
-        return if (response.isSuccessful) {
-            return response.body()?.filterNoUsedCurrencies()?.toCurrencyList()
-                ?: emptyList()
-        } else emptyList()
     }
 
     private fun getTradingViewExchangeValues(platformType: TradingPlatformType): Flow<TradingWebProviderState> =
@@ -121,9 +87,9 @@ class CurrencyRepository(
                     )
 
                     val currencies = when (platformType) {
-                        TradingPlatformType.Buenbit -> getBuenbitExchangeValues()
-                        TradingPlatformType.Binance -> getBinanceExchangeValues()
-                        TradingPlatformType.Ripio -> getRipioExchangeValues()
+                        TradingPlatformType.Buenbit -> remoteDataSource.getBuenbitExchangeValues()
+                        TradingPlatformType.Binance -> remoteDataSource.getBinanceExchangeValues()
+                        TradingPlatformType.Ripio -> remoteDataSource.getRipioExchangeValues()
                         else -> throw Exception("No valid platform")
                     }
 

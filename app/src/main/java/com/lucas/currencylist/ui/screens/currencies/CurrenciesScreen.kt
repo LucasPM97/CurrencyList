@@ -10,7 +10,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.lucas.core.models.CurrencyValue
+import com.lucas.core.data.models.CurrencyValue
 import com.lucas.currencylist.ui.components.TradingWebList
 import com.lucas.currencylist.ui.components.utils.mapToState
 import com.lucas.currencylist.ui.screens.currencies.components.TopBar

@@ -1,4 +1,4 @@
-package com.lucas.core.models.binance
+package com.lucas.core.data.models.binance
 
 data class BinanceCurrencyModel(
     val data: List<BinanceCurrency>

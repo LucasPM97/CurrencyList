@@ -1,8 +1,8 @@
 package com.lucas.core.utils.converters
 
 import androidx.room.TypeConverter
-import com.lucas.core.models.CurrencyType
-import com.lucas.core.models.TradingPlatformType
+import com.lucas.core.data.models.CurrencyType
+import com.lucas.core.data.models.TradingPlatformType
 import java.util.*
 
 class DateTimeConverter {
