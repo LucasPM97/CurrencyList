@@ -1,4 +1,4 @@
-package com.lucas.core.data.local.database
+package com.lucas.core.data.remote
 
 import com.lucas.core.data.models.CurrencyValue
 import com.lucas.core.data.remote.apis.BinanceApi

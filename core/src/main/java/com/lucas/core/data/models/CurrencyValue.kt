@@ -5,13 +5,10 @@ import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.lucas.core.utils.extensions.getName
 import com.lucas.core.utils.extensions.roundString
-import com.lucas.core.utils.helpers.DateHelper
-import java.time.LocalDateTime
-import java.util.*
 
 @Entity(tableName = "currencies_table")
 data class CurrencyValue(
-    var platform: TradingPlatformType = TradingPlatformType.None,
+    var platform: ExchangePlatformType = ExchangePlatformType.None,
     var exchangeValue: Double,
     var exchangeFrom: CurrencyType = CurrencyType.NONE,
     var exchangeTo: CurrencyType = CurrencyType.NONE,
