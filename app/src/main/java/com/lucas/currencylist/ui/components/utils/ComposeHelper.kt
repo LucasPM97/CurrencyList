@@ -3,9 +3,9 @@ package com.lucas.currencylist.ui.components.utils
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import com.lucas.core.models.CurrencyValue
-import com.lucas.core.models.TradingPlatformType
-import com.lucas.core.models.TradingWebProvider
+import com.lucas.core.data.models.CurrencyValue
+import com.lucas.core.data.models.TradingPlatformType
+import com.lucas.core.data.models.TradingWebProvider
 import kotlinx.coroutines.flow.Flow
 
 @Composable

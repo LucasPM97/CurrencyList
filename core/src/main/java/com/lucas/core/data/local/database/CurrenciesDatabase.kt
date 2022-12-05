@@ -1,11 +1,11 @@
-package com.lucas.core.database
+package com.lucas.core.data.local.database
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.lucas.core.models.CurrencyValue
+import com.lucas.core.data.models.CurrencyValue
 import com.lucas.core.utils.converters.DateTimeConverter
 
 

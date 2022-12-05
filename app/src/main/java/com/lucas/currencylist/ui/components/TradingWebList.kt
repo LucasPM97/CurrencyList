@@ -9,9 +9,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.lucas.core.models.CurrencyValue
-import com.lucas.core.models.TradingPlatformType
-import com.lucas.core.models.TradingWebProvider
+import com.lucas.core.data.models.CurrencyValue
+import com.lucas.core.data.models.TradingPlatformType
+import com.lucas.core.data.models.TradingWebProvider
 
 val itemsSpace = 10.dp
 

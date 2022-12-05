@@ -8,9 +8,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.lucas.core.models.CurrencyType
-import com.lucas.core.models.CurrencyValue
-import com.lucas.core.models.TradingPlatformType
+import com.lucas.core.data.models.CurrencyType
+import com.lucas.core.data.models.CurrencyValue
+import com.lucas.core.data.models.TradingPlatformType
 
 @Composable
 fun CurrencyView(
