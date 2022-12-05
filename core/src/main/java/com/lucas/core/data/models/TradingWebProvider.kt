@@ -5,7 +5,7 @@ import java.util.*
 
 data class TradingWebProvider(
     val state: Flow<TradingWebProviderState>,
-    val platformType: TradingPlatformType,
+    val platformType: ExchangePlatformType,
     var lastUpdate: Flow<Date>
 )
 
@@ -14,7 +14,7 @@ sealed class TradingWebProviderState() {
     class IsLoading() : TradingWebProviderState()
 }
 
-enum class TradingPlatformType {
+enum class ExchangePlatformType {
     None,
     Buenbit,
     Binance,
