@@ -1,4 +1,4 @@
-package com.lucas.core.models
+package com.lucas.core.data.models
 
 import androidx.room.Entity
 import androidx.room.Ignore
