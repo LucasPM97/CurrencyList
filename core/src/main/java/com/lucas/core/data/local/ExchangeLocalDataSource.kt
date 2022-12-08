@@ -5,14 +5,12 @@ import com.lucas.core.data.local.database.PlatformUpdatesDatabaseDAO
 import com.lucas.core.data.models.CurrencyValue
 import com.lucas.core.data.models.ExchangePlatformType
 import com.lucas.core.data.models.TradingPlatformUpdates
-import com.lucas.core.utils.extensions.getName
 import kotlinx.coroutines.flow.Flow
-import java.util.Date
 
 interface IExchangeLocalDataSource {
-    fun getPlatformLastExchangeDate(exchangePlatform: ExchangePlatformType): Flow<Date>
-    fun getPlatformExchangeValues(exchangePlatform: ExchangePlatformType): Flow<List<CurrencyValue>>
-    fun getPlatformFavExchangeValues(exchangePlatform: ExchangePlatformType): Flow<List<CurrencyValue>>
+    fun getPlatformsLastExchangeDateFlow(): Flow<List<TradingPlatformUpdates>>
+    fun getAllExchangeValues(): Flow<List<CurrencyValue>>
+    fun getAllFavExchangeValues(): Flow<List<CurrencyValue>>
     suspend fun updatePlatformLastUpdateDate(exchangePlatform: ExchangePlatformType)
     suspend fun storeExchangeValueUpdate(currencies: List<CurrencyValue>)
     suspend fun updateExchangeValueFav(currencyId: String, fav: Boolean)
@@ -22,19 +20,19 @@ class ExchangeLocalDataSource(
     private val platformUpdatesDAO: PlatformUpdatesDatabaseDAO,
     private val currenciesDAO: CurrenciesDatabaseDAO
 ) : IExchangeLocalDataSource {
-    override fun getPlatformLastExchangeDate(exchangePlatform: ExchangePlatformType): Flow<Date> =
-        platformUpdatesDAO.getFlowPlatformLastUpdate(exchangePlatform.getName())
+    override fun getPlatformsLastExchangeDateFlow(): Flow<List<TradingPlatformUpdates>> =
+        platformUpdatesDAO.getAllPlatformsLastUpdateFlow()
 
-    override fun getPlatformFavExchangeValues(exchangePlatform: ExchangePlatformType): Flow<List<CurrencyValue>> =
-        currenciesDAO.getFavCurrenciesFlowFromPlatform(exchangePlatform)
+    override fun getAllExchangeValues(): Flow<List<CurrencyValue>> =
+        currenciesDAO.getAllExchangeValuesFlow()
 
-    override fun getPlatformExchangeValues(exchangePlatform: ExchangePlatformType): Flow<List<CurrencyValue>> =
-        currenciesDAO.getCurrenciesFlowFromPlatform(exchangePlatform)
+    override fun getAllFavExchangeValues(): Flow<List<CurrencyValue>> =
+        currenciesDAO.getAllFavExchangeValuesFlow()
 
     override suspend fun updatePlatformLastUpdateDate(exchangePlatform: ExchangePlatformType) =
         platformUpdatesDAO.insertPlatformUpdates(
             TradingPlatformUpdates(
-                platformName = exchangePlatform.getName()
+                platformType = exchangePlatform
             )
         )
 

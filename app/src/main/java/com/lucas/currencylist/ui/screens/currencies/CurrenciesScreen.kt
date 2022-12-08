@@ -1,9 +1,12 @@
 package com.lucas.currencylist.ui.screens.currencies
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -12,7 +15,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.lucas.core.data.models.CurrencyValue
 import com.lucas.currencylist.ui.components.TradingWebList
-import com.lucas.currencylist.ui.components.utils.mapToState
 import com.lucas.currencylist.ui.screens.currencies.components.TopBar
 import kotlinx.coroutines.launch
 
@@ -31,7 +33,11 @@ fun CurrenciesScreen(
         topBar = {
             TopBar(onBack = { onBack() })
         },
-        content = { Screen(viewModel) }
+        content = {
+            Column(modifier = Modifier.padding(it)) {
+                Screen(viewModel)
+            }
+        }
     )
 }
 
@@ -45,22 +51,20 @@ private fun Screen(viewModel: CurrenciesViewModel) {
         }
     }
 
-    val platformState = mapToState(
-        currenciesMap = viewModel.currencies,
-        tradingWebProviders = viewModel.tradingWebProviders
-    )
+    val platformsState by viewModel.currencies.collectAsState(initial = null)
 
-    TradingWebList(
-        platformState,
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 20.dp),
-        itemFavOnClick = {
-            favCurrency(it)
-        }
-    )
+    platformsState?.let {
+        TradingWebList(
+            platformState = it,
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 20.dp),
+            itemFavOnClick = {
+                favCurrency(it)
+            }
+        )
+    }
 }
-
 
 @Preview(showBackground = true)
 @Composable

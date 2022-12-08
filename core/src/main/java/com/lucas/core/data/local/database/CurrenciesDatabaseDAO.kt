@@ -9,6 +9,12 @@ import java.util.*
 @Dao
 interface CurrenciesDatabaseDAO {
 
+    @Query("Select * FROM currencies_table")
+    fun getAllExchangeValuesFlow(): Flow<List<CurrencyValue>>
+
+    @Query("Select * FROM currencies_table WHERE fav == 1")
+    fun getAllFavExchangeValuesFlow(): Flow<List<CurrencyValue>>
+
     @Query("Select * FROM currencies_table WHERE platform == :platformType")
     fun getCurrenciesFlowFromPlatform(platformType: ExchangePlatformType): Flow<List<CurrencyValue>>
 

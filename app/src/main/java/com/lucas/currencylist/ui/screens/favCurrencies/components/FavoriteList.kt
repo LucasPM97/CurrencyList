@@ -6,16 +6,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.lucas.core.data.models.CurrencyValue
-import com.lucas.core.data.models.TradingWebProvider
+import com.lucas.core.domain.useCases.PlatformState
 import com.lucas.currencylist.ui.components.TradingWebList
 
 @Composable
 fun FavoriteList(
-    platformState: List<Pair<TradingWebProvider, List<CurrencyValue>>>,
+    platformsState: List<PlatformState>,
     itemFavOnClick: (currency: CurrencyValue) -> Unit
 ) {
     TradingWebList(
-        platformState,
+        platformsState,
         modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = 20.dp),
