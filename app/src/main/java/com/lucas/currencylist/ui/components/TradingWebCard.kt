@@ -19,8 +19,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.lucas.core.data.models.CurrencyType
 import com.lucas.core.data.models.CurrencyValue
-import com.lucas.core.data.models.ExchangePlatformType
+import com.lucas.core.data.models.TradingPlatformType
 import com.lucas.core.data.models.TradingWebProviderState
+import com.lucas.core.models.*
 import com.lucas.core.utils.extensions.getImage
 import com.lucas.core.utils.extensions.getName
 import com.lucas.core.utils.extensions.lastUpdateText
@@ -32,7 +33,7 @@ import com.lucas.currencylist.R
 
 @Composable
 fun TradingWebCard(
-    exchangePlatformType: ExchangePlatformType,
+    tradingPlatformType: TradingPlatformType,
     tradingWebState: TradingWebProviderState,
     lastUpdate: Date?,
     currencyList: List<CurrencyValue>,
@@ -68,11 +69,11 @@ fun TradingWebCard(
                 )
 
                 val webImageDescription = stringResource(id = R.string.webcard_image_description)
-                    .replace("{0}",exchangePlatformType.getName())
+                    .replace("{0}",tradingPlatformType.getName())
 
                 Image(
                     painter = painterResource(
-                        id = exchangePlatformType.getImage()
+                        id = tradingPlatformType.getImage()
                     ),
                     contentDescription = webImageDescription
                 )
@@ -173,17 +174,17 @@ private fun RenderList(
 @Preview
 fun PreviewTradingWebCard_CompletedState() {
     TradingWebCard(
-        exchangePlatformType = ExchangePlatformType.Binance,
+        tradingPlatformType = TradingPlatformType.Binance,
         tradingWebState = TradingWebProviderState.Completed(),
         currencyList = listOf(
             CurrencyValue(
-                platform = ExchangePlatformType.None,
+                platform = TradingPlatformType.None,
                 exchangeValue = 180.5,
                 exchangeFrom = CurrencyType.ARS,
                 exchangeTo = CurrencyType.DAI
             ),
             CurrencyValue(
-                platform = ExchangePlatformType.None,
+                platform = TradingPlatformType.None,
                 exchangeValue = 40000.0,
                 exchangeFrom = CurrencyType.DAI,
                 exchangeTo = CurrencyType.BTC
@@ -197,7 +198,7 @@ fun PreviewTradingWebCard_CompletedState() {
 @Preview
 fun PreviewTradingWebCard_Error() {
     TradingWebCard(
-        exchangePlatformType = ExchangePlatformType.Binance,
+        tradingPlatformType = TradingPlatformType.Binance,
         tradingWebState = TradingWebProviderState.Completed(),
         currencyList = emptyList(),
         lastUpdate = DateHelper.currentDate()
@@ -208,7 +209,7 @@ fun PreviewTradingWebCard_Error() {
 @Preview
 fun PreviewTradingWebCard_Loading() {
     TradingWebCard(
-        exchangePlatformType = ExchangePlatformType.Binance,
+        tradingPlatformType = TradingPlatformType.Binance,
         tradingWebState = TradingWebProviderState.IsLoading(),
         currencyList = emptyList(),
         lastUpdate = DateHelper.currentDate()
@@ -219,17 +220,17 @@ fun PreviewTradingWebCard_Loading() {
 @Preview
 fun PreviewTradingWebCard_Loading_WithItems() {
     TradingWebCard(
-        exchangePlatformType = ExchangePlatformType.Binance,
+        tradingPlatformType = TradingPlatformType.Binance,
         tradingWebState = TradingWebProviderState.IsLoading(),
         currencyList = listOf(
             CurrencyValue(
-                platform = ExchangePlatformType.None,
+                platform = TradingPlatformType.None,
                 exchangeValue = 180.5,
                 exchangeFrom = CurrencyType.ARS,
                 exchangeTo = CurrencyType.DAI
             ),
             CurrencyValue(
-                platform = ExchangePlatformType.None,
+                platform = TradingPlatformType.None,
                 exchangeValue = 40000.0,
                 exchangeFrom = CurrencyType.DAI,
                 exchangeTo = CurrencyType.BTC

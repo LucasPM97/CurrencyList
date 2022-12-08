@@ -1,79 +1,84 @@
 package com.lucas.core.data.repositories
 
-import com.lucas.core.data.local.IExchangeLocalDataSource
-import com.lucas.core.data.remote.IExchangeRemoteDataSource
+import com.lucas.core.data.local.database.CurrenciesDatabaseDAO
+import com.lucas.core.data.local.database.IExchangeRemoteDataSource
+import com.lucas.core.data.local.database.PlatformUpdatesDatabaseDAO
 import com.lucas.core.data.models.*
+import com.lucas.core.utils.extensions.filterNoUsedCurrencies
+import com.lucas.core.utils.extensions.getName
+import com.lucas.core.utils.extensions.toCurrencyList
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 interface ICurrencyRepository {
-    fun getCurrencies(): Map<ExchangePlatformType, Flow<List<CurrencyValue>>>
-    fun getFavCurrencies(): Map<ExchangePlatformType, Flow<List<CurrencyValue>>>
+    fun getCurrencies(): Map<TradingPlatformType, Flow<List<CurrencyValue>>>
+    fun getFavCurrencies(): Map<TradingPlatformType, Flow<List<CurrencyValue>>>
     fun getTradingWebProviders(): List<TradingWebProvider>
     suspend fun updateCurrencyFav(currencyId: String, fav: Boolean)
 }
 
 class CurrencyRepository(
-    private val localDataSource: IExchangeLocalDataSource,
+    private val platformUpdatesDAO: PlatformUpdatesDatabaseDAO,
+    private val currenciesDAO: CurrenciesDatabaseDAO,
     private val remoteDataSource: IExchangeRemoteDataSource
 ) : ICurrencyRepository {
 
-    override fun getCurrencies(): Map<ExchangePlatformType, Flow<List<CurrencyValue>>> {
+    override fun getCurrencies(): Map<TradingPlatformType, Flow<List<CurrencyValue>>> {
         return mapOf(
-            createPlatformCurrencyPair(ExchangePlatformType.Buenbit),
-            createPlatformCurrencyPair(ExchangePlatformType.Binance),
-            createPlatformCurrencyPair(ExchangePlatformType.Ripio)
+            createPlatformCurrencyPair(TradingPlatformType.Buenbit),
+            createPlatformCurrencyPair(TradingPlatformType.Binance),
+            createPlatformCurrencyPair(TradingPlatformType.Ripio)
         )
     }
 
-    private fun createPlatformCurrencyPair(platformType: ExchangePlatformType) =
+    private fun createPlatformCurrencyPair(platformType: TradingPlatformType) =
         platformType to
-                localDataSource.getPlatformExchangeValues(platformType)
+                currenciesDAO.getCurrenciesFlowFromPlatform(platformType)
 
-    override fun getFavCurrencies(): Map<ExchangePlatformType, Flow<List<CurrencyValue>>> {
+    override fun getFavCurrencies(): Map<TradingPlatformType, Flow<List<CurrencyValue>>> {
         return mapOf(
-            createPlatformFavCurrencyPair(ExchangePlatformType.Buenbit),
-            createPlatformFavCurrencyPair(ExchangePlatformType.Binance),
-            createPlatformFavCurrencyPair(ExchangePlatformType.Ripio)
+            createPlatformFavCurrencyPair(TradingPlatformType.Buenbit),
+            createPlatformFavCurrencyPair(TradingPlatformType.Binance),
+            createPlatformFavCurrencyPair(TradingPlatformType.Ripio)
         )
     }
 
-    private fun createPlatformFavCurrencyPair(platformType: ExchangePlatformType) =
+    private fun createPlatformFavCurrencyPair(platformType: TradingPlatformType) =
         platformType to
-                localDataSource.getPlatformFavExchangeValues(platformType)
+                currenciesDAO.getFavCurrenciesFlowFromPlatform(platformType)
 
     override fun getTradingWebProviders(): List<TradingWebProvider> {
         return listOf(
             TradingWebProvider(
-                state = getTradingViewExchangeValues(ExchangePlatformType.Buenbit),
-                platformType = ExchangePlatformType.Buenbit,
-                lastUpdate = localDataSource.getPlatformLastExchangeDate(
-                    com.lucas.core.data.models.ExchangePlatformType.Buenbit
+                state = getTradingViewExchangeValues(TradingPlatformType.Buenbit),
+                platformType = TradingPlatformType.Buenbit,
+                lastUpdate = platformUpdatesDAO.getFlowPlatformLastUpdate(
+                    com.lucas.core.data.models.TradingPlatformType.Buenbit.getName()
                 )
             ),
             TradingWebProvider(
-                state = getTradingViewExchangeValues(ExchangePlatformType.Binance),
-                platformType = ExchangePlatformType.Binance,
-                lastUpdate = localDataSource.getPlatformLastExchangeDate(
-                    com.lucas.core.data.models.ExchangePlatformType.Binance
+                state = getTradingViewExchangeValues(TradingPlatformType.Binance),
+                platformType = TradingPlatformType.Binance,
+                lastUpdate = platformUpdatesDAO.getFlowPlatformLastUpdate(
+                    com.lucas.core.data.models.TradingPlatformType.Binance.getName()
                 )
             ),
             TradingWebProvider(
-                state = getTradingViewExchangeValues(ExchangePlatformType.Ripio),
-                platformType = ExchangePlatformType.Ripio,
-                lastUpdate = localDataSource.getPlatformLastExchangeDate(
-                    com.lucas.core.data.models.ExchangePlatformType.Ripio
+                state = getTradingViewExchangeValues(TradingPlatformType.Ripio),
+                platformType = TradingPlatformType.Ripio,
+                lastUpdate = platformUpdatesDAO.getFlowPlatformLastUpdate(
+                    com.lucas.core.data.models.TradingPlatformType.Ripio.getName()
                 )
             )
         )
     }
 
     override suspend fun updateCurrencyFav(currencyId: String, fav: Boolean) {
-        localDataSource.updateExchangeValueFav(currencyId, fav)
+        currenciesDAO.updateFav(currencyId, fav)
     }
 
-    private fun getTradingViewExchangeValues(platformType: ExchangePlatformType): Flow<TradingWebProviderState> =
+    private fun getTradingViewExchangeValues(platformType: TradingPlatformType): Flow<TradingWebProviderState> =
         flow {
             while (true) {
                 try {
@@ -82,14 +87,18 @@ class CurrencyRepository(
                     )
 
                     val currencies = when (platformType) {
-                        ExchangePlatformType.Buenbit -> remoteDataSource.getBuenbitExchangeValues()
-                        ExchangePlatformType.Binance -> remoteDataSource.getBinanceExchangeValues()
-                        ExchangePlatformType.Ripio -> remoteDataSource.getRipioExchangeValues()
+                        TradingPlatformType.Buenbit -> remoteDataSource.getBuenbitExchangeValues()
+                        TradingPlatformType.Binance -> remoteDataSource.getBinanceExchangeValues()
+                        TradingPlatformType.Ripio -> remoteDataSource.getRipioExchangeValues()
                         else -> throw Exception("No valid platform")
                     }
 
-                    localDataSource.updatePlatformLastUpdateDate(platformType)
-                    localDataSource.storeExchangeValueUpdate(currencies)
+                    platformUpdatesDAO.insertPlatformUpdates(
+                        TradingPlatformUpdates(
+                            platformName = platformType.getName()
+                        )
+                    )
+                    updateCurrencyValuesIfAlreadyExists(currencies)
 
                     emit(
                         TradingWebProviderState.Completed()
@@ -106,4 +115,16 @@ class CurrencyRepository(
                 delay(300000)
             }
         }
+
+    private suspend fun updateCurrencyValuesIfAlreadyExists(currencies: List<CurrencyValue>) {
+        currencies.forEach { currency ->
+            val storedCurrency = currenciesDAO.getCurrencyById(currency.currencyId)
+
+            if (storedCurrency == null) {
+                currenciesDAO.insertCurrency(currency)
+            } else {
+                currenciesDAO.updateExchangeValues(currency.currencyId, currency.exchangeValue)
+            }
+        }
+    }
 }

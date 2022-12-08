@@ -2,7 +2,7 @@ package com.lucas.core.data.local.database
 
 import androidx.room.*
 import com.lucas.core.data.models.CurrencyValue
-import com.lucas.core.data.models.ExchangePlatformType
+import com.lucas.core.data.models.TradingPlatformType
 import kotlinx.coroutines.flow.Flow
 import java.util.*
 
@@ -10,10 +10,10 @@ import java.util.*
 interface CurrenciesDatabaseDAO {
 
     @Query("Select * FROM currencies_table WHERE platform == :platformType")
-    fun getCurrenciesFlowFromPlatform(platformType: ExchangePlatformType): Flow<List<CurrencyValue>>
+    fun getCurrenciesFlowFromPlatform(platformType: TradingPlatformType): Flow<List<CurrencyValue>>
 
     @Query("Select * FROM currencies_table WHERE platform == :platformType AND fav == 1")
-    fun getFavCurrenciesFlowFromPlatform(platformType: ExchangePlatformType): Flow<List<CurrencyValue>>
+    fun getFavCurrenciesFlowFromPlatform(platformType: TradingPlatformType): Flow<List<CurrencyValue>>
 
     @Query("Select * FROM currencies_table WHERE currencyId == :currencyId")
     suspend fun getCurrencyById(currencyId: String): CurrencyValue?

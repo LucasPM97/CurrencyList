@@ -4,13 +4,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import com.lucas.core.data.models.CurrencyValue
-import com.lucas.core.data.models.ExchangePlatformType
+import com.lucas.core.data.models.TradingPlatformType
 import com.lucas.core.data.models.TradingWebProvider
 import kotlinx.coroutines.flow.Flow
 
 @Composable
 fun mapToState(
-    currenciesMap: Map<ExchangePlatformType, Flow<List<CurrencyValue>>>,
+    currenciesMap: Map<TradingPlatformType, Flow<List<CurrencyValue>>>,
     tradingWebProviders: List<TradingWebProvider>
 ) =
     currenciesMap.map { (platform, currenciesFlow) ->

@@ -3,7 +3,9 @@ package com.lucas.core.utils.extensions
 import android.content.Context
 import androidx.annotation.DrawableRes
 import com.lucas.core.R
-import com.lucas.core.data.models.ExchangePlatformType
+import com.lucas.core.data.models.CurrencyValue
+import com.lucas.core.data.models.TradingPlatformType
+import com.lucas.core.data.models.TradingWebProvider
 import com.lucas.core.utils.helpers.DateHelper
 import java.util.*
 
@@ -23,16 +25,16 @@ fun Date.lastUpdateText(context: Context): String {
 }
 
 @DrawableRes
-fun ExchangePlatformType.getImage(): Int = when (this) {
-    ExchangePlatformType.Buenbit -> R.drawable.buenbit
-    ExchangePlatformType.Binance -> R.drawable.binance
-    ExchangePlatformType.Ripio -> R.drawable.ripio
+fun TradingPlatformType.getImage(): Int = when (this) {
+    TradingPlatformType.Buenbit -> R.drawable.buenbit
+    TradingPlatformType.Binance -> R.drawable.binance
+    TradingPlatformType.Ripio -> R.drawable.ripio
     else -> R.drawable.ic_baseline_block_24
 }
 
-fun ExchangePlatformType.getName(): String = when (this) {
-    ExchangePlatformType.Buenbit -> "Buenbit"
-    ExchangePlatformType.Binance -> "Binance"
-    ExchangePlatformType.Ripio -> "Ripio"
+fun TradingPlatformType.getName(): String = when (this) {
+    TradingPlatformType.Buenbit -> "Buenbit"
+    TradingPlatformType.Binance -> "Binance"
+    TradingPlatformType.Ripio -> "Ripio"
     else -> ""
 }
