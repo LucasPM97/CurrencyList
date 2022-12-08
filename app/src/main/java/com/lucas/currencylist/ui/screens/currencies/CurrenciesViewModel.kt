@@ -9,6 +9,7 @@ import com.lucas.core.data.remote.ExchangeRemoteDataSource
 import com.lucas.core.data.remote.apis.RetrofitBuilder
 import com.lucas.core.data.repositories.CurrencyRepository
 import com.lucas.core.domain.useCases.GetExchangeValuesUseCase
+import com.lucas.core.domain.useCases.UpdateExchangeValueFavUseCase
 
 class CurrenciesViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -25,12 +26,14 @@ class CurrenciesViewModel(application: Application) : AndroidViewModel(applicati
 
     )
     private val getExchangeValues = GetExchangeValuesUseCase(repository)
+    private val updateExchangeValueFav = UpdateExchangeValueFavUseCase(repository)
 
     val currencies = getExchangeValues()
 
 
     suspend fun updateFav(currencyId: String, fav: Boolean) {
-        repository.updateCurrencyFav(currencyId, fav)
+
+        updateExchangeValueFav(currencyId, fav)
     }
 
 }

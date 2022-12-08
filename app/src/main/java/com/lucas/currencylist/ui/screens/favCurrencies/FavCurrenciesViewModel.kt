@@ -7,11 +7,11 @@ import com.lucas.core.data.local.ExchangeLocalDataSource
 import com.lucas.core.data.local.database.CurrenciesDatabase
 import com.lucas.core.data.local.database.PlatformUpdatesDatabase
 import com.lucas.core.data.remote.ExchangeRemoteDataSource
-import com.lucas.core.data.repositories.CurrencyRepository
-import com.lucas.core.data.repositories.ICurrencyRepository
 import com.lucas.core.data.remote.apis.RetrofitBuilder
+import com.lucas.core.data.repositories.CurrencyRepository
 import com.lucas.core.data.workers.ExchangeFetchWorker
 import com.lucas.core.domain.useCases.GetFavExchangeValuesUseCase
+import com.lucas.core.domain.useCases.UpdateExchangeValueFavUseCase
 import java.util.concurrent.TimeUnit
 
 class FavCurrenciesViewModel(application: Application) : AndroidViewModel(application) {
@@ -29,6 +29,7 @@ class FavCurrenciesViewModel(application: Application) : AndroidViewModel(applic
 
     )
     private val getFavExchangeValues = GetFavExchangeValuesUseCase(repository)
+    private val updateExchangeValueFav = UpdateExchangeValueFavUseCase(repository)
 
     val currencies = getFavExchangeValues()
 
@@ -51,6 +52,6 @@ class FavCurrenciesViewModel(application: Application) : AndroidViewModel(applic
     }
 
     suspend fun updateFav(currencyId: String, fav: Boolean) {
-        repository.updateCurrencyFav(currencyId, fav)
+        updateExchangeValueFav(currencyId, fav)
     }
 }
