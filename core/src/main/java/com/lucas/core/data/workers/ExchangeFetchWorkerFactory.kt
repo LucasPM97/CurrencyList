@@ -1,4 +1,4 @@
-package com.lucas.core.workers
+package com.lucas.core.data.workers
 
 import android.content.Context
 import androidx.work.ListenableWorker
