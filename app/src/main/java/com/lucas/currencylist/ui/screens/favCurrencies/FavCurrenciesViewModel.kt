@@ -2,7 +2,10 @@ package com.lucas.currencylist.ui.screens.favCurrencies
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.work.*
+import androidx.work.Constraints
+import androidx.work.NetworkType
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import com.lucas.core.data.local.ExchangeLocalDataSource
 import com.lucas.core.data.local.database.CurrenciesDatabase
 import com.lucas.core.data.local.database.PlatformUpdatesDatabase
@@ -11,7 +14,6 @@ import com.lucas.core.data.repositories.CurrencyRepository
 import com.lucas.core.data.repositories.ICurrencyRepository
 import com.lucas.core.data.remote.apis.RetrofitBuilder
 import com.lucas.core.workers.ExchangeFetchWorker
-import java.util.concurrent.TimeUnit
 
 class FavCurrenciesViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -35,19 +37,16 @@ class FavCurrenciesViewModel(application: Application) : AndroidViewModel(applic
     private val workManager = WorkManager.getInstance(application)
 
     init {
-        val constraints = Constraints.Builder()
-            .setRequiredNetworkType(NetworkType.CONNECTED)
-            .setRequiresBatteryNotLow(true)
+        val request = OneTimeWorkRequestBuilder<ExchangeFetchWorker>()
+            .setConstraints(
+                Constraints.Builder()
+                    .setRequiredNetworkType(NetworkType.CONNECTED)
+                    .setRequiresBatteryNotLow(true)
+                    .build()
+            )
+            .addTag(ExchangeFetchWorker.NAME)
             .build()
-        val request = PeriodicWorkRequestBuilder<ExchangeFetchWorker>(15, TimeUnit.MINUTES)
-            .setConstraints(constraints)
-            .addTag(ExchangeFetchWorker.TAG)
-            .build()
-        workManager.enqueueUniquePeriodicWork(
-            ExchangeFetchWorker.TAG,
-            ExistingPeriodicWorkPolicy.REPLACE,
-            request
-        )
+        workManager.beginWith(request).enqueue()
     }
 
     suspend fun updateFav(currencyId: String, fav: Boolean) {
