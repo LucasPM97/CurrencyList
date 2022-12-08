@@ -17,10 +17,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.lucas.core.data.models.CurrencyType
-import com.lucas.core.data.models.CurrencyValue
-import com.lucas.core.data.models.TradingPlatformType
-import com.lucas.core.data.models.TradingWebProviderState
 import com.lucas.core.models.*
 import com.lucas.core.utils.extensions.getImage
 import com.lucas.core.utils.extensions.getName

@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import com.lucas.core.data.models.CurrencyType
+import com.lucas.core.models.CurrencyType
 import com.lucas.core.utils.extensions.getImage
 import com.lucas.core.utils.extensions.getImageName
 

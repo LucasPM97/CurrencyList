@@ -2,11 +2,12 @@ package com.lucas.currencylist.ui.screens.favCurrencies
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import com.lucas.core.data.local.database.CurrenciesDatabase
-import com.lucas.core.data.local.database.PlatformUpdatesDatabase
-import com.lucas.core.data.repositories.CurrencyRepository
-import com.lucas.core.data.repositories.ICurrencyRepository
-import com.lucas.core.data.remote.apis.RetrofitBuilder
+import androidx.lifecycle.ViewModel
+import com.lucas.core.database.CurrenciesDatabase
+import com.lucas.core.database.PlatformUpdatesDatabase
+import com.lucas.core.repositories.CurrencyRepository
+import com.lucas.core.repositories.ICurrencyRepository
+import com.lucas.core.services.RetrofitBuilder
 
 class FavCurrenciesViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -14,7 +15,7 @@ class FavCurrenciesViewModel(application: Application) : AndroidViewModel(applic
         PlatformUpdatesDatabase.getInstance(application.applicationContext).dao,
         CurrenciesDatabase.getInstance(application.applicationContext).dao,
         RetrofitBuilder.buenbitService,
-        RetrofitBuilder.binanceApi,
+        RetrofitBuilder.binanceService,
         RetrofitBuilder.ripioService
     )
 
