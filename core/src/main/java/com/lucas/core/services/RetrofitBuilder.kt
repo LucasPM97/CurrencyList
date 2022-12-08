@@ -1,4 +1,4 @@
-package com.lucas.core.data.remote.apis
+package com.lucas.core.services
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -16,7 +16,7 @@ object RetrofitBuilder {
             .build() //Doesn't require the adapter
     }
 
-    val buenbitService: BuenbitApi = getRetrofit(BUENBIT_BASE_URL).create(BuenbitApi::class.java)
-    val binanceApi: BinanceApi = getRetrofit(BINANCE_BASE_URL).create(BinanceApi::class.java)
-    val ripioService: RipioApi = getRetrofit(RIPIO_BASE_URL).create(RipioApi::class.java)
+    val buenbitService: BuenbitService = getRetrofit(BUENBIT_BASE_URL).create(BuenbitService::class.java)
+    val binanceService: BinanceService = getRetrofit(BINANCE_BASE_URL).create(BinanceService::class.java)
+    val ripioService: RipioService = getRetrofit(RIPIO_BASE_URL).create(RipioService::class.java)
 }

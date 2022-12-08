@@ -1,10 +1,11 @@
-package com.lucas.core.data.models
+package com.lucas.core.models
 
 import kotlinx.coroutines.flow.Flow
 import java.util.*
 
 data class TradingWebProvider(
-    val platformType: ExchangePlatformType,
+    val state: Flow<TradingWebProviderState>,
+    val platformType: TradingPlatformType,
     var lastUpdate: Flow<Date>
 )
 
@@ -13,7 +14,7 @@ sealed class TradingWebProviderState() {
     class IsLoading() : TradingWebProviderState()
 }
 
-enum class ExchangePlatformType {
+enum class TradingPlatformType {
     None,
     Buenbit,
     Binance,

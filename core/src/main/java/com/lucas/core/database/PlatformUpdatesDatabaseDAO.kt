@@ -1,7 +1,10 @@
-package com.lucas.core.data.local.database
+package com.lucas.core.database
 
 import androidx.room.*
-import com.lucas.core.data.models.TradingPlatformUpdates
+import com.lucas.core.models.CurrencyValue
+import com.lucas.core.models.TradingPlatformType
+import com.lucas.core.models.TradingPlatformUpdates
+import com.lucas.core.utils.helpers.DateHelper
 import kotlinx.coroutines.flow.Flow
 import java.util.*
 

@@ -8,9 +8,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.lucas.core.data.models.CurrencyType
-import com.lucas.core.data.models.CurrencyValue
-import com.lucas.core.data.models.ExchangePlatformType
+import com.lucas.core.models.CurrencyType
+import com.lucas.core.models.CurrencyValue
+import com.lucas.core.models.TradingPlatformType
 
 @Composable
 fun CurrencyView(
@@ -82,7 +82,7 @@ private fun CurrencyStack(
 fun PreviewCurrency() {
     CurrencyView(
         currencyValue = CurrencyValue(
-            platform = ExchangePlatformType.None,
+            platform = TradingPlatformType.None,
             180.5,
             exchangeFrom = CurrencyType.ARS,
             exchangeTo = CurrencyType.DAI,

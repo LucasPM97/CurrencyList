@@ -5,8 +5,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.lucas.core.data.models.CurrencyValue
-import com.lucas.core.data.models.TradingWebProvider
+import com.lucas.core.models.CurrencyValue
+import com.lucas.core.models.TradingWebProvider
 import com.lucas.currencylist.ui.components.TradingWebList
 
 @Composable

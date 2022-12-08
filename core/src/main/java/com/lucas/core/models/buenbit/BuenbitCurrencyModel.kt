@@ -1,4 +1,4 @@
-package com.lucas.core.data.models.buenbit
+package com.lucas.core.models.buenbit
 
 import com.google.gson.annotations.SerializedName
 

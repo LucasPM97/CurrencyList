@@ -9,9 +9,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.lucas.core.data.models.CurrencyValue
-import com.lucas.core.data.models.ExchangePlatformType
-import com.lucas.core.data.models.TradingWebProvider
+import com.lucas.core.models.CurrencyValue
+import com.lucas.core.models.TradingPlatformType
+import com.lucas.core.models.TradingWebProvider
 
 val itemsSpace = 10.dp
 
@@ -45,21 +45,25 @@ fun TradingWebList(
 @Composable
 private fun RenderTradingWeb(
     tradingWebProvider: TradingWebProvider,
-    platformType: ExchangePlatformType,
+    platformType: TradingPlatformType,
     currencies: List<CurrencyValue>,
     modifier: Modifier = Modifier,
     itemFavOnClick: (currencyId: String) -> Unit
 ) {
+    val tradingWebState by tradingWebProvider.state.collectAsState(null)
     val lastUpdate by tradingWebProvider.lastUpdate.collectAsState(null)
 
-    TradingWebCard(
-        platformType,
-        lastUpdate = lastUpdate,
-        currencyList = currencies,
-        itemFavOnClick = itemFavOnClick,
-        modifier = modifier.padding(
-            top = itemsSpace,
-            bottom = itemsSpace
+    tradingWebState?.let {
+        TradingWebCard(
+            platformType,
+            tradingWebState = it,
+            lastUpdate = lastUpdate,
+            currencyList = currencies,
+            itemFavOnClick = itemFavOnClick,
+            modifier = modifier.padding(
+                top = itemsSpace,
+                bottom = itemsSpace
+            )
         )
-    )
+    }
 }
