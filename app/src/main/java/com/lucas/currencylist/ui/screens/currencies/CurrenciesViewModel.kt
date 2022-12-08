@@ -2,13 +2,15 @@ package com.lucas.currencylist.ui.screens.currencies
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.work.*
 import com.lucas.core.data.local.ExchangeLocalDataSource
 import com.lucas.core.data.local.database.CurrenciesDatabase
 import com.lucas.core.data.local.database.PlatformUpdatesDatabase
 import com.lucas.core.data.remote.ExchangeRemoteDataSource
-import com.lucas.core.data.remote.apis.RetrofitBuilder
 import com.lucas.core.data.repositories.CurrencyRepository
 import com.lucas.core.data.repositories.ICurrencyRepository
+import com.lucas.core.data.remote.apis.RetrofitBuilder
+import com.lucas.core.workers.ExchangeFetchWorker
 
 class CurrenciesViewModel(application: Application) : AndroidViewModel(application) {
 
