@@ -50,16 +50,20 @@ private fun RenderTradingWeb(
     modifier: Modifier = Modifier,
     itemFavOnClick: (currencyId: String) -> Unit
 ) {
+    val tradingWebState by tradingWebProvider.state.collectAsState(null)
     val lastUpdate by tradingWebProvider.lastUpdate.collectAsState(null)
 
-    TradingWebCard(
-        platformType,
-        lastUpdate = lastUpdate,
-        currencyList = currencies,
-        itemFavOnClick = itemFavOnClick,
-        modifier = modifier.padding(
-            top = itemsSpace,
-            bottom = itemsSpace
+    tradingWebState?.let {
+        TradingWebCard(
+            platformType,
+            tradingWebState = it,
+            lastUpdate = lastUpdate,
+            currencyList = currencies,
+            itemFavOnClick = itemFavOnClick,
+            modifier = modifier.padding(
+                top = itemsSpace,
+                bottom = itemsSpace
+            )
         )
-    )
+    }
 }
