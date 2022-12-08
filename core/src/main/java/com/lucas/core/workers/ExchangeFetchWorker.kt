@@ -1,4 +1,4 @@
-package com.lucas.core.data.workers
+package com.lucas.core.workers
 
 import android.content.Context
 import androidx.work.CoroutineWorker

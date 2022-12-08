@@ -9,7 +9,7 @@ import com.lucas.core.data.local.database.PlatformUpdatesDatabase
 import com.lucas.core.data.remote.ExchangeRemoteDataSource
 import com.lucas.core.data.remote.apis.RetrofitBuilder
 import com.lucas.core.data.repositories.CurrencyRepository
-import com.lucas.core.data.workers.ExchangeFetchWorkerFactory
+import com.lucas.core.workers.ExchangeFetchWorkerFactory
 
 class App : Application(), Configuration.Provider {
 
