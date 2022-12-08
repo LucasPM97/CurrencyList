@@ -12,12 +12,13 @@ import androidx.compose.ui.unit.dp
 import com.lucas.core.data.models.CurrencyValue
 import com.lucas.core.data.models.ExchangePlatformType
 import com.lucas.core.data.models.TradingWebProvider
+import com.lucas.core.domain.useCases.PlatformState
 
 val itemsSpace = 10.dp
 
 @Composable
 fun TradingWebList(
-    platformState: List<Pair<TradingWebProvider, List<CurrencyValue>>>,
+    platformState: List<PlatformState>,
     modifier: Modifier = Modifier,
     itemFavOnClick: (currency: CurrencyValue) -> Unit
 ) {
@@ -25,13 +26,11 @@ fun TradingWebList(
         modifier
             .verticalScroll(rememberScrollState())
     ) {
-        platformState.forEach { (providerState, currencies) ->
+        platformState.forEach { platformState ->
             RenderTradingWeb(
-                tradingWebProvider = providerState,
-                platformType = providerState.platformType,
-                currencies = currencies,
+                platformState,
                 itemFavOnClick = { currencyId ->
-                    val currency = currencies.first {
+                    val currency = platformState.exchangeValues.first {
                         it.currencyId == currencyId
                     }
                     itemFavOnClick(currency)
@@ -44,18 +43,14 @@ fun TradingWebList(
 
 @Composable
 private fun RenderTradingWeb(
-    tradingWebProvider: TradingWebProvider,
-    platformType: ExchangePlatformType,
-    currencies: List<CurrencyValue>,
+    platformState: PlatformState,
     modifier: Modifier = Modifier,
     itemFavOnClick: (currencyId: String) -> Unit
 ) {
-    val lastUpdate by tradingWebProvider.lastUpdate.collectAsState(null)
-
     TradingWebCard(
-        platformType,
-        lastUpdate = lastUpdate,
-        currencyList = currencies,
+        platformState.platformType,
+        lastUpdate = platformState.lastUpdate,
+        currencyList = platformState.exchangeValues,
         itemFavOnClick = itemFavOnClick,
         modifier = modifier.padding(
             top = itemsSpace,

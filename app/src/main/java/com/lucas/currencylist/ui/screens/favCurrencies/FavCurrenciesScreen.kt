@@ -3,16 +3,18 @@ package com.lucas.currencylist.ui.screens.favCurrencies
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import com.lucas.core.data.models.CurrencyValue
-import com.lucas.currencylist.ui.components.utils.mapToState
 import com.lucas.currencylist.ui.screens.favCurrencies.components.FavoriteList
 import com.lucas.currencylist.ui.screens.favCurrencies.components.NavigateToCurrencyListButton
 import com.lucas.currencylist.ui.screens.favCurrencies.components.TopBar
@@ -34,7 +36,9 @@ fun FavCurrenciesScreen(
             )
         },
         content = {
-            Screen(viewModel)
+            Column(modifier = Modifier.padding(it)) {
+                Screen(viewModel)
+            }
         }
     )
 }
@@ -45,12 +49,7 @@ private fun Screen(
 ) {
     val coroutineScope = rememberCoroutineScope()
 
-    val platformState = mapToState(
-        currenciesMap = viewModel.currencies,
-        tradingWebProviders = viewModel.tradingWebProviders
-    ).filter { (_, currencies) ->
-        currencies.isNotEmpty()
-    }
+    val platformsState by viewModel.currencies.collectAsState(null)
 
     fun favCurrency(currency: CurrencyValue) {
         coroutineScope.launch {
@@ -58,22 +57,29 @@ private fun Screen(
         }
     }
 
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        if (platformState.isEmpty()) {
-            EmptyFavListMessage()
-        } else {
-            FavoriteList(
-                platformState,
-                itemFavOnClick = {
-                    favCurrency(it)
-                }
-            )
+    platformsState?.let {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            val anyExchangeValuesStored = it.any {
+                it.exchangeValues.any()
+            }
+
+            if (!anyExchangeValuesStored) {
+                EmptyFavListMessage()
+            } else {
+                FavoriteList(
+                    platformsState = it,
+                    itemFavOnClick = {
+                        favCurrency(it)
+                    }
+                )
+            }
         }
     }
+
 }
 
 @Composable
