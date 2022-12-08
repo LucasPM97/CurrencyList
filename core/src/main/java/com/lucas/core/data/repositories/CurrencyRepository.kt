@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 interface ICurrencyRepository {
+    suspend fun fetchExchangeValues(): Boolean
     fun getCurrencies(): Map<ExchangePlatformType, Flow<List<CurrencyValue>>>
     fun getFavCurrencies(): Map<ExchangePlatformType, Flow<List<CurrencyValue>>>
     fun getTradingWebProviders(): List<TradingWebProvider>
@@ -18,6 +19,48 @@ class CurrencyRepository(
     private val localDataSource: IExchangeLocalDataSource,
     private val remoteDataSource: IExchangeRemoteDataSource
 ) : ICurrencyRepository {
+
+    override suspend fun fetchExchangeValues(): Boolean {
+
+        val platformList = listOf(
+            ExchangePlatformType.Buenbit,
+            ExchangePlatformType.Binance,
+            ExchangePlatformType.Ripio
+        )
+
+        var everythingGoesWell = true
+
+        platformList.forEach {
+            val result = fetchPlatformExchangeValues(it)
+
+            if (!result){
+                everythingGoesWell = false
+            }
+        }
+
+        return everythingGoesWell
+    }
+
+    private suspend fun fetchPlatformExchangeValues(platformType: ExchangePlatformType): Boolean {
+        try {
+            val currencies = when (platformType) {
+                ExchangePlatformType.Buenbit -> remoteDataSource.getBuenbitExchangeValues()
+                ExchangePlatformType.Binance -> remoteDataSource.getBinanceExchangeValues()
+                ExchangePlatformType.Ripio -> remoteDataSource.getRipioExchangeValues()
+                else -> throw Exception("No valid platform")
+            }
+
+            localDataSource.updatePlatformLastUpdateDate(platformType)
+            localDataSource.storeExchangeValueUpdate(currencies)
+
+            return true
+
+        } catch (ex: Exception) {
+            println(ex)
+        }
+
+        return false
+    }
 
     override fun getCurrencies(): Map<ExchangePlatformType, Flow<List<CurrencyValue>>> {
         return mapOf(
@@ -46,21 +89,18 @@ class CurrencyRepository(
     override fun getTradingWebProviders(): List<TradingWebProvider> {
         return listOf(
             TradingWebProvider(
-                state = getTradingViewExchangeValues(ExchangePlatformType.Buenbit),
                 platformType = ExchangePlatformType.Buenbit,
                 lastUpdate = localDataSource.getPlatformLastExchangeDate(
                     com.lucas.core.data.models.ExchangePlatformType.Buenbit
                 )
             ),
             TradingWebProvider(
-                state = getTradingViewExchangeValues(ExchangePlatformType.Binance),
                 platformType = ExchangePlatformType.Binance,
                 lastUpdate = localDataSource.getPlatformLastExchangeDate(
                     com.lucas.core.data.models.ExchangePlatformType.Binance
                 )
             ),
             TradingWebProvider(
-                state = getTradingViewExchangeValues(ExchangePlatformType.Ripio),
                 platformType = ExchangePlatformType.Ripio,
                 lastUpdate = localDataSource.getPlatformLastExchangeDate(
                     com.lucas.core.data.models.ExchangePlatformType.Ripio

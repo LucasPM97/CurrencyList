@@ -4,7 +4,6 @@ import kotlinx.coroutines.flow.Flow
 import java.util.*
 
 data class TradingWebProvider(
-    val state: Flow<TradingWebProviderState>,
     val platformType: ExchangePlatformType,
     var lastUpdate: Flow<Date>
 )
