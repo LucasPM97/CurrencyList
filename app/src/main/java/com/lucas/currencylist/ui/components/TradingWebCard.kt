@@ -33,7 +33,7 @@ import com.lucas.currencylist.R
 @Composable
 fun TradingWebCard(
     exchangePlatformType: ExchangePlatformType,
-    tradingWebState: TradingWebProviderState = TradingWebProviderState.Completed(),
+    tradingWebState: TradingWebProviderState,
     lastUpdate: Date?,
     currencyList: List<CurrencyValue>,
     itemFavOnClick: (currencyId: String) -> Unit = {},
@@ -68,7 +68,7 @@ fun TradingWebCard(
                 )
 
                 val webImageDescription = stringResource(id = R.string.webcard_image_description)
-                    .replace("{0}", exchangePlatformType.getName())
+                    .replace("{0}",exchangePlatformType.getName())
 
                 Image(
                     painter = painterResource(
@@ -152,9 +152,9 @@ private fun RenderList(
 
     lastUpdate?.let {
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier= Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.End
-        ) {
+        ){
             Text(
                 text = lastUpdate.lastUpdateText(context),
                 fontSize = 12.sp,
