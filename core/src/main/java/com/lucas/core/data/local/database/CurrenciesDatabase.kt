@@ -9,7 +9,7 @@ import com.lucas.core.data.models.CurrencyValue
 import com.lucas.core.utils.converters.DateTimeConverter
 
 
-@Database(entities = [CurrencyValue::class], version = 4, exportSchema = false)
+@Database(entities = [CurrencyValue::class], version = 5, exportSchema = false)
 @TypeConverters(DateTimeConverter::class)
 abstract class CurrenciesDatabase : RoomDatabase() {
 

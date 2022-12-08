@@ -8,6 +8,6 @@ import java.util.*
 @Entity(tableName = "platform_updates")
 data class TradingPlatformUpdates(
     @PrimaryKey
-    val platformName: String,
+    var platformType: ExchangePlatformType,
     var lastUpdate: Date = DateHelper.currentDate()
 )
