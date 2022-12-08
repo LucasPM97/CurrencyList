@@ -7,7 +7,7 @@ import com.lucas.core.data.models.ExchangePlatformType
 import com.lucas.core.data.models.TradingPlatformUpdates
 import com.lucas.core.utils.extensions.getName
 import kotlinx.coroutines.flow.Flow
-import java.util.*
+import java.util.Date
 
 interface IExchangeLocalDataSource {
     fun getPlatformLastExchangeDate(exchangePlatform: ExchangePlatformType): Flow<Date>
@@ -26,10 +26,10 @@ class ExchangeLocalDataSource(
         platformUpdatesDAO.getFlowPlatformLastUpdate(exchangePlatform.getName())
 
     override fun getPlatformFavExchangeValues(exchangePlatform: ExchangePlatformType): Flow<List<CurrencyValue>> =
-        currenciesDAO.getCurrenciesFlowFromPlatform(exchangePlatform)
+        currenciesDAO.getFavCurrenciesFlowFromPlatform(exchangePlatform)
 
     override fun getPlatformExchangeValues(exchangePlatform: ExchangePlatformType): Flow<List<CurrencyValue>> =
-        currenciesDAO.getFavCurrenciesFlowFromPlatform(exchangePlatform)
+        currenciesDAO.getCurrenciesFlowFromPlatform(exchangePlatform)
 
     override suspend fun updatePlatformLastUpdateDate(exchangePlatform: ExchangePlatformType) =
         platformUpdatesDAO.insertPlatformUpdates(
