@@ -10,7 +10,7 @@ import com.lucas.core.data.remote.ExchangeRemoteDataSource
 import com.lucas.core.data.repositories.CurrencyRepository
 import com.lucas.core.data.repositories.ICurrencyRepository
 import com.lucas.core.data.remote.apis.RetrofitBuilder
-import com.lucas.core.workers.ExchangeFetchWorker
+import com.lucas.core.data.workers.ExchangeFetchWorker
 import java.util.concurrent.TimeUnit
 
 class FavCurrenciesViewModel(application: Application) : AndroidViewModel(application) {
