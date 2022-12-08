@@ -1,9 +1,9 @@
 package com.lucas.core.utils.extensions
 
-import com.lucas.core.data.models.CurrencyType
-import com.lucas.core.data.models.CurrencyValue
-import com.lucas.core.data.models.TradingPlatformType
-import com.lucas.core.data.models.binance.BinanceCurrency
+import com.lucas.core.models.CurrencyType
+import com.lucas.core.models.CurrencyValue
+import com.lucas.core.models.TradingPlatformType
+import com.lucas.core.models.binance.BinanceCurrency
 
 
 fun List<BinanceCurrency>.filterNoUsedCurrencies(): List<BinanceCurrency> = filter {
@@ -15,16 +15,16 @@ fun List<BinanceCurrency>.toCurrencyList() = map {
 }
 
 fun BinanceCurrency.toCurrencyValue(): CurrencyValue = CurrencyValue(
-    exchangeFrom = com.lucas.core.data.models.CurrencyType.USD,
+    exchangeFrom = CurrencyType.USD,
     exchangeTo = this.getCurrencyType(),
     exchangeValue = price,
-    platform = com.lucas.core.data.models.TradingPlatformType.Binance
+    platform = TradingPlatformType.Binance
 )
 
 fun BinanceCurrency.getCurrencyType(): CurrencyType =
     when (name.lowercase()) {
-        "btc" -> com.lucas.core.data.models.CurrencyType.BTC
-        "eth" -> com.lucas.core.data.models.CurrencyType.ETH
-        "bnb" -> com.lucas.core.data.models.CurrencyType.BNB
-        else -> com.lucas.core.data.models.CurrencyType.NONE
+        "btc" -> CurrencyType.BTC
+        "eth" -> CurrencyType.ETH
+        "bnb" -> CurrencyType.BNB
+        else -> CurrencyType.NONE
     }

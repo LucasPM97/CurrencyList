@@ -1,4 +1,4 @@
-package com.lucas.core.data.models.ripio
+package com.lucas.core.models.ripio
 
 import com.google.gson.annotations.SerializedName
 
