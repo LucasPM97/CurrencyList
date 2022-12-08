@@ -11,11 +11,12 @@ import com.lucas.core.data.repositories.CurrencyRepository
 import com.lucas.core.data.repositories.ICurrencyRepository
 import com.lucas.core.data.remote.apis.RetrofitBuilder
 import com.lucas.core.data.workers.ExchangeFetchWorker
+import com.lucas.core.domain.useCases.GetFavExchangeValuesUseCase
 import java.util.concurrent.TimeUnit
 
 class FavCurrenciesViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val repository: ICurrencyRepository = CurrencyRepository(
+    private val repository = CurrencyRepository(
         ExchangeLocalDataSource(
             PlatformUpdatesDatabase.getInstance(application.applicationContext).dao,
             CurrenciesDatabase.getInstance(application.applicationContext).dao
@@ -27,10 +28,9 @@ class FavCurrenciesViewModel(application: Application) : AndroidViewModel(applic
         )
 
     )
+    private val getFavExchangeValues = GetFavExchangeValuesUseCase(repository)
 
-    val tradingWebProviders = repository.getTradingWebProviders()
-
-    val currencies = repository.getFavCurrencies()
+    val currencies = getFavExchangeValues()
 
     private val workManager = WorkManager.getInstance(application)
 
