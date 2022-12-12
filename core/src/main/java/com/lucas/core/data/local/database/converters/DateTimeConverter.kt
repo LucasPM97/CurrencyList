@@ -1,4 +1,4 @@
-package com.lucas.core.utils.converters
+package com.lucas.core.data.local.database.converters
 
 import androidx.room.TypeConverter
 import java.util.*

@@ -3,8 +3,8 @@ package com.lucas.core.data.models
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
-import com.lucas.core.utils.extensions.getName
-import com.lucas.core.utils.extensions.roundString
+import com.lucas.core.domain.extensions.getName
+import com.lucas.core.domain.extensions.roundString
 
 @Entity(tableName = "exchange_table")
 data class ExchangeValue(
