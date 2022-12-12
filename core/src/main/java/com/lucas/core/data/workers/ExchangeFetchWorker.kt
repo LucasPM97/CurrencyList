@@ -3,12 +3,12 @@ package com.lucas.core.data.workers
 import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.lucas.core.data.repositories.ICurrencyRepository
+import com.lucas.core.domain.useCases.IFetchExchangeValuesUseCase
 
 class ExchangeFetchWorker(
     context: Context,
     params: WorkerParameters,
-    private val repository: ICurrencyRepository
+    private val fetchExchangeValues: IFetchExchangeValuesUseCase
 ) :
     CoroutineWorker(context, params) {
 
@@ -19,7 +19,7 @@ class ExchangeFetchWorker(
     override suspend fun doWork(): Result {
 
         return try {
-            val succeeded = repository.fetchExchangeValues()
+            val succeeded = fetchExchangeValues()
 
             if (succeeded)
                 Result.success()
