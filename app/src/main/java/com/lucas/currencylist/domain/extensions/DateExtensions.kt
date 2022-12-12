@@ -1,4 +1,4 @@
-package com.lucas.currencylist.ui.extensions
+package com.lucas.currencylist.domain.extensions
 
 import android.content.Context
 import com.lucas.core.utils.extensions.toDetailedDate

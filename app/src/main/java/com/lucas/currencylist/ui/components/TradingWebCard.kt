@@ -27,8 +27,8 @@ import com.lucas.currencylist.ui.screens.currencies.CurrencyList
 import com.lucas.currencylist.ui.screens.currencies.components.ErrorMessage
 import java.util.*
 import com.lucas.currencylist.R
-import com.lucas.currencylist.ui.extensions.getImage
-import com.lucas.currencylist.ui.extensions.lastUpdateText
+import com.lucas.currencylist.domain.extensions.getImage
+import com.lucas.currencylist.domain.extensions.lastUpdateText
 
 @Composable
 fun TradingWebCard(
