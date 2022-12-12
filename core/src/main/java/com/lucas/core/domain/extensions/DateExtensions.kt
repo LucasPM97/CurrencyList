@@ -1,7 +1,7 @@
-package com.lucas.core.utils.extensions
+package com.lucas.core.domain.extensions
 
 import android.os.Build
-import com.lucas.core.utils.helpers.DetailedDate
+import com.lucas.core.domain.helpers.DetailedDate
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalDateTime

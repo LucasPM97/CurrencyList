@@ -1,4 +1,4 @@
-package com.lucas.core.utils.extensions
+package com.lucas.core.domain.extensions
 
 import com.lucas.core.data.models.buenbit.BuenbitObject
 import com.lucas.core.data.models.CurrencyType
@@ -22,11 +22,11 @@ fun BuenbitCurrency.toExchangeValue(): ExchangeValue = ExchangeValue(
 )
 
 fun BuenbitCurrency.getCurrencyType(currencyName: String): CurrencyType = when (currencyName) {
-    "ars" -> com.lucas.core.data.models.CurrencyType.ARS
-    "usd" -> com.lucas.core.data.models.CurrencyType.USD
-    "dai" -> com.lucas.core.data.models.CurrencyType.DAI
-    "btc" -> com.lucas.core.data.models.CurrencyType.BTC
-    "eth" -> com.lucas.core.data.models.CurrencyType.ETH
-    "bnb" -> com.lucas.core.data.models.CurrencyType.BNB
-    else -> com.lucas.core.data.models.CurrencyType.NONE
+    "ars" -> CurrencyType.ARS
+    "usd" -> CurrencyType.USD
+    "dai" -> CurrencyType.DAI
+    "btc" -> CurrencyType.BTC
+    "eth" -> CurrencyType.ETH
+    "bnb" -> CurrencyType.BNB
+    else -> CurrencyType.NONE
 }
