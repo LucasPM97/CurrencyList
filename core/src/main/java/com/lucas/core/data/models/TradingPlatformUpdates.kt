@@ -2,7 +2,7 @@ package com.lucas.core.data.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.lucas.core.utils.helpers.DateHelper
+import com.lucas.core.domain.helpers.DateHelper
 import java.util.*
 
 @Entity(tableName = "platform_updates")

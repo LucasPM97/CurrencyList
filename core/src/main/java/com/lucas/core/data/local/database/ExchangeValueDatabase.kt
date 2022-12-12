@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.lucas.core.data.models.ExchangeValue
-import com.lucas.core.utils.converters.DateTimeConverter
+import com.lucas.core.data.local.database.converters.DateTimeConverter
 
 
 @Database(entities = [ExchangeValue::class], version = 1, exportSchema = false)

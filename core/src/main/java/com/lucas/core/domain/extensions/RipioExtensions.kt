@@ -1,4 +1,4 @@
-package com.lucas.core.utils.extensions
+package com.lucas.core.domain.extensions
 
 import com.lucas.core.data.models.CurrencyType
 import com.lucas.core.data.models.ExchangeValue
@@ -31,10 +31,10 @@ fun RipioCurrency.toExchangeValue(): ExchangeValue = ExchangeValue(
 
 fun RipioCurrency.getCurrencyType(currencyName: String): CurrencyType =
     when (currencyName.lowercase()) {
-        "btc" -> com.lucas.core.data.models.CurrencyType.BTC
-        "eth" -> com.lucas.core.data.models.CurrencyType.ETH
-        "usdc" -> com.lucas.core.data.models.CurrencyType.USDC
-        "dai" -> com.lucas.core.data.models.CurrencyType.DAI
-        "ars" -> com.lucas.core.data.models.CurrencyType.ARS
-        else -> com.lucas.core.data.models.CurrencyType.NONE
+        "btc" -> CurrencyType.BTC
+        "eth" -> CurrencyType.ETH
+        "usdc" -> CurrencyType.USDC
+        "dai" -> CurrencyType.DAI
+        "ars" -> CurrencyType.ARS
+        else -> CurrencyType.NONE
     }

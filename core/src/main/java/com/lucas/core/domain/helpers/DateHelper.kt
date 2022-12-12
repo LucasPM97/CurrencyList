@@ -1,4 +1,4 @@
-package com.lucas.core.utils.helpers
+package com.lucas.core.domain.helpers
 
 import android.os.Build
 import androidx.annotation.RequiresApi
