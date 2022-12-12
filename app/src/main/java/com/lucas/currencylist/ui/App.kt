@@ -10,26 +10,29 @@ import com.lucas.core.data.remote.ExchangeRemoteDataSource
 import com.lucas.core.data.remote.apis.RetrofitBuilder
 import com.lucas.core.data.repositories.CurrencyRepository
 import com.lucas.core.data.workers.ExchangeFetchWorkerFactory
+import com.lucas.core.domain.useCases.FetchExchangeValuesUseCase
 
 class App : Application(), Configuration.Provider {
 
     override fun getWorkManagerConfiguration(): Configuration {
-        val repository = CurrencyRepository(
-            ExchangeLocalDataSource(
-                PlatformUpdatesDatabase.getInstance(applicationContext).dao,
-                ExchangeValueDatabase.getInstance(applicationContext).dao
-            ),
-            ExchangeRemoteDataSource(
-                RetrofitBuilder.buenbitService,
-                RetrofitBuilder.binanceApi,
-                RetrofitBuilder.ripioService
+        val fetchUseCase = FetchExchangeValuesUseCase(
+            CurrencyRepository(
+                ExchangeLocalDataSource(
+                    PlatformUpdatesDatabase.getInstance(applicationContext).dao,
+                    ExchangeValueDatabase.getInstance(applicationContext).dao
+                ),
+                ExchangeRemoteDataSource(
+                    RetrofitBuilder.buenbitService,
+                    RetrofitBuilder.binanceApi,
+                    RetrofitBuilder.ripioService
+                )
             )
         )
 
         return Configuration.Builder()
             .setMinimumLoggingLevel(Log.DEBUG)
             .setWorkerFactory(
-                ExchangeFetchWorkerFactory(repository)
+                ExchangeFetchWorkerFactory(fetchUseCase)
             )
             .build()
     }

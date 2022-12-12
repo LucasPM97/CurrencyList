@@ -4,9 +4,10 @@ import android.content.Context
 import androidx.work.ListenableWorker
 import androidx.work.WorkerFactory
 import androidx.work.WorkerParameters
-import com.lucas.core.data.repositories.ICurrencyRepository
+import com.lucas.core.domain.useCases.IFetchExchangeValuesUseCase
 
-class ExchangeFetchWorkerFactory(private val repository: ICurrencyRepository) : WorkerFactory() {
+class ExchangeFetchWorkerFactory(private val fetchExchangeValuesUseCase: IFetchExchangeValuesUseCase) :
+    WorkerFactory() {
 
     override fun createWorker(
         appContext: Context,
@@ -17,7 +18,7 @@ class ExchangeFetchWorkerFactory(private val repository: ICurrencyRepository) : 
         return ExchangeFetchWorker(
             appContext,
             workerParameters,
-            repository
+            fetchExchangeValuesUseCase
         )
 
     }
