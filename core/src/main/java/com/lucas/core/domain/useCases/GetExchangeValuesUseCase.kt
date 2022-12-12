@@ -1,6 +1,6 @@
 package com.lucas.core.domain.useCases
 
-import com.lucas.core.data.models.CurrencyValue
+import com.lucas.core.data.models.ExchangeValue
 import com.lucas.core.data.models.ExchangePlatformType
 import com.lucas.core.data.repositories.ICurrencyRepository
 import kotlinx.coroutines.flow.Flow
@@ -39,6 +39,6 @@ class GetExchangeValuesUseCase(
 
 data class PlatformState(
     val platformType: ExchangePlatformType,
-    val exchangeValues: List<CurrencyValue>,
+    val exchangeValues: List<ExchangeValue>,
     val lastUpdate: Date
 )

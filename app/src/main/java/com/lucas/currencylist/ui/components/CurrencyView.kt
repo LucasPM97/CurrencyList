@@ -9,12 +9,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.lucas.core.data.models.CurrencyType
-import com.lucas.core.data.models.CurrencyValue
+import com.lucas.core.data.models.ExchangeValue
 import com.lucas.core.data.models.ExchangePlatformType
 
 @Composable
 fun CurrencyView(
-    currencyValue: CurrencyValue,
+    ExchangeValue: ExchangeValue,
     modifier: Modifier = Modifier,
     favOnClick: (currencyId: String) -> Unit = {}
 ) {
@@ -25,13 +25,13 @@ fun CurrencyView(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
-                text = currencyValue.exchangeTitle,
+                text = ExchangeValue.exchangeTitle,
                 modifier = Modifier
                     .padding(end = 20.dp),
             )
             CurrencyStack(
-                exchangeFrom = currencyValue.exchangeFrom,
-                exchangeTo = currencyValue.exchangeTo
+                exchangeFrom = ExchangeValue.exchangeFrom,
+                exchangeTo = ExchangeValue.exchangeTo
             )
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -39,13 +39,13 @@ fun CurrencyView(
                 horizontalArrangement = Arrangement.End
             ) {
                 Text(
-                    text = currencyValue.exchangeString,
+                    text = ExchangeValue.exchangeString,
                     textAlign = TextAlign.End
                 )
                 FavButton(
-                    currencyValue.fav,
+                    ExchangeValue.fav,
                     onClick = {
-                        favOnClick(currencyValue.currencyId)
+                        favOnClick(ExchangeValue.currencyId)
                     }
                 )
             }
@@ -81,7 +81,7 @@ private fun CurrencyStack(
 @Preview(showBackground = true)
 fun PreviewCurrency() {
     CurrencyView(
-        currencyValue = CurrencyValue(
+        ExchangeValue = ExchangeValue(
             platform = ExchangePlatformType.None,
             180.5,
             exchangeFrom = CurrencyType.ARS,

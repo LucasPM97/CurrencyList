@@ -18,24 +18,24 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.lucas.core.data.models.CurrencyType
-import com.lucas.core.data.models.CurrencyValue
+import com.lucas.core.data.models.ExchangeValue
 import com.lucas.core.data.models.ExchangePlatformType
 import com.lucas.core.data.models.TradingWebProviderState
-import com.lucas.core.utils.extensions.getImage
 import com.lucas.core.utils.extensions.getName
-import com.lucas.core.utils.extensions.lastUpdateText
 import com.lucas.core.utils.helpers.DateHelper
 import com.lucas.currencylist.ui.screens.currencies.CurrencyList
 import com.lucas.currencylist.ui.screens.currencies.components.ErrorMessage
 import java.util.*
 import com.lucas.currencylist.R
+import com.lucas.currencylist.ui.extensions.getImage
+import com.lucas.currencylist.ui.extensions.lastUpdateText
 
 @Composable
 fun TradingWebCard(
     exchangePlatformType: ExchangePlatformType,
     tradingWebState: TradingWebProviderState = TradingWebProviderState.Completed(),
     lastUpdate: Date?,
-    currencyList: List<CurrencyValue>,
+    currencyList: List<ExchangeValue>,
     itemFavOnClick: (currencyId: String) -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
@@ -85,7 +85,7 @@ fun TradingWebCard(
 private fun RenderBody(
     tradingWebState: TradingWebProviderState,
     lastUpdate: Date?,
-    currencyList: List<CurrencyValue>,
+    currencyList: List<ExchangeValue>,
     itemFavOnClick: (currencyId: String) -> Unit = {}
 ) {
     if (tradingWebState is TradingWebProviderState.Completed) {
@@ -143,7 +143,7 @@ fun RenderLoading() {
 
 @Composable
 private fun RenderList(
-    currencies: List<CurrencyValue>,
+    currencies: List<ExchangeValue>,
     lastUpdate: Date?,
     itemFavOnClick: (currencyId: String) -> Unit = {}
 ) {
@@ -176,13 +176,13 @@ fun PreviewTradingWebCard_CompletedState() {
         exchangePlatformType = ExchangePlatformType.Binance,
         tradingWebState = TradingWebProviderState.Completed(),
         currencyList = listOf(
-            CurrencyValue(
+            ExchangeValue(
                 platform = ExchangePlatformType.None,
                 exchangeValue = 180.5,
                 exchangeFrom = CurrencyType.ARS,
                 exchangeTo = CurrencyType.DAI
             ),
-            CurrencyValue(
+            ExchangeValue(
                 platform = ExchangePlatformType.None,
                 exchangeValue = 40000.0,
                 exchangeFrom = CurrencyType.DAI,
@@ -222,13 +222,13 @@ fun PreviewTradingWebCard_Loading_WithItems() {
         exchangePlatformType = ExchangePlatformType.Binance,
         tradingWebState = TradingWebProviderState.IsLoading(),
         currencyList = listOf(
-            CurrencyValue(
+            ExchangeValue(
                 platform = ExchangePlatformType.None,
                 exchangeValue = 180.5,
                 exchangeFrom = CurrencyType.ARS,
                 exchangeTo = CurrencyType.DAI
             ),
-            CurrencyValue(
+            ExchangeValue(
                 platform = ExchangePlatformType.None,
                 exchangeValue = 40000.0,
                 exchangeFrom = CurrencyType.DAI,

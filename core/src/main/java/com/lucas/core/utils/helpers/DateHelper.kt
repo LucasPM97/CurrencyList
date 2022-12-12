@@ -10,9 +10,11 @@ object DateHelper {
     fun currentDate(): Date {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val currentDate = currentLocalDateTime()
-            return Date.from(currentDate.atZone(ZoneId.systemDefault()).toInstant())
+            val date = Date.from(currentDate.atZone(ZoneId.systemDefault()).toInstant())
+            return date
         } else {
-            return currentCalendarTime()
+            val date = currentCalendarTime()
+            return date
         }
     }
 
@@ -23,9 +25,8 @@ object DateHelper {
 }
 
 
-
 data class DetailedDate(
-    val year : Int,
-    val month : Int,
-    val day : Int,
+    val year: Int,
+    val month: Int,
+    val day: Int,
 )

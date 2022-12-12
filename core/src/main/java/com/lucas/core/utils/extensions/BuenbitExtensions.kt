@@ -2,19 +2,19 @@ package com.lucas.core.utils.extensions
 
 import com.lucas.core.data.models.buenbit.BuenbitObject
 import com.lucas.core.data.models.CurrencyType
-import com.lucas.core.data.models.CurrencyValue
+import com.lucas.core.data.models.ExchangeValue
 import com.lucas.core.data.models.buenbit.BuenbitCurrency
 
 
-fun BuenbitObject.toCurrencyList(): List<CurrencyValue> = listOf(
-    daiars.toCurrencyValue(),
-    daiusd.toCurrencyValue(),
-    btcdai.toCurrencyValue(),
-    ethdai.toCurrencyValue(),
-    bnbdai.toCurrencyValue()
+fun BuenbitObject.toCurrencyList(): List<ExchangeValue> = listOf(
+    daiars.toExchangeValue(),
+    daiusd.toExchangeValue(),
+    btcdai.toExchangeValue(),
+    ethdai.toExchangeValue(),
+    bnbdai.toExchangeValue()
 )
 
-fun BuenbitCurrency.toCurrencyValue(): CurrencyValue = CurrencyValue(
+fun BuenbitCurrency.toExchangeValue(): ExchangeValue = ExchangeValue(
     exchangeFrom = this.getCurrencyType(currency),
     exchangeTo = this.getCurrencyType(bidCurrency),
     exchangeValue = sellingPrice,
