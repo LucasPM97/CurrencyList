@@ -13,7 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.lucas.core.data.models.CurrencyValue
+import com.lucas.core.data.models.ExchangeValue
 import com.lucas.currencylist.ui.components.TradingWebList
 import com.lucas.currencylist.ui.screens.currencies.components.TopBar
 import kotlinx.coroutines.launch
@@ -45,7 +45,7 @@ fun CurrenciesScreen(
 private fun Screen(viewModel: CurrenciesViewModel) {
     val coroutineScope = rememberCoroutineScope()
 
-    fun favCurrency(currency: CurrencyValue) {
+    fun favCurrency(currency: ExchangeValue) {
         coroutineScope.launch {
             viewModel.updateFav(currency.currencyId, !currency.fav)
         }

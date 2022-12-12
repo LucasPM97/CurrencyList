@@ -5,29 +5,29 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.lucas.core.data.models.CurrencyValue
+import com.lucas.core.data.models.ExchangeValue
 import com.lucas.core.utils.converters.DateTimeConverter
 
 
-@Database(entities = [CurrencyValue::class], version = 5, exportSchema = false)
+@Database(entities = [ExchangeValue::class], version = 1, exportSchema = false)
 @TypeConverters(DateTimeConverter::class)
-abstract class CurrenciesDatabase : RoomDatabase() {
+abstract class ExchangeValueDatabase : RoomDatabase() {
 
-    abstract val dao: CurrenciesDatabaseDAO
+    abstract val dao: ExchangeValuesDatabaseDAO
 
     companion object {
 
         @Volatile
-        private var INSTANCE: CurrenciesDatabase? = null
+        private var INSTANCE: ExchangeValueDatabase? = null
 
-        fun getInstance(context: Context): CurrenciesDatabase {
+        fun getInstance(context: Context): ExchangeValueDatabase {
             synchronized(this) {
                 var instance = INSTANCE
 
                 if (instance == null) {
                     instance = Room.databaseBuilder(
                         context.applicationContext,
-                        CurrenciesDatabase::class.java,
+                        ExchangeValueDatabase::class.java,
                         "currencies_database"
                     )
                         .fallbackToDestructiveMigration()

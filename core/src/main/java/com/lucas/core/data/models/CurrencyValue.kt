@@ -6,8 +6,8 @@ import androidx.room.PrimaryKey
 import com.lucas.core.utils.extensions.getName
 import com.lucas.core.utils.extensions.roundString
 
-@Entity(tableName = "currencies_table")
-data class CurrencyValue(
+@Entity(tableName = "exchange_table")
+data class ExchangeValue(
     var platform: ExchangePlatformType = ExchangePlatformType.None,
     var exchangeValue: Double,
     var exchangeFrom: CurrencyType = CurrencyType.NONE,

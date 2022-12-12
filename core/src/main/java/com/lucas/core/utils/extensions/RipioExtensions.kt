@@ -1,7 +1,7 @@
 package com.lucas.core.utils.extensions
 
 import com.lucas.core.data.models.CurrencyType
-import com.lucas.core.data.models.CurrencyValue
+import com.lucas.core.data.models.ExchangeValue
 import com.lucas.core.data.models.ripio.RipioCurrency
 
 val usedCurrencies = listOf(
@@ -19,10 +19,10 @@ fun List<RipioCurrency>.filterNoUsedCurrencies(): List<RipioCurrency> = filter {
 }
 
 fun List<RipioCurrency>.toCurrencyList() = map {
-    it.toCurrencyValue()
+    it.toExchangeValue()
 }
 
-fun RipioCurrency.toCurrencyValue(): CurrencyValue = CurrencyValue(
+fun RipioCurrency.toExchangeValue(): ExchangeValue = ExchangeValue(
     exchangeFrom = this.getCurrencyType(quote),
     exchangeTo = this.getCurrencyType(base),
     exchangeValue = price,

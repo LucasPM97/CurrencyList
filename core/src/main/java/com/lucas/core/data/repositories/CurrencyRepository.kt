@@ -1,7 +1,7 @@
 package com.lucas.core.data.repositories
 
 import com.lucas.core.data.local.IExchangeLocalDataSource
-import com.lucas.core.data.models.CurrencyValue
+import com.lucas.core.data.models.ExchangeValue
 import com.lucas.core.data.models.ExchangePlatformType
 import com.lucas.core.data.models.TradingPlatformUpdates
 import com.lucas.core.data.remote.IExchangeRemoteDataSource
@@ -9,8 +9,8 @@ import kotlinx.coroutines.flow.Flow
 
 interface ICurrencyRepository {
     suspend fun fetchExchangeValues(): Boolean
-    fun getExchangeValues(): Flow<List<CurrencyValue>>
-    fun getFavExchangeValues(): Flow<List<CurrencyValue>>
+    fun getExchangeValues(): Flow<List<ExchangeValue>>
+    fun getFavExchangeValues(): Flow<List<ExchangeValue>>
     fun getPlatformsLastUpdateFlow(): Flow<List<TradingPlatformUpdates>>
     suspend fun updateCurrencyFav(currencyId: String, fav: Boolean)
 }
@@ -64,7 +64,7 @@ class CurrencyRepository(
 
     override fun getExchangeValues() = localDataSource.getAllExchangeValues()
 
-    override fun getFavExchangeValues(): Flow<List<CurrencyValue>> =
+    override fun getFavExchangeValues(): Flow<List<ExchangeValue>> =
         localDataSource.getAllFavExchangeValues()
 
     override fun getPlatformsLastUpdateFlow(): Flow<List<TradingPlatformUpdates>> =
