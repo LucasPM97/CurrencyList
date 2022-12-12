@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.work.*
 import com.lucas.core.data.local.ExchangeLocalDataSource
-import com.lucas.core.data.local.database.CurrenciesDatabase
+import com.lucas.core.data.local.database.ExchangeValueDatabase
 import com.lucas.core.data.local.database.PlatformUpdatesDatabase
 import com.lucas.core.data.remote.ExchangeRemoteDataSource
 import com.lucas.core.data.remote.apis.RetrofitBuilder
@@ -19,7 +19,7 @@ class FavCurrenciesViewModel(application: Application) : AndroidViewModel(applic
     private val repository = CurrencyRepository(
         ExchangeLocalDataSource(
             PlatformUpdatesDatabase.getInstance(application.applicationContext).dao,
-            CurrenciesDatabase.getInstance(application.applicationContext).dao
+            ExchangeValueDatabase.getInstance(application.applicationContext).dao
         ),
         ExchangeRemoteDataSource(
             RetrofitBuilder.buenbitService,

@@ -9,7 +9,7 @@ import com.lucas.core.data.models.TradingPlatformUpdates
 import com.lucas.core.utils.converters.DateTimeConverter
 
 
-@Database(entities = [TradingPlatformUpdates::class], version = 3, exportSchema = false)
+@Database(entities = [TradingPlatformUpdates::class], version = 4, exportSchema = false)
 @TypeConverters(DateTimeConverter::class)
 abstract class PlatformUpdatesDatabase : RoomDatabase() {
 

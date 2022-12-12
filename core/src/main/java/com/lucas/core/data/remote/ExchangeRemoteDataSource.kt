@@ -1,6 +1,6 @@
 package com.lucas.core.data.remote
 
-import com.lucas.core.data.models.CurrencyValue
+import com.lucas.core.data.models.ExchangeValue
 import com.lucas.core.data.remote.apis.BinanceApi
 import com.lucas.core.data.remote.apis.BuenbitApi
 import com.lucas.core.data.remote.apis.RipioApi
@@ -8,9 +8,9 @@ import com.lucas.core.utils.extensions.filterNoUsedCurrencies
 import com.lucas.core.utils.extensions.toCurrencyList
 
 interface IExchangeRemoteDataSource {
-    suspend fun getBuenbitExchangeValues(): List<CurrencyValue>
-    suspend fun getBinanceExchangeValues(): List<CurrencyValue>
-    suspend fun getRipioExchangeValues(): List<CurrencyValue>
+    suspend fun getBuenbitExchangeValues(): List<ExchangeValue>
+    suspend fun getBinanceExchangeValues(): List<ExchangeValue>
+    suspend fun getRipioExchangeValues(): List<ExchangeValue>
 }
 
 class ExchangeRemoteDataSource(
@@ -18,7 +18,7 @@ class ExchangeRemoteDataSource(
     private val binanceApi: BinanceApi,
     private val ripioService: RipioApi
 ) : IExchangeRemoteDataSource {
-    override suspend fun getBuenbitExchangeValues(): List<CurrencyValue> {
+    override suspend fun getBuenbitExchangeValues(): List<ExchangeValue> {
         val response = buenbitService.getCurrencyExchangeValues()
 
         return if (response.isSuccessful) {
@@ -27,7 +27,7 @@ class ExchangeRemoteDataSource(
         } else emptyList()
     }
 
-    override suspend fun getBinanceExchangeValues(): List<CurrencyValue> {
+    override suspend fun getBinanceExchangeValues(): List<ExchangeValue> {
         val response = binanceApi.getCurrencyExchangeValues()
 
         return if (response.isSuccessful) {
@@ -36,7 +36,7 @@ class ExchangeRemoteDataSource(
         } else emptyList()
     }
 
-    override suspend fun getRipioExchangeValues(): List<CurrencyValue> {
+    override suspend fun getRipioExchangeValues(): List<ExchangeValue> {
         val response = ripioService.getCurrencyExchangeValues()
 
         return if (response.isSuccessful) {
