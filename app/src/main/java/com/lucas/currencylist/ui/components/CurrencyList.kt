@@ -5,13 +5,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.lucas.core.data.models.CurrencyValue
+import com.lucas.core.data.models.ExchangeValue
 import com.lucas.currencylist.ui.components.CurrencyView
 
 @Composable
 fun CurrencyList(
     modifier: Modifier = Modifier,
-    currencies: List<CurrencyValue>,
+    currencies: List<ExchangeValue>,
     itemFavOnClick: (currencyId: String) -> Unit = {}
 
 ) {

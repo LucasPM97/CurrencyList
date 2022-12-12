@@ -9,7 +9,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.lucas.core.data.models.CurrencyValue
+import com.lucas.core.data.models.ExchangeValue
 import com.lucas.core.data.models.ExchangePlatformType
 import com.lucas.core.data.models.TradingWebProvider
 import com.lucas.core.domain.useCases.PlatformState
@@ -20,7 +20,7 @@ val itemsSpace = 10.dp
 fun TradingWebList(
     platformState: List<PlatformState>,
     modifier: Modifier = Modifier,
-    itemFavOnClick: (currency: CurrencyValue) -> Unit
+    itemFavOnClick: (currency: ExchangeValue) -> Unit
 ) {
     Column(
         modifier
