@@ -6,8 +6,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.lucas.core.data.models.CurrencyType
-import com.lucas.currencylist.ui.extensions.getImage
-import com.lucas.currencylist.ui.extensions.getImageName
+import com.lucas.currencylist.domain.extensions.getImage
+import com.lucas.currencylist.domain.extensions.getImageName
 
 @Composable
 fun CurrencyImage(
