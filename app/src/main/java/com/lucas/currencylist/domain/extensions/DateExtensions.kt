@@ -1,9 +1,9 @@
 package com.lucas.currencylist.domain.extensions
 
 import android.content.Context
-import com.lucas.core.utils.extensions.toDetailedDate
-import com.lucas.core.utils.extensions.toString
-import com.lucas.core.utils.helpers.DateHelper
+import com.lucas.core.domain.extensions.toDetailedDate
+import com.lucas.core.domain.extensions.toString
+import com.lucas.core.domain.helpers.DateHelper
 import com.lucas.currencylist.R
 import java.util.Date
 

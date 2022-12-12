@@ -21,8 +21,8 @@ import com.lucas.core.data.models.CurrencyType
 import com.lucas.core.data.models.ExchangeValue
 import com.lucas.core.data.models.ExchangePlatformType
 import com.lucas.core.data.models.TradingWebProviderState
-import com.lucas.core.utils.extensions.getName
-import com.lucas.core.utils.helpers.DateHelper
+import com.lucas.core.domain.extensions.getName
+import com.lucas.core.domain.helpers.DateHelper
 import com.lucas.currencylist.ui.screens.currencies.CurrencyList
 import com.lucas.currencylist.ui.screens.currencies.components.ErrorMessage
 import java.util.*

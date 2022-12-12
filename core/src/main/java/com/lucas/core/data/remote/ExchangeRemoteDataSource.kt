@@ -4,8 +4,8 @@ import com.lucas.core.data.models.ExchangeValue
 import com.lucas.core.data.remote.apis.BinanceApi
 import com.lucas.core.data.remote.apis.BuenbitApi
 import com.lucas.core.data.remote.apis.RipioApi
-import com.lucas.core.utils.extensions.filterNoUsedCurrencies
-import com.lucas.core.utils.extensions.toCurrencyList
+import com.lucas.core.domain.extensions.filterNoUsedCurrencies
+import com.lucas.core.domain.extensions.toCurrencyList
 
 interface IExchangeRemoteDataSource {
     suspend fun getBuenbitExchangeValues(): List<ExchangeValue>
