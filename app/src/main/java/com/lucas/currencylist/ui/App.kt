@@ -4,8 +4,8 @@ import android.app.Application
 import android.util.Log
 import androidx.work.Configuration
 import com.lucas.core.data.local.ExchangeLocalDataSource
-import com.lucas.core.data.local.database.ExchangeValueDatabase
-import com.lucas.core.data.local.database.PlatformUpdatesDatabase
+import com.lucas.core.data.local.database.exchangeValues.ExchangeValueDatabase
+import com.lucas.core.data.local.database.platforms.PlatformUpdatesDatabase
 import com.lucas.core.data.remote.ExchangeRemoteDataSource
 import com.lucas.core.data.remote.apis.RetrofitBuilder
 import com.lucas.core.data.repositories.CurrencyRepository

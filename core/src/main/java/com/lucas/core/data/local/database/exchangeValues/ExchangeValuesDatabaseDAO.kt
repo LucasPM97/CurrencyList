@@ -1,4 +1,4 @@
-package com.lucas.core.data.local.database
+package com.lucas.core.data.local.database.exchangeValues
 
 import androidx.room.*
 import com.lucas.core.data.models.ExchangePlatformType

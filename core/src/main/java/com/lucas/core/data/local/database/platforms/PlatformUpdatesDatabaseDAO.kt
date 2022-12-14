@@ -1,4 +1,4 @@
-package com.lucas.core.data.local.database
+package com.lucas.core.data.local.database.platforms
 
 import androidx.room.*
 import com.lucas.core.data.models.ExchangePlatformType
@@ -10,7 +10,7 @@ import kotlin.collections.List
 @Dao
 interface PlatformUpdatesDatabaseDAO {
 
-    @Query("Select * FROM platform_updates")
+    @Query("Select * FROM platform_updates ORDER BY platformType")
     fun getAllPlatformsLastUpdateFlow(): Flow<List<TradingPlatformUpdates>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
