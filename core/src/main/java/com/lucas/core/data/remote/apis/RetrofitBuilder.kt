@@ -5,9 +5,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitBuilder {
 
-    private const val BUENBIT_BASE_URL = "https://be.buenbit.com/api/"
-    private const val BINANCE_BASE_URL = "https://binance.com/bapi/composite/v1/public/"
-    private const val RIPIO_BASE_URL = "https://api.exchange.ripio.com/api/v1/"
+    const val BUENBIT_BASE_URL = "https://be.buenbit.com/api/"
+    const val BINANCE_BASE_URL = "https://binance.com/bapi/composite/v1/public/"
+    const val RIPIO_BASE_URL = "https://api.exchange.ripio.com/api/v1/"
 
     private fun getRetrofit(baseUrl: String): Retrofit {
         return Retrofit.Builder()
