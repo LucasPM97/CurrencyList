@@ -1,7 +1,7 @@
 package com.lucas.core.data.local
 
-import com.lucas.core.data.local.database.ExchangeValuesDatabaseDAO
-import com.lucas.core.data.local.database.PlatformUpdatesDatabaseDAO
+import com.lucas.core.data.local.database.exchangeValues.ExchangeValuesDatabaseDAO
+import com.lucas.core.data.local.database.platforms.PlatformUpdatesDatabaseDAO
 import com.lucas.core.data.models.ExchangePlatformType
 import com.lucas.core.data.models.ExchangeValue
 import com.lucas.core.data.models.TradingPlatformUpdates
