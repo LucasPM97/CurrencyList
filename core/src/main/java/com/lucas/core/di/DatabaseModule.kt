@@ -14,7 +14,7 @@ val databaseModule = module {
             "currencies_database"
         )
             .fallbackToDestructiveMigration()
-            .build()
+            .build().dao
     }
     single {
         Room.databaseBuilder(
@@ -24,5 +24,6 @@ val databaseModule = module {
         )
             .fallbackToDestructiveMigration()
             .build()
+            .dao
     }
 }
