@@ -19,11 +19,12 @@ import com.lucas.currencylist.ui.screens.favExchangeList.components.FavoriteList
 import com.lucas.currencylist.ui.screens.favExchangeList.components.NavigateToCurrencyListButton
 import com.lucas.currencylist.ui.screens.favExchangeList.components.TopBar
 import kotlinx.coroutines.launch
+import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun FavExchangeListScreen(
     navController: NavController? = null,
-    viewModel: FavExchangeListViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
+    viewModel: FavExchangeListViewModel = getViewModel()
 ) {
 
     Scaffold(
