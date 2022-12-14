@@ -11,6 +11,9 @@ import com.lucas.core.data.remote.apis.RetrofitBuilder
 import com.lucas.core.data.repositories.CurrencyRepository
 import com.lucas.core.data.workers.ExchangeFetchWorkerFactory
 import com.lucas.core.domain.useCases.FetchExchangeValuesUseCase
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
 
 class App : Application(), Configuration.Provider {
 
@@ -35,5 +38,18 @@ class App : Application(), Configuration.Provider {
                 ExchangeFetchWorkerFactory(fetchUseCase)
             )
             .build()
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+
+        startKoin {
+            // Log Koin into Android logger
+            androidLogger()
+            // Reference Android context
+            androidContext(this@App)
+            // Load modules
+            modules()
+        }
     }
 }
