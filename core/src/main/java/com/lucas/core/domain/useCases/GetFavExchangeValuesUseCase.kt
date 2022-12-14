@@ -6,9 +6,13 @@ import com.lucas.core.domain.extensions.filterByPlatform
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 
+interface IGetFavExchangeValuesUseCase {
+    operator fun invoke(): Flow<List<PlatformState>>
+}
+
 class GetFavExchangeValuesUseCase(
     private val repository: ICurrencyRepository
-) : IGetExchangeValuesUseCase {
+) : IGetFavExchangeValuesUseCase {
 
     override operator fun invoke(): Flow<List<PlatformState>> {
 
