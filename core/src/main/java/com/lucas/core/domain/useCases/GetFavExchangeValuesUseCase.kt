@@ -1,6 +1,8 @@
 package com.lucas.core.domain.useCases
 
 import com.lucas.core.data.repositories.ICurrencyRepository
+import com.lucas.core.domain.extensions.anyPlatform
+import com.lucas.core.domain.extensions.filterByPlatform
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 
@@ -17,13 +19,14 @@ class GetFavExchangeValuesUseCase(
             exchangeValuesFlow,
             platformsLastUpdateFlow
         ) { exchangeValues, platformsLastUpdate ->
-            platformsLastUpdate.map { platform ->
+
+            platformsLastUpdate.filter {
+                exchangeValues.anyPlatform(it.platformType)
+            }.map { platform ->
                 PlatformState(
                     platformType = platform.platformType,
                     lastUpdate = platform.lastUpdate,
-                    exchangeValues = exchangeValues.filter {
-                        it.platform == platform.platformType
-                    }
+                    exchangeValues = exchangeValues.filterByPlatform(platform.platformType)
                 )
             }
         }
