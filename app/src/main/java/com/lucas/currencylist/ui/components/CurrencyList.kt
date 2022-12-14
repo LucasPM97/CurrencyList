@@ -1,4 +1,4 @@
-package com.lucas.currencylist.ui.screens.currencies
+package com.lucas.currencylist.ui.screens.exchangeList
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
