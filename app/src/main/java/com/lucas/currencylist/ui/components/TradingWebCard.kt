@@ -23,8 +23,8 @@ import com.lucas.core.data.models.ExchangePlatformType
 import com.lucas.core.data.models.TradingWebProviderState
 import com.lucas.core.domain.extensions.getName
 import com.lucas.core.domain.helpers.DateHelper
-import com.lucas.currencylist.ui.screens.currencies.CurrencyList
-import com.lucas.currencylist.ui.screens.currencies.components.ErrorMessage
+import com.lucas.currencylist.ui.screens.exchangeList.CurrencyList
+import com.lucas.currencylist.ui.screens.exchangeList.components.ErrorMessage
 import java.util.*
 import com.lucas.currencylist.R
 import com.lucas.currencylist.domain.extensions.getImage

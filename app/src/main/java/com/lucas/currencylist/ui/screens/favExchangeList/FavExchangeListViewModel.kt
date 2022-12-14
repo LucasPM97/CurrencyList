@@ -1,13 +1,10 @@
-package com.lucas.currencylist.ui.screens.favCurrencies
+package com.lucas.currencylist.ui.screens.favExchangeList
 
 import androidx.lifecycle.ViewModel
-import androidx.work.*
-import com.lucas.core.data.workers.ExchangeFetchWorker
 import com.lucas.core.domain.useCases.IGetFavExchangeValuesUseCase
 import com.lucas.core.domain.useCases.IUpdateExchangeValueFavUseCase
-import java.util.concurrent.TimeUnit
 
-class FavCurrenciesViewModel(
+class FavExchangeListViewModel(
     private val getFavExchangeValues: IGetFavExchangeValuesUseCase,
     private val updateExchangeValueFav: IUpdateExchangeValueFavUseCase
 ) : ViewModel() {
