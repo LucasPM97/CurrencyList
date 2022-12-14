@@ -48,6 +48,10 @@ android {
 
 dependencies {
 
+    // Modules
+    implementation project(path: ':core')
+
+    // Core
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'com.google.android.material:material:1.7.0'
@@ -56,25 +60,29 @@ dependencies {
     implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
     implementation 'androidx.activity:activity-compose:1.6.1'
-    //Navigation Compose
+
+    // Navigation Compose
     implementation "androidx.navigation:navigation-compose:2.6.0-alpha04"
+
     // Compose Integration with observables
     implementation("androidx.compose.runtime:runtime-livedata:$compose_version")
     implementation("androidx.compose.runtime:runtime-rxjava2:$compose_version")
+
     // Coroutines
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.5.1"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4'
 
-    //Retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation 'com.google.code.gson:gson:2.8.9'
-    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
-    implementation project(path: ':core')
-    //WorkManager
+    // WorkManager: Background jobs
     implementation "androidx.work:work-runtime-ktx:2.7.1"
-    //Test and Tools
+
+    // Koin: Dependency Injection
+    implementation "io.insert-koin:koin-core:$koin_version"
+    implementation "io.insert-koin:koin-androidx-workmanager:$koin_android_version"
+    implementation "io.insert-koin:koin-androidx-compose:$koin_android_compose_version"
+
+
+    // Test and Tools
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
