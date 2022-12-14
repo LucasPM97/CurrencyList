@@ -11,17 +11,17 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.lucas.core.data.models.ExchangeValue
 import com.lucas.currencylist.ui.components.TradingWebList
 import com.lucas.currencylist.ui.screens.exchangeList.components.TopBar
 import kotlinx.coroutines.launch
+import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun ExchangeListScreen(
     navController: NavController?,
-    viewModel: ExchangeListViewModel = viewModel()
+    viewModel: ExchangeListViewModel = getViewModel()
 ) {
     fun onBack() {
         navController?.let {
