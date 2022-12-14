@@ -8,6 +8,7 @@ val coreModule = module {
         databaseModule,
         dataSourceModule,
         repositoryModule,
-        useCasesModule
+        useCasesModule,
+        workManagerModule
     )
 }
