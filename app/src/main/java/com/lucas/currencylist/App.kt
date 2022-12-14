@@ -1,4 +1,4 @@
-package com.lucas.currencylist.ui
+package com.lucas.currencylist
 
 import android.app.Application
 import android.util.Log
@@ -51,7 +51,10 @@ class App : Application(), Configuration.Provider {
             // Reference Android context
             androidContext(this@App)
             // Load modules
-            modules(apiModule, databaseModule, dataSourceModule, repositoryModule, useCasesModule)
+            modules(
+                appModule,
+                coreModule
+            )
         }
     }
 }
