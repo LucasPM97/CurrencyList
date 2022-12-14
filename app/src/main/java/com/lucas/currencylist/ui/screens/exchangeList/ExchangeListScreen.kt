@@ -1,4 +1,4 @@
-package com.lucas.currencylist.ui.screens.currencies
+package com.lucas.currencylist.ui.screens.exchangeList
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,13 +15,13 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.lucas.core.data.models.ExchangeValue
 import com.lucas.currencylist.ui.components.TradingWebList
-import com.lucas.currencylist.ui.screens.currencies.components.TopBar
+import com.lucas.currencylist.ui.screens.exchangeList.components.TopBar
 import kotlinx.coroutines.launch
 
 @Composable
-fun CurrenciesScreen(
+fun ExchangeListScreen(
     navController: NavController?,
-    viewModel: CurrenciesViewModel = viewModel()
+    viewModel: ExchangeListViewModel = viewModel()
 ) {
     fun onBack() {
         navController?.let {
@@ -42,7 +42,7 @@ fun CurrenciesScreen(
 }
 
 @Composable
-private fun Screen(viewModel: CurrenciesViewModel) {
+private fun Screen(viewModel: ExchangeListViewModel) {
     val coroutineScope = rememberCoroutineScope()
 
     fun favCurrency(currency: ExchangeValue) {
@@ -69,5 +69,5 @@ private fun Screen(viewModel: CurrenciesViewModel) {
 @Preview(showBackground = true)
 @Composable
 fun PreviewScreen() {
-    CurrenciesScreen(navController = null)
+    ExchangeListScreen(navController = null)
 }

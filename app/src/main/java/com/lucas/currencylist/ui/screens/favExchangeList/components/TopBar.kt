@@ -1,4 +1,4 @@
-package com.lucas.currencylist.ui.screens.favCurrencies.components
+package com.lucas.currencylist.ui.screens.favExchangeList.components
 
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar

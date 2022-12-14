@@ -1,4 +1,4 @@
-package com.lucas.currencylist.ui.screens.currencies.components
+package com.lucas.currencylist.ui.screens.exchangeList.components
 
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
