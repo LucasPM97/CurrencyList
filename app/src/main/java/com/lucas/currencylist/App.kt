@@ -12,6 +12,7 @@ import com.lucas.core.data.repositories.CurrencyRepository
 import com.lucas.core.data.workers.ExchangeFetchWorkerFactory
 import com.lucas.core.di.*
 import com.lucas.core.domain.useCases.FetchExchangeValuesUseCase
+import com.lucas.currencylist.di.appModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
