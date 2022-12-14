@@ -9,8 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.lucas.currencylist.ui.screens.currencies.CurrenciesScreen
-import com.lucas.currencylist.ui.screens.favCurrencies.FavCurrenciesScreen
+import com.lucas.currencylist.ui.screens.exchangeList.ExchangeListScreen
+import com.lucas.currencylist.ui.screens.favExchangeList.FavExchangeListScreen
 import com.lucas.currencylist.ui.theme.CurrencyListTheme
 
 class MainActivity : ComponentActivity() {
@@ -32,7 +32,7 @@ fun AppComponent() {
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = "favCurrencies") {
-        composable("favCurrencies") { FavCurrenciesScreen(navController) }
-        composable("currencies") { CurrenciesScreen(navController) }
+        composable("favCurrencies") { FavExchangeListScreen(navController) }
+        composable("currencies") { ExchangeListScreen(navController) }
     }
 }

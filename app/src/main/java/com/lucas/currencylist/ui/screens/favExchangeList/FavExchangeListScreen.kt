@@ -1,4 +1,4 @@
-package com.lucas.currencylist.ui.screens.favCurrencies
+package com.lucas.currencylist.ui.screens.favExchangeList
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -15,15 +15,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import com.lucas.core.data.models.ExchangeValue
-import com.lucas.currencylist.ui.screens.favCurrencies.components.FavoriteList
-import com.lucas.currencylist.ui.screens.favCurrencies.components.NavigateToCurrencyListButton
-import com.lucas.currencylist.ui.screens.favCurrencies.components.TopBar
+import com.lucas.currencylist.ui.screens.favExchangeList.components.FavoriteList
+import com.lucas.currencylist.ui.screens.favExchangeList.components.NavigateToCurrencyListButton
+import com.lucas.currencylist.ui.screens.favExchangeList.components.TopBar
 import kotlinx.coroutines.launch
 
 @Composable
-fun FavCurrenciesScreen(
+fun FavExchangeListScreen(
     navController: NavController? = null,
-    viewModel: FavCurrenciesViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
+    viewModel: FavExchangeListViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
 ) {
 
     Scaffold(
@@ -45,7 +45,7 @@ fun FavCurrenciesScreen(
 
 @Composable
 private fun Screen(
-    viewModel: FavCurrenciesViewModel
+    viewModel: FavExchangeListViewModel
 ) {
     val coroutineScope = rememberCoroutineScope()
 
@@ -90,5 +90,5 @@ private fun EmptyFavListMessage() {
 @Preview(showBackground = true)
 @Composable
 fun PreviewScreen() {
-    FavCurrenciesScreen()
+    FavExchangeListScreen()
 }
