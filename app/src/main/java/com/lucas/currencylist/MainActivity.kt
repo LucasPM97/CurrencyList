@@ -9,11 +9,17 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.work.*
+import com.lucas.core.data.workers.ExchangeFetchWorker
 import com.lucas.currencylist.ui.screens.exchangeList.ExchangeListScreen
 import com.lucas.currencylist.ui.screens.favExchangeList.FavExchangeListScreen
 import com.lucas.currencylist.ui.theme.CurrencyListTheme
+import java.util.concurrent.TimeUnit
 
 class MainActivity : ComponentActivity() {
+
+    private val workManager = WorkManager.getInstance(this)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -24,15 +30,33 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+
+        runWorkers()
     }
-}
 
-@Composable
-fun AppComponent() {
-    val navController = rememberNavController()
+    private fun runWorkers() {
+        val constraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .setRequiresBatteryNotLow(true)
+            .build()
+        val request = PeriodicWorkRequestBuilder<ExchangeFetchWorker>(15, TimeUnit.MINUTES)
+            .setConstraints(constraints)
+            .addTag(ExchangeFetchWorker.TAG)
+            .build()
+        workManager.enqueueUniquePeriodicWork(
+            ExchangeFetchWorker.TAG,
+            ExistingPeriodicWorkPolicy.REPLACE,
+            request
+        )
+    }
 
-    NavHost(navController = navController, startDestination = "favCurrencies") {
-        composable("favCurrencies") { FavExchangeListScreen(navController) }
-        composable("currencies") { ExchangeListScreen(navController) }
+    @Composable
+    private fun AppComponent() {
+        val navController = rememberNavController()
+
+        NavHost(navController = navController, startDestination = "favCurrencies") {
+            composable("favCurrencies") { FavExchangeListScreen(navController) }
+            composable("currencies") { ExchangeListScreen(navController) }
+        }
     }
 }
