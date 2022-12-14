@@ -10,6 +10,7 @@ import com.lucas.core.data.remote.ExchangeRemoteDataSource
 import com.lucas.core.data.remote.apis.RetrofitBuilder
 import com.lucas.core.data.repositories.CurrencyRepository
 import com.lucas.core.data.workers.ExchangeFetchWorkerFactory
+import com.lucas.core.di.*
 import com.lucas.core.domain.useCases.FetchExchangeValuesUseCase
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -49,7 +50,7 @@ class App : Application(), Configuration.Provider {
             // Reference Android context
             androidContext(this@App)
             // Load modules
-            modules()
+            modules(apiModule, databaseModule, dataSourceModule, repositoryModule, useCasesModule)
         }
     }
 }
