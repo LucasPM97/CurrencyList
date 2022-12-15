@@ -39,7 +39,7 @@ class MainActivity : ComponentActivity() {
             .setRequiredNetworkType(NetworkType.CONNECTED)
             .setRequiresBatteryNotLow(true)
             .build()
-        val request = PeriodicWorkRequestBuilder<ExchangeFetchWorker>(15, TimeUnit.MINUTES)
+        val request = PeriodicWorkRequestBuilder<ExchangeFetchWorker>(30, TimeUnit.MINUTES)
             .setConstraints(constraints)
             .addTag(ExchangeFetchWorker.TAG)
             .build()
