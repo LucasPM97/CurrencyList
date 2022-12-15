@@ -7,14 +7,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.lucas.core.data.models.ExchangeValue
 import com.lucas.core.domain.useCases.PlatformState
-import com.lucas.currencylist.ui.components.TradingWebList
+import com.lucas.currencylist.ui.components.PlatformCardList
 
 @Composable
 fun FavoriteList(
     platformsState: List<PlatformState>,
     itemFavOnClick: (currency: ExchangeValue) -> Unit
 ) {
-    TradingWebList(
+    PlatformCardList(
         platformsState,
         modifier = Modifier
             .fillMaxSize()

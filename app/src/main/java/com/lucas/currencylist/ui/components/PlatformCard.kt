@@ -23,7 +23,6 @@ import com.lucas.core.data.models.ExchangePlatformType
 import com.lucas.core.data.models.TradingWebProviderState
 import com.lucas.core.domain.extensions.getName
 import com.lucas.core.domain.helpers.DateHelper
-import com.lucas.currencylist.ui.screens.exchangeList.CurrencyList
 import com.lucas.currencylist.ui.screens.exchangeList.components.ErrorMessage
 import java.util.*
 import com.lucas.currencylist.R
@@ -31,7 +30,7 @@ import com.lucas.currencylist.domain.extensions.getImage
 import com.lucas.currencylist.domain.extensions.lastUpdateText
 
 @Composable
-fun TradingWebCard(
+fun PlatformCard(
     exchangePlatformType: ExchangePlatformType,
     tradingWebState: TradingWebProviderState = TradingWebProviderState.Completed(),
     lastUpdate: Date?,
@@ -162,7 +161,7 @@ private fun RenderList(
             )
         }
     }
-    CurrencyList(
+    ExchangeValueList(
         modifier = Modifier.padding(bottom = 20.dp),
         currencies,
         itemFavOnClick
@@ -172,7 +171,7 @@ private fun RenderList(
 @Composable
 @Preview
 fun PreviewTradingWebCard_CompletedState() {
-    TradingWebCard(
+    PlatformCard(
         exchangePlatformType = ExchangePlatformType.Binance,
         tradingWebState = TradingWebProviderState.Completed(),
         currencyList = listOf(
@@ -196,7 +195,7 @@ fun PreviewTradingWebCard_CompletedState() {
 @Composable
 @Preview
 fun PreviewTradingWebCard_Error() {
-    TradingWebCard(
+    PlatformCard(
         exchangePlatformType = ExchangePlatformType.Binance,
         tradingWebState = TradingWebProviderState.Completed(),
         currencyList = emptyList(),
@@ -207,7 +206,7 @@ fun PreviewTradingWebCard_Error() {
 @Composable
 @Preview
 fun PreviewTradingWebCard_Loading() {
-    TradingWebCard(
+    PlatformCard(
         exchangePlatformType = ExchangePlatformType.Binance,
         tradingWebState = TradingWebProviderState.IsLoading(),
         currencyList = emptyList(),
@@ -218,7 +217,7 @@ fun PreviewTradingWebCard_Loading() {
 @Composable
 @Preview
 fun PreviewTradingWebCard_Loading_WithItems() {
-    TradingWebCard(
+    PlatformCard(
         exchangePlatformType = ExchangePlatformType.Binance,
         tradingWebState = TradingWebProviderState.IsLoading(),
         currencyList = listOf(

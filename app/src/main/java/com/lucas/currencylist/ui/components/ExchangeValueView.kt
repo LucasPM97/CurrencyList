@@ -13,10 +13,10 @@ import com.lucas.core.data.models.ExchangeValue
 import com.lucas.core.data.models.ExchangePlatformType
 
 @Composable
-fun CurrencyView(
-    ExchangeValue: ExchangeValue,
+fun ExchangeValueView(
+    exchangeValue: ExchangeValue,
     modifier: Modifier = Modifier,
-    favOnClick: (currencyId: String) -> Unit = {}
+    favOnClick: (exchangeValueId: String) -> Unit = {}
 ) {
     Column(
         modifier.fillMaxWidth()
@@ -25,13 +25,13 @@ fun CurrencyView(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
-                text = ExchangeValue.exchangeTitle,
+                text = exchangeValue.exchangeTitle,
                 modifier = Modifier
                     .padding(end = 20.dp),
             )
-            CurrencyStack(
-                exchangeFrom = ExchangeValue.exchangeFrom,
-                exchangeTo = ExchangeValue.exchangeTo
+            CurrencyImageStack(
+                exchangeFrom = exchangeValue.exchangeFrom,
+                exchangeTo = exchangeValue.exchangeTo
             )
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -39,13 +39,13 @@ fun CurrencyView(
                 horizontalArrangement = Arrangement.End
             ) {
                 Text(
-                    text = ExchangeValue.exchangeString,
+                    text = exchangeValue.exchangeString,
                     textAlign = TextAlign.End
                 )
                 FavButton(
-                    ExchangeValue.fav,
+                    exchangeValue.fav,
                     onClick = {
-                        favOnClick(ExchangeValue.currencyId)
+                        favOnClick(exchangeValue.currencyId)
                     }
                 )
             }
@@ -55,7 +55,7 @@ fun CurrencyView(
 }
 
 @Composable
-private fun CurrencyStack(
+private fun CurrencyImageStack(
     exchangeFrom: CurrencyType,
     exchangeTo: CurrencyType
 ) {
@@ -80,8 +80,8 @@ private fun CurrencyStack(
 @Composable
 @Preview(showBackground = true)
 fun PreviewCurrency() {
-    CurrencyView(
-        ExchangeValue = ExchangeValue(
+    ExchangeValueView(
+        exchangeValue = ExchangeValue(
             platform = ExchangePlatformType.None,
             180.5,
             exchangeFrom = CurrencyType.ARS,

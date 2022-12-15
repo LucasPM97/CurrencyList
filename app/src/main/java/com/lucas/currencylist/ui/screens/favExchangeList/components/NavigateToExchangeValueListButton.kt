@@ -9,23 +9,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
+import com.lucas.currencylist.NavigationConsts
 import com.lucas.currencylist.R
 
 @Composable
-fun NavigateToCurrencyListButton(
+fun NavigateToExchangeValueListButton(
     modifier: Modifier = Modifier,
     navController: NavController? = null,
 ) {
-    fun goToCurrencyList() {
-        navController?.let {
-            it.navigate("currencies")
-        }
+    fun goToExchangeValuesList() {
+        navController?.navigate(NavigationConsts.EXCHANGE_LIST_SCREEN)
     }
 
     FloatingActionButton(
         modifier = modifier,
         onClick = {
-            goToCurrencyList()
+            goToExchangeValuesList()
         },
     ) {
         Icon(
@@ -38,5 +37,5 @@ fun NavigateToCurrencyListButton(
 @Composable
 @Preview
 fun PreviewButton() {
-    NavigateToCurrencyListButton()
+    NavigateToExchangeValueListButton()
 }
