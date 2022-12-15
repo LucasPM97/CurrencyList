@@ -1,6 +1,6 @@
 package com.lucas.core.data.models.binance
 
-data class BinanceCurrency(
+data class BinanceExchangeValue(
     val name: String,
     val price: Double
 )

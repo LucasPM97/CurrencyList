@@ -2,11 +2,12 @@ package com.lucas.core.domain.extensions
 
 import com.lucas.core.data.models.buenbit.BuenbitObject
 import com.lucas.core.data.models.CurrencyType
+import com.lucas.core.data.models.ExchangePlatformType
 import com.lucas.core.data.models.ExchangeValue
-import com.lucas.core.data.models.buenbit.BuenbitCurrency
+import com.lucas.core.data.models.buenbit.BuenbitExchangeValue
 
 
-fun BuenbitObject.toCurrencyList(): List<ExchangeValue> = listOf(
+fun BuenbitObject.toExchangeValueList(): List<ExchangeValue> = listOf(
     daiars.toExchangeValue(),
     daiusd.toExchangeValue(),
     btcdai.toExchangeValue(),
@@ -14,14 +15,14 @@ fun BuenbitObject.toCurrencyList(): List<ExchangeValue> = listOf(
     bnbdai.toExchangeValue()
 )
 
-fun BuenbitCurrency.toExchangeValue(): ExchangeValue = ExchangeValue(
+fun BuenbitExchangeValue.toExchangeValue(): ExchangeValue = ExchangeValue(
     exchangeFrom = this.getCurrencyType(currency),
     exchangeTo = this.getCurrencyType(bidCurrency),
     exchangeValue = sellingPrice,
-    platform = com.lucas.core.data.models.ExchangePlatformType.Buenbit
+    platform = ExchangePlatformType.Buenbit
 )
 
-fun BuenbitCurrency.getCurrencyType(currencyName: String): CurrencyType = when (currencyName) {
+fun BuenbitExchangeValue.getCurrencyType(currencyName: String): CurrencyType = when (currencyName) {
     "ars" -> CurrencyType.ARS
     "usd" -> CurrencyType.USD
     "dai" -> CurrencyType.DAI

@@ -5,7 +5,7 @@ import com.lucas.core.data.remote.apis.BinanceApi
 import com.lucas.core.data.remote.apis.BuenbitApi
 import com.lucas.core.data.remote.apis.RipioApi
 import com.lucas.core.domain.extensions.filterNoUsedCurrencies
-import com.lucas.core.domain.extensions.toCurrencyList
+import com.lucas.core.domain.extensions.toExchangeValueList
 
 interface IExchangeRemoteDataSource {
     suspend fun getBuenbitExchangeValues(): List<ExchangeValue>
@@ -22,7 +22,7 @@ class ExchangeRemoteDataSource(
         val response = buenbitService.getCurrencyExchangeValues()
 
         return if (response.isSuccessful) {
-            return response.body()?.buenbitObject?.toCurrencyList()
+            return response.body()?.buenbitObject?.toExchangeValueList()
                 ?: emptyList()
         } else emptyList()
     }
@@ -31,7 +31,7 @@ class ExchangeRemoteDataSource(
         val response = binanceApi.getCurrencyExchangeValues()
 
         return if (response.isSuccessful) {
-            return response.body()?.data?.filterNoUsedCurrencies()?.toCurrencyList()
+            return response.body()?.data?.filterNoUsedCurrencies()?.toExchangeValueList()
                 ?: emptyList()
         } else emptyList()
     }
@@ -40,7 +40,7 @@ class ExchangeRemoteDataSource(
         val response = ripioService.getCurrencyExchangeValues()
 
         return if (response.isSuccessful) {
-            return response.body()?.filterNoUsedCurrencies()?.toCurrencyList()
+            return response.body()?.filterNoUsedCurrencies()?.toExchangeValueList()
                 ?: emptyList()
         } else emptyList()
     }

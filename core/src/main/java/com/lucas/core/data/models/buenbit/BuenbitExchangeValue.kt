@@ -2,7 +2,7 @@ package com.lucas.core.data.models.buenbit
 
 import com.google.gson.annotations.SerializedName
 
-data class BuenbitCurrency(
+data class BuenbitExchangeValue(
     val currency: String,
     @SerializedName("bid_currency") val bidCurrency: String,
     @SerializedName("ask_currency") val askCurrency: String,
