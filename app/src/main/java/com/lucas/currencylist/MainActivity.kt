@@ -54,9 +54,22 @@ class MainActivity : ComponentActivity() {
     private fun AppComponent() {
         val navController = rememberNavController()
 
-        NavHost(navController = navController, startDestination = "favCurrencies") {
-            composable("favCurrencies") { FavExchangeListScreen(navController) }
-            composable("currencies") { ExchangeListScreen(navController) }
+        NavHost(
+            navController = navController,
+            startDestination = NavigationConsts.FAV_EXCHANGE_LIST_SCREEN
+        ) {
+            composable(NavigationConsts.FAV_EXCHANGE_LIST_SCREEN) {
+                FavExchangeListScreen(
+                    navController
+                )
+            }
+            composable(NavigationConsts.EXCHANGE_LIST_SCREEN) { ExchangeListScreen(navController) }
         }
     }
+}
+
+object NavigationConsts {
+    const val FAV_EXCHANGE_LIST_SCREEN = "favExchangeValuesList"
+    const val EXCHANGE_LIST_SCREEN = "exchangeValuesList"
+
 }

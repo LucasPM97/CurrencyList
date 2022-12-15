@@ -16,7 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import com.lucas.core.data.models.ExchangeValue
 import com.lucas.currencylist.ui.screens.favExchangeList.components.FavoriteList
-import com.lucas.currencylist.ui.screens.favExchangeList.components.NavigateToCurrencyListButton
+import com.lucas.currencylist.ui.screens.favExchangeList.components.NavigateToExchangeValueListButton
 import com.lucas.currencylist.ui.screens.favExchangeList.components.TopBar
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel
@@ -32,7 +32,7 @@ fun FavExchangeListScreen(
             TopBar()
         },
         floatingActionButton = {
-            NavigateToCurrencyListButton(
+            NavigateToExchangeValueListButton(
                 navController = navController
             )
         },

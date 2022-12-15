@@ -13,7 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.lucas.core.data.models.ExchangeValue
-import com.lucas.currencylist.ui.components.TradingWebList
+import com.lucas.currencylist.ui.components.PlatformCardList
 import com.lucas.currencylist.ui.screens.exchangeList.components.TopBar
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel
@@ -24,9 +24,7 @@ fun ExchangeListScreen(
     viewModel: ExchangeListViewModel = getViewModel()
 ) {
     fun onBack() {
-        navController?.let {
-            it.popBackStack()
-        }
+        navController?.popBackStack()
     }
 
     Scaffold(
@@ -45,22 +43,22 @@ fun ExchangeListScreen(
 private fun Screen(viewModel: ExchangeListViewModel) {
     val coroutineScope = rememberCoroutineScope()
 
-    fun favCurrency(currency: ExchangeValue) {
+    fun favExchangeValue(exchangeValue: ExchangeValue) {
         coroutineScope.launch {
-            viewModel.updateFav(currency.currencyId, !currency.fav)
+            viewModel.updateFav(exchangeValue.currencyId, !exchangeValue.fav)
         }
     }
 
     val platformsState by viewModel.currencies.collectAsState(initial = null)
 
-    platformsState?.let {
-        TradingWebList(
+    platformsState?.let { it ->
+        PlatformCardList(
             platformState = it,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(horizontal = 20.dp),
-            itemFavOnClick = {
-                favCurrency(it)
+            itemFavOnClick = { exchangeValue ->
+                favExchangeValue(exchangeValue)
             }
         )
     }

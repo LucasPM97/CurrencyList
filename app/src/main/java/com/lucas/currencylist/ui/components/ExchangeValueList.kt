@@ -1,4 +1,4 @@
-package com.lucas.currencylist.ui.screens.exchangeList
+package com.lucas.currencylist.ui.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -6,18 +6,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.lucas.core.data.models.ExchangeValue
-import com.lucas.currencylist.ui.components.CurrencyView
 
 @Composable
-fun CurrencyList(
+fun ExchangeValueList(
     modifier: Modifier = Modifier,
-    currencies: List<ExchangeValue>,
-    itemFavOnClick: (currencyId: String) -> Unit = {}
+    exchangeValues: List<ExchangeValue>,
+    itemFavOnClick: (exchangeValueId: String) -> Unit = {}
 
 ) {
     Column(modifier) {
-        currencies.forEach {
-            CurrencyView(
+        exchangeValues.forEach {
+            ExchangeValueView(
                 it,
                 modifier = Modifier
                     .padding(bottom = 9.dp),
