@@ -7,9 +7,9 @@ data class BuenbitCurrencyModel(
 )
 
 data class BuenbitObject(
-    val daiars: BuenbitCurrency,
-    val daiusd: BuenbitCurrency,
-    val btcdai: BuenbitCurrency,
-    val ethdai: BuenbitCurrency,
-    val bnbdai: BuenbitCurrency
+    val daiars: BuenbitExchangeValue,
+    val daiusd: BuenbitExchangeValue,
+    val btcdai: BuenbitExchangeValue,
+    val ethdai: BuenbitExchangeValue,
+    val bnbdai: BuenbitExchangeValue
 )

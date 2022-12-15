@@ -1,12 +1,12 @@
 package com.lucas.core.di
 
-import com.lucas.core.data.repositories.CurrencyRepository
-import com.lucas.core.data.repositories.ICurrencyRepository
+import com.lucas.core.data.repositories.ExchangeRepository
+import com.lucas.core.data.repositories.IExchangeRepository
 import org.koin.dsl.module
 
 val repositoryModule = module {
-    single<ICurrencyRepository> {
-        CurrencyRepository(
+    single<IExchangeRepository> {
+        ExchangeRepository(
             get(),
             get()
         )

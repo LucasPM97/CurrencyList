@@ -1,6 +1,6 @@
 package com.lucas.core.domain.useCases
 
-import com.lucas.core.data.repositories.ICurrencyRepository
+import com.lucas.core.data.repositories.IExchangeRepository
 import com.lucas.core.domain.extensions.anyPlatform
 import com.lucas.core.domain.extensions.filterByPlatform
 import kotlinx.coroutines.flow.Flow
@@ -11,7 +11,7 @@ interface IGetFavExchangeValuesUseCase {
 }
 
 class GetFavExchangeValuesUseCase(
-    private val repository: ICurrencyRepository
+    private val repository: IExchangeRepository
 ) : IGetFavExchangeValuesUseCase {
 
     override operator fun invoke(): Flow<List<PlatformState>> {

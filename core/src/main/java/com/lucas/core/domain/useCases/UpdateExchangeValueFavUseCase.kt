@@ -1,6 +1,6 @@
 package com.lucas.core.domain.useCases
 
-import com.lucas.core.data.repositories.ICurrencyRepository
+import com.lucas.core.data.repositories.IExchangeRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -10,12 +10,12 @@ interface IUpdateExchangeValueFavUseCase {
 }
 
 class UpdateExchangeValueFavUseCase(
-    private val repository: ICurrencyRepository,
+    private val repository: IExchangeRepository,
     private val dispatcher: CoroutineDispatcher = Dispatchers.Default
 ) : IUpdateExchangeValueFavUseCase {
 
     override suspend operator fun invoke(currencyId: String, fav: Boolean) =
         withContext(dispatcher) {
-            repository.updateCurrencyFav(currencyId, fav)
+            repository.updateExchangeValueFav(currencyId, fav)
         }
 }

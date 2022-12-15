@@ -2,7 +2,7 @@ package com.lucas.core.domain.useCases
 
 import com.lucas.core.data.models.ExchangeValue
 import com.lucas.core.data.models.ExchangePlatformType
-import com.lucas.core.data.repositories.ICurrencyRepository
+import com.lucas.core.data.repositories.IExchangeRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import java.util.Date
@@ -12,7 +12,7 @@ interface IGetExchangeValuesUseCase {
 }
 
 class GetExchangeValuesUseCase(
-    private val repository: ICurrencyRepository
+    private val repository: IExchangeRepository
 ) : IGetExchangeValuesUseCase {
 
     override operator fun invoke(): Flow<List<PlatformState>> {
