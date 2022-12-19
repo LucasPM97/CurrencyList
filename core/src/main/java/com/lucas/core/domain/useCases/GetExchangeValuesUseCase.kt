@@ -2,9 +2,13 @@ package com.lucas.core.domain.useCases
 
 import com.lucas.core.data.models.ExchangeValue
 import com.lucas.core.data.models.ExchangePlatformType
+import com.lucas.core.data.models.TradingPlatformUpdates
 import com.lucas.core.data.repositories.IExchangeRepository
+import com.lucas.core.domain.extensions.filterByPlatform
+import com.lucas.core.domain.extensions.toPlatformState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.toList
 import java.util.Date
 
 interface IGetExchangeValuesUseCase {
@@ -25,13 +29,7 @@ class GetExchangeValuesUseCase(
             platformsLastUpdateFlow
         ) { exchangeValues, platformsLastUpdate ->
             platformsLastUpdate.map { platform ->
-                PlatformState(
-                    platformType = platform.platformType,
-                    lastUpdate = platform.lastUpdate,
-                    exchangeValues = exchangeValues.filter {
-                        it.platform == platform.platformType
-                    }
-                )
+                platform.toPlatformState(exchangeValues)
             }
         }
     }

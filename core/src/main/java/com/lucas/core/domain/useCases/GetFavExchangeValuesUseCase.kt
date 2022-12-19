@@ -3,6 +3,7 @@ package com.lucas.core.domain.useCases
 import com.lucas.core.data.repositories.IExchangeRepository
 import com.lucas.core.domain.extensions.anyPlatform
 import com.lucas.core.domain.extensions.filterByPlatform
+import com.lucas.core.domain.extensions.toPlatformState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 
@@ -27,11 +28,8 @@ class GetFavExchangeValuesUseCase(
             platformsLastUpdate.filter {
                 exchangeValues.anyPlatform(it.platformType)
             }.map { platform ->
-                PlatformState(
-                    platformType = platform.platformType,
-                    lastUpdate = platform.lastUpdate,
-                    exchangeValues = exchangeValues.filterByPlatform(platform.platformType)
-                )
+                platform.toPlatformState(exchangeValues)
+
             }
         }
     }
