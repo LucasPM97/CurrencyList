@@ -10,14 +10,12 @@ import org.junit.Test
 class GetExchangeValuesUseCaseTest {
 
     private lateinit var getExchangeValues: GetExchangeValuesUseCase
-    private lateinit var getFavExchangeValues: GetFavExchangeValuesUseCase
     private lateinit var repository: FakeExchangeRepository
 
     @Before
     fun setup() {
         repository = FakeExchangeRepository()
         getExchangeValues = GetExchangeValuesUseCase(repository)
-        getFavExchangeValues = GetFavExchangeValuesUseCase(repository)
     }
 
     @Test

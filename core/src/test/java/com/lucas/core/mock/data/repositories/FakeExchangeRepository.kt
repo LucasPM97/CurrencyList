@@ -31,14 +31,14 @@ class FakeExchangeRepository : IExchangeRepository {
     }
 
     override suspend fun updateExchangeValueFav(currencyId: String, fav: Boolean) {
-        exchangeValues.first {
-            it.currencyId == currencyId
-        }.fav = fav
+
     }
+
+    fun getRandomExchangeValue() = exchangeValues.random()
 
     fun addFakeExchangeValues() {
         for (i in 0..5) {
-            exchangeValues.add(getRandomExchangeValue())
+            exchangeValues.add(createFakeExchangeValue())
         }
     }
 
@@ -60,7 +60,7 @@ class FakeExchangeRepository : IExchangeRepository {
         // Add some not fav exchange values to know if UseCase filters are working correctly
         for (i in 0..3) {
             exchangeValues.add(
-                getRandomExchangeValue()
+                createFakeExchangeValue()
                     .copy(
                         platform = ExchangePlatformType.Binance
                     )
@@ -83,7 +83,7 @@ class FakeExchangeRepository : IExchangeRepository {
         }
     }
 
-    private fun getRandomExchangeValue(): ExchangeValue {
+    private fun createFakeExchangeValue(): ExchangeValue {
         return ExchangeValue(
             platform = getRandomPlatform(),
             exchangeValue = (1..10).random().toDouble()
