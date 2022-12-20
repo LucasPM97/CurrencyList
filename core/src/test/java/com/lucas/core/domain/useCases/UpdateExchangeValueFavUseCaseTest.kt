@@ -21,13 +21,14 @@ class UpdateExchangeValueFavUseCaseTest {
     }
 
     @Test
-    fun `Update exchange value and check if repository was called`() = runBlocking {
+    fun `Update exchange value and check if repository UpdateFav method was called`() =
+        runBlocking {
 
-        coEvery { repository.updateExchangeValueFav(any(), any()) } returns Unit
+            coEvery { repository.updateExchangeValueFav(any(), any()) } returns Unit
 
-        updateExchangeValueFav("", true)
+            updateExchangeValueFav("", true)
 
-        coVerify { repository.updateExchangeValueFav(any(), any()) }
-        confirmVerified(repository)
-    }
+            coVerify { repository.updateExchangeValueFav(any(), any()) }
+            confirmVerified(repository)
+        }
 }
