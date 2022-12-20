@@ -37,9 +37,36 @@ class FakeExchangeRepository : IExchangeRepository {
     }
 
     fun addFakeExchangeValues() {
-        for (i in 1..5) {
+        for (i in 0..5) {
             exchangeValues.add(getRandomExchangeValue())
         }
+    }
+
+    private val platformsWithFavExchangeValues = listOf(
+        ExchangePlatformType.Binance,
+        ExchangePlatformType.Buenbit
+    )
+
+    fun addFakeFavExchangeValues() {
+        platformsWithFavExchangeValues.forEach {
+            val favExchangeValue = ExchangeValue(
+                fav = true,
+                platform = it,
+                exchangeValue = (1..10).random().toDouble()
+            )
+            exchangeValues.add(favExchangeValue)
+        }
+
+        // Add some not fav exchange values to know if UseCase filters are working correctly
+        for (i in 0..3) {
+            exchangeValues.add(
+                getRandomExchangeValue()
+                    .copy(
+                        platform = ExchangePlatformType.Binance
+                    )
+            )
+        }
+
     }
 
     fun addFakePlatformUpdates() {
@@ -64,13 +91,13 @@ class FakeExchangeRepository : IExchangeRepository {
     }
 
     private fun getRandomPlatform(): ExchangePlatformType {
-        val platform = listOf(
-            ExchangePlatformType.Binance,
-            ExchangePlatformType.Buenbit,
-            ExchangePlatformType.Ripio
-        ).random()
-
-        return platform
+        return getPlatforms().random()
     }
+
+    private fun getPlatforms() = listOf(
+        ExchangePlatformType.Binance,
+        ExchangePlatformType.Buenbit,
+        ExchangePlatformType.Ripio
+    )
 
 }

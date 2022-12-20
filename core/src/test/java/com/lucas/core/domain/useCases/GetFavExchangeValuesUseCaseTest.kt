@@ -1,31 +1,29 @@
 package com.lucas.core.domain.useCases
 
 import app.cash.turbine.test
-import com.google.common.truth.Truth.assertThat
+import com.google.common.truth.Truth
 import com.lucas.core.mock.data.repositories.FakeExchangeRepository
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 
-class GetExchangeValuesUseCaseTest {
+class GetFavExchangeValuesUseCaseTest {
 
-    private lateinit var getExchangeValues: GetExchangeValuesUseCase
     private lateinit var getFavExchangeValues: GetFavExchangeValuesUseCase
     private lateinit var repository: FakeExchangeRepository
 
     @Before
     fun setup() {
         repository = FakeExchangeRepository()
-        getExchangeValues = GetExchangeValuesUseCase(repository)
         getFavExchangeValues = GetFavExchangeValuesUseCase(repository)
     }
 
     @Test
-    fun `Get exchange values grouped by Platform`() = runBlocking {
-        repository.addFakeExchangeValues()
+    fun `Get Fav exchange values grouped by Platform`() = runBlocking {
+        repository.addFakeFavExchangeValues()
         repository.addFakePlatformUpdates()
 
-        getExchangeValues().test {
+        getFavExchangeValues().test {
             val platformStates = awaitItem()
             platformStates.forEach { platformState ->
 
@@ -37,24 +35,27 @@ class GetExchangeValuesUseCaseTest {
                     it != platformState.platformType
                 }
 
-                assertThat(anyDifferentPlatform).isFalse()
+                Truth.assertThat(anyDifferentPlatform).isFalse()
                 awaitComplete()
             }
         }
     }
 
     @Test
-    fun `Even without exchange values, platforms must be returned`() = runBlocking {
+    fun `Return only platforms with favored exchange values`() = runBlocking {
+        repository.addFakeFavExchangeValues()
         repository.addFakePlatformUpdates()
 
-        getExchangeValues().test {
+        getFavExchangeValues().test {
             val platformStates = awaitItem()
 
             platformStates.forEach { platformState ->
 
-                val anyExchangeValues = platformState.exchangeValues.any()
+                val anyNotFavExchangeValues = platformState.exchangeValues.any {
+                    it.fav == false
+                }
 
-                assertThat(anyExchangeValues).isFalse()
+                Truth.assertThat(anyNotFavExchangeValues).isFalse()
                 awaitComplete()
             }
         }
