@@ -6,11 +6,13 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import com.lucas.currencylist.NavigationConsts
 import com.lucas.currencylist.R
+import com.lucas.currencylist.ui.utils.TestTagConsts
 
 @Composable
 fun NavigateToExchangeValueListButton(
@@ -26,7 +28,8 @@ fun NavigateToExchangeValueListButton(
         onClick = {
             goToExchangeValuesList()
         },
-    ) {
+
+        ) {
         Icon(
             imageVector = Icons.Filled.Add,
             contentDescription = stringResource(id = R.string.favorites_addCurrenciesButton_description)
