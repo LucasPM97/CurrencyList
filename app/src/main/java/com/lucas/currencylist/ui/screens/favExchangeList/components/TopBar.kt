@@ -11,7 +11,7 @@ import com.lucas.currencylist.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopBar() {
-    val title = stringResource(id = R.string.favorites_tabBarTitle)
+    val title = stringResource(id = R.string.favScreen_tabBarTitle)
     TopAppBar(
         title = {
             Text(title)

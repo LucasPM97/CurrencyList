@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import com.lucas.core.data.models.ExchangeValue
+import com.lucas.currencylist.ui.screens.favExchangeList.components.FavExchangeList
 import com.lucas.currencylist.ui.screens.favExchangeList.components.NavigateToExchangeValueListButton
 import com.lucas.currencylist.ui.screens.favExchangeList.components.TopBar
 import kotlinx.coroutines.launch

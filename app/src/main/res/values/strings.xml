@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">CurrencyList</string>
-    <string name="favorites_tabBarTitle">Your list</string>
-    <string name="favorites_addCurrenciesButton_description">Add currencies</string>
+    <string name="favScreen_tabBarTitle">Your list</string>
+    <string name="favScreen_addCurrenciesButton_description">Add currencies</string>
+    <string name="favScreen_emptyList_message">Here will be listed your selected currencies</string>
     <string name="currencies_backButton_description">Back</string>
     <string name="currencies_emptyTitle">Mmmmm… no currencies?\nMmmmm…That\'s weird…</string>
     <string name="currencies_emptySubtitle">It would be better if you go and watch some videos and learn how to create your own currency app…</string>
