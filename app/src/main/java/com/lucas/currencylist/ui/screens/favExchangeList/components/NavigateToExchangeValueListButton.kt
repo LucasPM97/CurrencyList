@@ -32,7 +32,7 @@ fun NavigateToExchangeValueListButton(
         ) {
         Icon(
             imageVector = Icons.Filled.Add,
-            contentDescription = stringResource(id = R.string.favorites_addCurrenciesButton_description)
+            contentDescription = stringResource(id = R.string.favScreen_addCurrenciesButton_description)
         )
     }
 }

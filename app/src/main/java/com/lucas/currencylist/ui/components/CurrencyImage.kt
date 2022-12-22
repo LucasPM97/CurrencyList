@@ -18,7 +18,9 @@ fun CurrencyImage(
         painter = painterResource(
             currencyType.getImage()
         ),
-        contentDescription = stringResource(id =  currencyType.getImageName()),
+        contentDescription = stringResource(
+            id = currencyType.getImageName()
+        ),
         modifier = modifier
     )
 }
