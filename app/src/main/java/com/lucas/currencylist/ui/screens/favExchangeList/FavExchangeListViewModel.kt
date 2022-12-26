@@ -1,9 +1,11 @@
 package com.lucas.currencylist.ui.screens.favExchangeList
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.work.WorkManager
 import com.lucas.core.domain.useCases.IGetFavExchangeValuesUseCase
 import com.lucas.core.domain.useCases.IUpdateExchangeValueFavUseCase
+import kotlinx.coroutines.launch
 
 class FavExchangeListViewModel(
     private val getFavExchangeValues: IGetFavExchangeValuesUseCase,
@@ -12,7 +14,7 @@ class FavExchangeListViewModel(
 
     val currencies = getFavExchangeValues()
 
-    suspend fun updateFav(currencyId: String, fav: Boolean) {
+    fun updateFav(currencyId: String, fav: Boolean) = viewModelScope.launch {
         updateExchangeValueFav(currencyId, fav)
     }
 }
