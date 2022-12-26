@@ -40,6 +40,7 @@ class NavigateToExchangeValueListButtonTest {
 
     @Test
     fun check_floatingButton_exists_isClickable() {
+
         val floatingButton = composeRule
             .onNodeWithTag(
                 TestTagConsts.FavExchangeListScreen.FLOATING_BUTTON_TAG

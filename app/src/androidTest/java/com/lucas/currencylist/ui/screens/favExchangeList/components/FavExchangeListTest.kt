@@ -29,20 +29,22 @@ class FavExchangeListTest {
 
         val context = ApplicationProvider.getApplicationContext<Context>()
 
-        composeRule.setContent {
-            CurrencyListTheme {
-                RenderNotEmptyList()
+        with(composeRule) {
+
+            setContent {
+                CurrencyListTheme {
+                    RenderNotEmptyList()
+                }
             }
-        }
 
-        val poweredByText = context.getString(R.string.webcard_poweredBy)
+            val poweredByText = context.getString(R.string.webcard_poweredBy)
 
-        // Check if "powered by" Text exists.
-        // This component is rendered on each Platform Card
-        composeRule
-            .onNode(
+            // Check if "powered by" Text exists.
+            // This component is rendered on each Platform Card
+            onNode(
                 hasText(poweredByText)
             ).assertExists()
+        }
     }
 
     @Test
@@ -50,17 +52,18 @@ class FavExchangeListTest {
 
         val context = ApplicationProvider.getApplicationContext<Context>()
 
-        composeRule.setContent {
-            CurrencyListTheme {
-                RenderEmptyList()
+        with(composeRule) {
+            setContent {
+                CurrencyListTheme {
+                    RenderEmptyList()
+                }
             }
-        }
 
-        val emptyListMessageText = context.getString(R.string.favScreen_emptyList_message)
-        composeRule
-            .onNode(
+            val emptyListMessageText = context.getString(R.string.favScreen_emptyList_message)
+            onNode(
                 hasText(emptyListMessageText)
             ).assertExists()
+        }
     }
 
     @Test
@@ -68,17 +71,18 @@ class FavExchangeListTest {
 
         val context = ApplicationProvider.getApplicationContext<Context>()
 
-        composeRule.setContent {
-            CurrencyListTheme {
-                RenderNotEmptyList()
+        with(composeRule) {
+            setContent {
+                CurrencyListTheme {
+                    RenderNotEmptyList()
+                }
             }
-        }
 
-        val emptyListMessageText = context.getString(R.string.favScreen_emptyList_message)
-        composeRule
-            .onNode(
+            val emptyListMessageText = context.getString(R.string.favScreen_emptyList_message)
+            onNode(
                 hasText(emptyListMessageText)
             ).assertDoesNotExist()
+        }
     }
 
     @Test
@@ -86,17 +90,19 @@ class FavExchangeListTest {
 
         val onFavButtonPressed = mockk<(ExchangeValue) -> Unit>(relaxed = true)
 
-        composeRule.setContent {
-            CurrencyListTheme {
-                RenderNotEmptyList()
+        with(composeRule) {
+
+            setContent {
+                CurrencyListTheme {
+                    RenderNotEmptyList()
+                }
             }
+
+            onNodeWithTag(TestTagConsts.Components.FavButton.FAV_BUTTON_TAG)
+                .performClick()
+
+            verify { onFavButtonPressed(any()) }
         }
-
-        composeRule
-            .onNodeWithTag(TestTagConsts.Components.FavButton.FAV_BUTTON_TAG)
-            .performClick()
-
-        verify { onFavButtonPressed(any()) }
     }
 }
 
