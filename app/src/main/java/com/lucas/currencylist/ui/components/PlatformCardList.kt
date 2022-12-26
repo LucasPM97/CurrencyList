@@ -14,7 +14,7 @@ val itemsSpace = 10.dp
 
 @Composable
 fun PlatformCardList(
-    platformState: List<PlatformState>,
+    platformsState: List<PlatformState>,
     modifier: Modifier = Modifier,
     itemFavOnClick: (currency: ExchangeValue) -> Unit
 ) {
@@ -22,7 +22,7 @@ fun PlatformCardList(
         modifier
             .verticalScroll(rememberScrollState())
     ) {
-        platformState.forEach { platformState ->
+        platformsState.forEach { platformState ->
             RenderTradingWeb(
                 platformState,
                 itemFavOnClick = { exchangeValueId ->
