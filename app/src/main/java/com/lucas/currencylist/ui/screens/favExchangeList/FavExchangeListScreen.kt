@@ -22,14 +22,10 @@ fun FavExchangeListScreen(
     navController: NavController? = null,
     viewModel: FavExchangeListViewModel = getViewModel()
 ) {
-    val coroutineScope = rememberCoroutineScope()
-
     val platformsState by viewModel.currencies.collectAsState(null)
 
     fun favCurrency(currency: ExchangeValue) {
-        coroutineScope.launch {
-            viewModel.updateFav(currency.currencyId, !currency.fav)
-        }
+        viewModel.updateFav(currency.currencyId, !currency.fav)
     }
 
     ScreenScaffold(

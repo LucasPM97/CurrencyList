@@ -43,12 +43,8 @@ fun ExchangeListScreen(
 
 @Composable
 private fun Screen(viewModel: ExchangeListViewModel) {
-    val coroutineScope = rememberCoroutineScope()
-
     fun favExchangeValue(exchangeValue: ExchangeValue) {
-        coroutineScope.launch {
-            viewModel.updateFav(exchangeValue.currencyId, !exchangeValue.fav)
-        }
+        viewModel.updateFav(exchangeValue.currencyId, !exchangeValue.fav)
     }
 
     val platformsState by viewModel.currencies.collectAsState(initial = null)
