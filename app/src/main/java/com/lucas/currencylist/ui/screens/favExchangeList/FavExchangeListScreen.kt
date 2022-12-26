@@ -6,7 +6,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
@@ -14,7 +13,6 @@ import com.lucas.core.data.models.ExchangeValue
 import com.lucas.currencylist.ui.screens.favExchangeList.components.FavExchangeList
 import com.lucas.currencylist.ui.screens.favExchangeList.components.NavigateToExchangeValueListButton
 import com.lucas.currencylist.ui.screens.favExchangeList.components.TopBar
-import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel
 
 @Composable
