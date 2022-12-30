@@ -6,12 +6,12 @@ import com.lucas.core.data.models.ExchangePlatformType
 import com.lucas.core.data.models.ExchangeValue
 import com.lucas.core.data.models.TradingPlatformUpdates
 import com.lucas.core.data.repositories.IExchangeRepository
-import com.lucas.core.mock.data.repositories.FakeExchangeRepository
 import io.mockk.*
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
+import java.util.*
 
 class GetFavExchangeValuesUseCaseTest {
 
@@ -27,14 +27,17 @@ class GetFavExchangeValuesUseCaseTest {
     @Test
     fun `Get Fav exchange values grouped by Platform`() = runBlocking {
 
-        coEvery { repository.getFavExchangeValues() } returns flow {
-            emit(fakeFavExchangeValues())
+        every { repository.getFavExchangeValues() } returns flow {
+            emit(fakeFavExchangeValues().filter {
+                it.fav
+            })
         }
-        coEvery { repository.getPlatformsLastUpdateFlow() } returns flow {
+        every { repository.getPlatformsLastUpdateFlow() } returns flow {
             emit(fakePlatformUpdates())
         }
 
         getFavExchangeValues().test {
+
             val platformStates = awaitItem()
             platformStates.forEach { platformState ->
 
@@ -50,18 +53,17 @@ class GetFavExchangeValuesUseCaseTest {
                 awaitComplete()
             }
         }
-
-        coVerify { repository.getFavExchangeValues() }
-        coVerify { repository.getPlatformsLastUpdateFlow() }
     }
 
     @Test
     fun `Return only platforms with favored exchange values`() = runBlocking {
 
-        coEvery { repository.getFavExchangeValues() } returns flow {
-            emit(fakeFavExchangeValues())
+        every { repository.getFavExchangeValues() } returns flow {
+            emit(fakeFavExchangeValues().filter {
+                it.fav
+            })
         }
-        coEvery { repository.getPlatformsLastUpdateFlow() } returns flow {
+        every { repository.getPlatformsLastUpdateFlow() } returns flow {
             emit(fakePlatformUpdates())
         }
 
@@ -115,6 +117,7 @@ class GetFavExchangeValuesUseCaseTest {
     ).map {
         mockk {
             every { platformType } returns it
+            every { lastUpdate } returns Date()
         }
     }
     //endregion

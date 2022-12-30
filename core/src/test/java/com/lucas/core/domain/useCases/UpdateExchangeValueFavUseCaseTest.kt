@@ -12,13 +12,12 @@ import org.junit.Test
 class UpdateExchangeValueFavUseCaseTest {
 
     private lateinit var updateExchangeValueFav: UpdateExchangeValueFavUseCase
-    private lateinit var repository: IExchangeRepository
+    private val repository: IExchangeRepository = mockk {
+        coEvery { updateExchangeValueFav(any(), any()) } returns Unit
+    }
 
     @Before
     fun setup() {
-        repository = mockk {
-            coEvery { repository.updateExchangeValueFav(any(), any()) } returns Unit
-        }
         updateExchangeValueFav = UpdateExchangeValueFavUseCase(repository)
     }
 
@@ -28,6 +27,5 @@ class UpdateExchangeValueFavUseCaseTest {
             updateExchangeValueFav("", true)
 
             coVerify { repository.updateExchangeValueFav(any(), any()) }
-            confirmVerified(repository)
         }
 }
