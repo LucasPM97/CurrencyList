@@ -2,7 +2,13 @@ package com.lucas.core.domain.useCases
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth
+import com.lucas.core.data.models.ExchangePlatformType
+import com.lucas.core.data.models.ExchangeValue
+import com.lucas.core.data.models.TradingPlatformUpdates
+import com.lucas.core.data.repositories.IExchangeRepository
 import com.lucas.core.mock.data.repositories.FakeExchangeRepository
+import io.mockk.*
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
@@ -10,18 +16,23 @@ import org.junit.Test
 class GetFavExchangeValuesUseCaseTest {
 
     private lateinit var getFavExchangeValues: GetFavExchangeValuesUseCase
-    private lateinit var repository: FakeExchangeRepository
+    private val repository: IExchangeRepository = mockk()
 
     @Before
     fun setup() {
-        repository = FakeExchangeRepository()
         getFavExchangeValues = GetFavExchangeValuesUseCase(repository)
+        clearMocks(repository)
     }
 
     @Test
     fun `Get Fav exchange values grouped by Platform`() = runBlocking {
-        repository.addFakeFavExchangeValues()
-        repository.addFakePlatformUpdates()
+
+        coEvery { repository.getFavExchangeValues() } returns flow {
+            emit(fakeFavExchangeValues())
+        }
+        coEvery { repository.getPlatformsLastUpdateFlow() } returns flow {
+            emit(fakePlatformUpdates())
+        }
 
         getFavExchangeValues().test {
             val platformStates = awaitItem()
@@ -39,12 +50,20 @@ class GetFavExchangeValuesUseCaseTest {
                 awaitComplete()
             }
         }
+
+        coVerify { repository.getFavExchangeValues() }
+        coVerify { repository.getPlatformsLastUpdateFlow() }
     }
 
     @Test
     fun `Return only platforms with favored exchange values`() = runBlocking {
-        repository.addFakeFavExchangeValues()
-        repository.addFakePlatformUpdates()
+
+        coEvery { repository.getFavExchangeValues() } returns flow {
+            emit(fakeFavExchangeValues())
+        }
+        coEvery { repository.getPlatformsLastUpdateFlow() } returns flow {
+            emit(fakePlatformUpdates())
+        }
 
         getFavExchangeValues().test {
             val platformStates = awaitItem()
@@ -60,4 +79,43 @@ class GetFavExchangeValuesUseCaseTest {
             }
         }
     }
+
+    // region Fake data
+    private val platformsWithFavExchangeValues = listOf(
+        ExchangePlatformType.Binance,
+        ExchangePlatformType.Buenbit
+    )
+
+    private fun fakeFavExchangeValues(): List<ExchangeValue> {
+        val fakeExchangeValueList =
+            platformsWithFavExchangeValues.map<ExchangePlatformType, ExchangeValue> {
+                mockk {
+                    every { fav } returns true
+                    every { platform } returns it
+                }
+            }.toMutableList()
+
+        // Add some not fav exchange values to know if UseCase filters are working correctly
+        for (i in 0..3) {
+            fakeExchangeValueList.add(
+                mockk {
+                    every { fav } returns false
+                    every { platform } returns ExchangePlatformType.Binance
+                }
+            )
+        }
+
+        return fakeExchangeValueList
+    }
+
+    private fun fakePlatformUpdates(): List<TradingPlatformUpdates> = listOf(
+        ExchangePlatformType.Binance,
+        ExchangePlatformType.Buenbit,
+        ExchangePlatformType.Ripio
+    ).map {
+        mockk {
+            every { platformType } returns it
+        }
+    }
+    //endregion
 }
