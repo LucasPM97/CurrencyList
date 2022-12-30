@@ -1,10 +1,7 @@
 package com.lucas.core.domain.useCases
 
 import com.lucas.core.data.repositories.IExchangeRepository
-import io.mockk.coEvery
-import io.mockk.coVerify
-import io.mockk.confirmVerified
-import io.mockk.mockk
+import io.mockk.*
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
@@ -16,15 +13,15 @@ class FetchExchangeValuesUseCaseTest {
 
     @Before
     fun setup() {
-        repository = mockk(relaxed = true)
+        repository = mockk {
+            coEvery { fetchExchangeValues() } returns true
+        }
         fetchExchangeValues = FetchExchangeValuesUseCase(repository)
     }
 
     @Test
     fun `Run Fetch use case and check if repository FetchExchangeValues method was called`() =
         runBlocking {
-
-            coEvery { repository.fetchExchangeValues() } returns true
 
             fetchExchangeValues()
 
