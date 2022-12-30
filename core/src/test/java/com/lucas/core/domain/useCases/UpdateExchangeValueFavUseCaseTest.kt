@@ -16,16 +16,15 @@ class UpdateExchangeValueFavUseCaseTest {
 
     @Before
     fun setup() {
-        repository = mockk(relaxed = true)
+        repository = mockk {
+            coEvery { repository.updateExchangeValueFav(any(), any()) } returns Unit
+        }
         updateExchangeValueFav = UpdateExchangeValueFavUseCase(repository)
     }
 
     @Test
     fun `Update exchange value and check if repository UpdateFav method was called`() =
         runBlocking {
-
-            coEvery { repository.updateExchangeValueFav(any(), any()) } returns Unit
-
             updateExchangeValueFav("", true)
 
             coVerify { repository.updateExchangeValueFav(any(), any()) }
