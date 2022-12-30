@@ -2,28 +2,40 @@ package com.lucas.core.domain.useCases
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
-import com.lucas.core.mock.data.repositories.FakeExchangeRepository
+import com.lucas.core.data.models.ExchangePlatformType
+import com.lucas.core.data.models.ExchangeValue
+import com.lucas.core.data.models.TradingPlatformUpdates
+import com.lucas.core.data.repositories.IExchangeRepository
+import io.mockk.*
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
+import java.util.*
 
 class GetExchangeValuesUseCaseTest {
 
     private lateinit var getExchangeValues: GetExchangeValuesUseCase
-    private lateinit var repository: FakeExchangeRepository
+    private val repository: IExchangeRepository = mockk()
 
     @Before
     fun setup() {
-        repository = FakeExchangeRepository()
+        clearMocks(repository)
         getExchangeValues = GetExchangeValuesUseCase(repository)
     }
 
     @Test
     fun `Get exchange values grouped by Platform`() = runBlocking {
-        repository.addFakeExchangeValues()
-        repository.addFakePlatformUpdates()
+
+        every { repository.getExchangeValues() } returns flow {
+            emit(fakeExchangeValues())
+        }
+        every { repository.getPlatformsLastUpdateFlow() } returns flow {
+            emit(fakePlatformUpdates())
+        }
 
         getExchangeValues().test {
+
             val platformStates = awaitItem()
             platformStates.forEach { platformState ->
 
@@ -43,7 +55,13 @@ class GetExchangeValuesUseCaseTest {
 
     @Test
     fun `Even without exchange values, platforms must be returned`() = runBlocking {
-        repository.addFakePlatformUpdates()
+
+        every { repository.getExchangeValues() } returns flow {
+            emit(emptyList())
+        }
+        every { repository.getPlatformsLastUpdateFlow() } returns flow {
+            emit(fakePlatformUpdates())
+        }
 
         getExchangeValues().test {
             val platformStates = awaitItem()
@@ -57,4 +75,26 @@ class GetExchangeValuesUseCaseTest {
             }
         }
     }
+
+    // region Fake data
+
+    private fun fakeExchangeValues(): List<ExchangeValue> = (0..5).map {
+        mockk {
+            every { platform } returns getPlatforms().random()
+        }
+    }
+
+    private fun fakePlatformUpdates(): List<TradingPlatformUpdates> = getPlatforms().map {
+        mockk {
+            every { platformType } returns it
+            every { lastUpdate } returns Date()
+        }
+    }
+
+    private fun getPlatforms() = listOf(
+        ExchangePlatformType.Binance,
+        ExchangePlatformType.Buenbit,
+        ExchangePlatformType.Ripio
+    )
+    //endregion
 }
