@@ -10,7 +10,6 @@ import androidx.navigation.NavController
 import com.lucas.currencylist.NavigationConsts
 import com.lucas.currencylist.ui.theme.CurrencyListTheme
 import com.lucas.currencylist.ui.utils.TestTagConsts
-import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.Before
@@ -57,8 +56,6 @@ class NavigateToExchangeValueListButtonTest {
             .onNodeWithTag(
                 TestTagConsts.FavExchangeListScreen.FLOATING_BUTTON_TAG
             )
-
-        every { navController.navigate(NavigationConsts.EXCHANGE_LIST_SCREEN) } returns Unit
 
         floatingButton.performClick()
 

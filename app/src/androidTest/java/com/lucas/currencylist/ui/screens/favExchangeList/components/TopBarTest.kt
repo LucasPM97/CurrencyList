@@ -26,7 +26,7 @@ class TopBarTest {
     }
 
     @Test
-    fun Check_TopBarTitle() {
+    fun check_TopBarTitle() {
         val context = ApplicationProvider.getApplicationContext<Context>()
         val topBarTitle = context.getString(R.string.favScreen_tabBarTitle)
         composeRule.onNode(
